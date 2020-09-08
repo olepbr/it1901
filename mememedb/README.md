@@ -1,0 +1,3 @@
+# MEMEMEMDB
+
+![Klassediagram](Klassediagram.png)
