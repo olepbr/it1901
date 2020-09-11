@@ -1,9 +1,3 @@
 # Group gr2015 repository
 
-Welcome to IT1901 course fall 2020
-
-Good luck!
-
-Cheers!
-
-Have fun!
+The repo contains group 15's project for IT1901. The project can be accessed in the folder "mememedb". 
