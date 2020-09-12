@@ -58,6 +58,12 @@
           <include>**/*.css</include>
         </includes>
       </resource>
+      <resource>
+      	<directory>src/resources</directory>
+      	<includes>
+      	<include>**/*</include>
+      	</includes>
+      </resource>
     </resources>
     <testSourceDirectory>test</testSourceDirectory>
     <testResources>
