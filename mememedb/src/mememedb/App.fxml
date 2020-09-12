@@ -19,7 +19,7 @@
     <HBox prefWidth="674.0" style="-fx-background-color: #AAAAAA;" BorderPane.alignment="CENTER">
          <ImageView fx:id="userpic" fitHeight="52.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@Grandma.png" />
+               <Image url="@../resources/img/Grandma.png" />
             </image>
          </ImageView><Label fx:id="username" text="xXx__gertrude__xXx">
             <padding>

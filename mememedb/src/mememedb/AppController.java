@@ -18,6 +18,11 @@ import javafx.event.EventHandler;
 
 //Java Utils
 import java.util.HashMap;
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.URL;
 import java.text.DecimalFormat;
 
 public class AppController
@@ -35,14 +40,16 @@ public class AppController
 
 	}
 	@FXML
-	public void handleAddContent() {
+	public void handleAddContent() throws FileNotFoundException {
 		//get content from database
-		ImageView image = new ImageView(new Image(this.getClass().getResourceAsStream("Grandma.PNG")));
+		System.out.println(App.class.getPackage());
+		ImageView image = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Grandma.png")));
 		Label label2 = new Label("info and options");
 		SplitPane listElement = new SplitPane();
 		listElement.getItems().addAll(image, label2);
 		listElement.prefWidthProperty().bind(content.prefWidthProperty());
 		content.getChildren().addAll(listElement);
+		
 	}
 	
 	
