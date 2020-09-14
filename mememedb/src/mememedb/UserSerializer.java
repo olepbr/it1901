@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 public class UserSerializer extends JsonSerializer<User> {
 
-	/*
+	/**
 	 * Class for serializing User objects
 	 * format: { "id": "...", "name": "...", "nickname": "...", "email": "...", "posts": [ ... ] }
 	 * 
