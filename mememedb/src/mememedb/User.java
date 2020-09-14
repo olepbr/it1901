@@ -18,7 +18,11 @@ public class User
   private String email;
   private List<Post> posts = new ArrayList<>();
 
-public User(int id, String name, String nickname, String email)
+  public User() {
+	  
+  }
+  
+  public User(int id, String name, String nickname, String email)
   {
     this.id = id;
     this.name = name;
@@ -65,5 +69,10 @@ public List<Post> getPosts() {
 public void addPost(Post post) {
 	posts.add(post);
 }
+
+@Override
+	public String toString() {
+		return String.format("[User id=%d name=%s nickname=%s email=%s", getId(), getName(), getNickname(), getEmail());
+	}
 
 }

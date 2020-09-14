@@ -2,21 +2,24 @@ package mememedb;
 
 public class Post {
 
-    private User owner;
+    private String owner;
     private String caption;
     private String image;
+    
+    public Post() {
+    }
 
-    public Post(User owner, String caption, String image){
+    public Post(String owner, String caption, String image){
         this.owner = owner;
         this.caption = caption;
         this.image = image;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
@@ -34,5 +37,10 @@ public class Post {
 
     public void setImage(String image) {
         this.image = image;
+    }
+    
+    @Override
+    public String toString() {
+    	return String.format("[Post owner=%s caption=%s image=%s]", getOwner(), getText(), getImage());
     }
 }

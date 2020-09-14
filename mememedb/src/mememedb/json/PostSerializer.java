@@ -19,7 +19,7 @@ public class PostSerializer extends JsonSerializer<Post> {
 	@Override
 	public void serialize(Post post, JsonGenerator jGen, SerializerProvider serializerProvider) throws IOException {
 		jGen.writeStartObject();
-		jGen.writeStringField("owner", post.getOwner().getNickname());
+		jGen.writeStringField("owner", post.getOwner());
 		jGen.writeStringField("caption", post.getText());
 		jGen.writeStringField("image", post.getImage());
 		jGen.writeEndObject();
