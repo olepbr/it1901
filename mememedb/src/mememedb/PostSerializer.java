@@ -8,7 +8,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 public class PostSerializer extends JsonSerializer<Post> {
 
 	/*
+	 * Class for serializing Post objects
 	 * format: { "owner": "...", "caption": "...", "image": "..." }
+	 * 
+	 * @author Ole Peder Brandtzæg
+	 * 
 	*/
 
 	@Override

@@ -6,6 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 public class MememeModule extends SimpleModule {
+	/*
+	 * Module collecting individual class serializers
+	 * 
+	 * @author Ole Peder Brandtzæg
+	 * 
+	 */
 
 	private static final String NAME = "MememeModule";
 	private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
