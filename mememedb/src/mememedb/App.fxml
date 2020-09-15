@@ -37,7 +37,7 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Search..." />
+            <Button fx:id="searchButton" mnemonicParsing="false" text="Search..." />
             <Button fx:id="postButton" mnemonicParsing="false" onAction="#handleAddContent" text="Post" />
          </children>
       </VBox>

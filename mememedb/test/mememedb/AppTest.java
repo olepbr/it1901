@@ -9,6 +9,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.Node;
+
+import javafx.collections.ObservableList;
 
 public class AppTest extends ApplicationTest {
   private Parent parent;
@@ -24,10 +28,35 @@ public class AppTest extends ApplicationTest {
   }
 
   @Test
-  public void testController() {
+  public void testButtons() {
+    final Button logoutButton = (Button) parent.lookup("#logout");
+    final Button postButton = (Button) parent.lookup("#postButton");
+    final Button searchButton = (Button) parent.lookup("#searchButton");
+    clickOn(logoutButton);
+    clickOn(postButton);
+    clickOn(searchButton);
+  }
+
+  @Test
+  public void testContentButtons() {
     final Button postButton = (Button) parent.lookup("#postButton");
     final VBox content = (VBox) parent.lookup("#content");
+    ObservableList<Node> children = content.getChildren();
+
     clickOn(postButton);
-    Assertions.assertFalse(content.getChildren().isEmpty());
+
+    for(int i = 0; i<children.size(); i++){
+      Node nextChild = children.get(i);
+      if(nextChild instanceof HBox){
+        HBox nextHBox = (HBox) nextChild;
+        ObservableList<Node> subChildren = nextHBox.getChildren();
+        for(int j = 0; j<subChildren.size(); j++){
+          Node nextSubChild = subChildren.get(j);
+          if(nextSubChild instanceof Button){
+            clickOn(nextSubChild);
+          }
+        }
+      }
+    }
   }
 }
