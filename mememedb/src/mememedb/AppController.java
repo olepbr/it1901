@@ -18,18 +18,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 //Java Utils
 import java.util.HashMap;
-
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 
 public class AppController
-{
+{	
+	
+	
+	
+	
 	@FXML
 	VBox content;
 	Button addContent;
@@ -38,21 +46,42 @@ public class AppController
 
 	//Initialize
 	@FXML
-	public void initialize()
-	{
-
+	public void initialize(){
+		updatePosts();
 	}
+	
+	public void updatePosts() {
+		//remove old posts
+		content.getChildren().clear();
+		//get list? of posts from I/O
+		Collection<Post> postList = new ArrayList<Post>();
+		postList.add(new Post(new User(1, "Gertrude", "xX_gertrude_Xx", "grandma@grandmail.com"), "my beautiful face", "Grandma.png"));
+		for (Post post : postList) {
+			HBox subContent = new HBox();
+			FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
+			subContentLoader.setRoot(subContent);
+			subContentLoader.setController(getClass().getResource("PostController.java"));
+			content.getChildren().add(subContent);
+			try {
+				subContentLoader.load();
+				((PostController) subContentLoader.getController()).setPost(post);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		}
+	
+	public static File getImageFromName(String name) {
+		String absPath = Paths.get("").toUri().getPath() + "/src/resources/img/Grandma.png";
+		File image = new File(absPath);
+		return image;
+		
+	}
+	
+	
 	@FXML
-	public void handleAddContent() throws FileNotFoundException {
-		//get content from database
-//		System.out.println(App.class.getPackage());
-//		ImageView image = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Grandma.png")));
-//		Label label2 = new Label("info and options");
-//		SplitPane listElement = new SplitPane();
-//		listElement.getItems().addAll(image, label2);
-//		listElement.prefWidthProperty().bind(content.prefWidthProperty());
-//		content.getChildren().addAll(listElement);
-//		
+	public void handleAddContent(){	
 		HBox subContent = new HBox();
 		FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
 		subContentLoader.setRoot(subContent);
