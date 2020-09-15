@@ -32,31 +32,40 @@ public class AppTest extends ApplicationTest {
     final Button logoutButton = (Button) parent.lookup("#logout");
     final Button postButton = (Button) parent.lookup("#postButton");
     final Button searchButton = (Button) parent.lookup("#searchButton");
+    final VBox content = (VBox) parent.lookup("#content");
+    ObservableList<Node> children = content.getChildren();
+    int beforePosts = children.size();
+
     clickOn(logoutButton);
     clickOn(postButton);
     clickOn(searchButton);
+
+    children = content.getChildren();
+    int afterPosts = children.size();
+
+    Assertions.assertNotEquals(beforePosts, afterPosts);
   }
 
-  @Test
-  public void testContentButtons() {
-    final Button postButton = (Button) parent.lookup("#postButton");
-    final VBox content = (VBox) parent.lookup("#content");
-    ObservableList<Node> children = content.getChildren();
+  // @Test
+  // public void testContentButtons() {
+  //   final Button postButton = (Button) parent.lookup("#postButton");
+  //   final VBox content = (VBox) parent.lookup("#content");
+  //   ObservableList<Node> children = content.getChildren();
 
-    clickOn(postButton);
+  //   clickOn(postButton);
 
-    for(int i = 0; i<children.size(); i++){
-      Node nextChild = children.get(i);
-      if(nextChild instanceof HBox){
-        HBox nextHBox = (HBox) nextChild;
-        ObservableList<Node> subChildren = nextHBox.getChildren();
-        for(int j = 0; j<subChildren.size(); j++){
-          Node nextSubChild = subChildren.get(j);
-          if(nextSubChild instanceof Button){
-            clickOn(nextSubChild);
-          }
-        }
-      }
-    }
-  }
+  //   for(int i = 0; i<children.size(); i++){
+  //     Node nextChild = children.get(i);
+  //     if(nextChild instanceof HBox){
+  //       HBox nextHBox = (HBox) nextChild;
+  //       ObservableList<Node> subChildren = nextHBox.getChildren();
+  //       for(int j = 0; j<subChildren.size(); j++){
+  //         Node nextSubChild = subChildren.get(j);
+  //         if(nextSubChild instanceof Button){
+  //           clickOn(nextSubChild);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 }
