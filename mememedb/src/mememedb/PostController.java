@@ -25,7 +25,7 @@ public class PostController {
 	
 	@FXML
 	public void handleTestClicked(){
-		System.out.println("Post made by " + post.getOwner().getNickname() + ". DO NOT STEAL");
+		System.out.println("Post made by " + post.getOwner() + ". DO NOT STEAL");
 	}
 	
 	public void setPost(Post post) {

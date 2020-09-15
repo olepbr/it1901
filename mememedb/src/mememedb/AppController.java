@@ -53,9 +53,9 @@ public class AppController
 	public void updatePosts() {
 		//remove old posts
 		content.getChildren().clear();
-		//get list? of posts from I/O
+		//get collection of posts from I/O
 		Collection<Post> postList = new ArrayList<Post>();
-		postList.add(new Post(new User(1, "Gertrude", "xX_gertrude_Xx", "grandma@grandmail.com"), "my beautiful face", "Grandma.png"));
+		postList.add(new Post("xXx_Gertrude_xXx", "my beautiful face", "Grandma.png"));
 		for (Post post : postList) {
 			HBox subContent = new HBox();
 			FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
@@ -64,6 +64,7 @@ public class AppController
 			content.getChildren().add(subContent);
 			try {
 				subContentLoader.load();
+				//load post content
 				((PostController) subContentLoader.getController()).setPost(post);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -73,6 +74,8 @@ public class AppController
 		}
 	
 	public static File getImageFromName(String name) {
+		//To be moved into I/O
+		//gets image given name, assumes images are stored in img under resources.
 		String absPath = Paths.get("").toUri().getPath() + "/src/resources/img/Grandma.png";
 		File image = new File(absPath);
 		return image;
