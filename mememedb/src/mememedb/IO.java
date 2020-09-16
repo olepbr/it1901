@@ -7,8 +7,9 @@ import java.util.List;
 public interface IO {
 	
 	
-	public List<Post> getPostList();
-	public void savePost(Post post) throws IOException;
-	public void saveImage(File image) throws IOException;
+	public List<Post> getPostList();//return list of posts in database
+	public void savePost(Post post) throws IOException;//store post in database
+	public void saveImage(File image) throws IOException;//store image in database(or other storage location)
+	public File getImageFromName(String name);//get reference to image given name
 	
 }

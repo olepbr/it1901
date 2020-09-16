@@ -24,7 +24,6 @@ public class PostController {
 	
 	public void setPost(Post post) {
 		this.post = post;
-		//TODO move to IO
 		File image = AppController.getImageFromName(post.getImage());
 		try {
 			postImage.setImage(new Image(image.toURI().toURL().toExternalForm()));
