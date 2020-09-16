@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.util.*;
+import java.util.regex.Pattern;
 //Java Utils
 import java.io.File;
 import java.io.IOException;
@@ -20,10 +21,10 @@ import java.nio.file.Paths;
 
 public class AppController
 {	
-	
-	
-	
-	
+
+
+
+
 	@FXML
 	private VBox content;
 	@FXML
@@ -40,7 +41,7 @@ public class AppController
 	public void initialize(){
 		updatePosts();
 	}
-	
+
 	public void updatePosts() {
 		//remove old posts
 		content.getChildren().clear();
@@ -62,19 +63,24 @@ public class AppController
 				e.printStackTrace();
 			}
 		}
-		}
-	
+	}
+
 	public static File getImageFromName(String name) {
 		//To be moved into I/O
 		//gets image given name, assumes images are stored in img under resources.
-		System.out.println(Paths.get("").toUri().getPath());
-		String absPath = Paths.get("").toUri().getPath() + "/src/resources/img/Grandma.png";
+
+		String absPath = Paths.get("").toUri().getPath();
+		System.out.println(absPath);
+		if(!Pattern.matches(".*mememedb[/\\\\]*$", absPath)) {
+			absPath+="mememedb/";
+		}	
+		absPath=absPath + "src/resources/img/" + name;
+		System.out.println(absPath);
 		File image = new File(absPath);
 		return image;
-		
 	}
-	
-	
+
+
 	@FXML
 	public void handleAddContent(){	
 		HBox subContent = new HBox();
@@ -99,12 +105,12 @@ public class AppController
 				new FileChooser.ExtensionFilter("JPG files", "*.jpg"),
 				new FileChooser.ExtensionFilter("PNG files", "*.png"),
 				new FileChooser.ExtensionFilter("JPEG files", "*.jpeg")
-		);
+				);
 		Stage stage = (Stage)borderPane.getScene().getWindow();
 		fileChooser.showOpenDialog(stage);
 	}
-	
-	
+
+
 }
 
 
