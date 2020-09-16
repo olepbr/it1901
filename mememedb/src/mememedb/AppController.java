@@ -23,6 +23,9 @@ import java.util.Collection;
 import java.util.Collections;
 //Java Utils
 import java.util.HashMap;
+
+import java.util.regex.Pattern;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -76,7 +79,14 @@ public class AppController
 	public static File getImageFromName(String name) {
 		//To be moved into I/O
 		//gets image given name, assumes images are stored in img under resources.
-		String absPath = Paths.get("").toUri().getPath() + "/src/resources/img/Grandma.png";
+		
+		String absPath = Paths.get("").toUri().getPath();
+		System.out.println(absPath);
+		if(!Pattern.matches(".*mememedb[/\\\\]*$", absPath)) {
+			absPath+="mememedb/";
+		}	
+		absPath=absPath + "src/resources/img/" + name;
+		System.out.println(absPath);
 		File image = new File(absPath);
 		return image;
 		
