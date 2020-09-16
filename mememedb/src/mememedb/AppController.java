@@ -1,7 +1,6 @@
 package mememedb;
 
 //Import javafx stuff
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -12,11 +11,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.List;
 //Java Utils
+import java.util.regex.Pattern;
+//File utilities 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -25,8 +24,9 @@ public class AppController
 {
 
 
-
+	//Storage interface
 	private IO memeIO;
+	
 	private File selectedImage;
 	
 	@FXML
@@ -42,9 +42,6 @@ public class AppController
 	@FXML
 	private Label imgSelectorLabel;
 
-	public AppController() {
-	}
-
 	//Initialize
 	@FXML
 	public void initialize(){
@@ -53,12 +50,13 @@ public class AppController
 	}
 
 	public void updatePosts() {
-		//remove old posts
+		//remove old posts and reset post selector
 		content.getChildren().clear();
 		inputTextField.setText(null);
 		imgSelectorLabel.setText("Choose an image");
 		//get collection of posts from I/O
 		List<Post> postList =memeIO.getPostList();
+		//create nodes for each post
 		for (Post post : postList) {
 			HBox subContent = new HBox();
 			FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
@@ -67,28 +65,12 @@ public class AppController
 			content.getChildren().add(subContent);
 			try {
 				subContentLoader.load();
-				//load post content
+				((PostController) subContentLoader.getController()).setIO(memeIO);
 				((PostController) subContentLoader.getController()).setPost(post);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Error loading post");
 			}
 		}
-	}
-
-	public static File getImageFromName(String name) {
-		//To be moved into I/O
-		//gets image given name, assumes images are stored in img under resources.
-
-		String absPath = Paths.get("").toUri().getPath();
-		System.out.println(absPath);
-		if(!Pattern.matches(".*mememedb[/\\\\]*$", absPath)) {
-			absPath+="mememedb/";
-		}
-		absPath=absPath + "src/resources/img/" + name;
-		System.out.println(absPath);
-		File image = new File(absPath);
-		return image;
 	}
 
 

@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 public class PostController {
 	
 	Post post;
-	
+	IO io;
 	
 	@FXML ImageView postImage;
 	@FXML Label postText;
@@ -24,7 +24,7 @@ public class PostController {
 	
 	public void setPost(Post post) {
 		this.post = post;
-		File image = AppController.getImageFromName(post.getImage());
+		File image = io.getImageFromName(post.getImage());
 		try {
 			postImage.setImage(new Image(image.toURI().toURL().toExternalForm()));
 		} catch (MalformedURLException e) {
@@ -32,6 +32,10 @@ public class PostController {
 			e.printStackTrace();
 		}
 		postText.setText(post.getText());
+	}
+	
+	public void setIO(IO io) {
+		this.io = io;
 	}
 	
 	
