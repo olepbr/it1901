@@ -1,47 +1,58 @@
 package mememedb;
 
 //Import javafx stuff
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.event.EventHandler;
 
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 //Java Utils
+import java.util.HashMap;
+
+import java.util.regex.Pattern;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.FileSystems;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 
 public class AppController
 {	
+	
+	
+	
+	
+	@FXML
+	VBox content;
+	Button addContent;
 
 
-
-
-	@FXML
-	private VBox content;
-	@FXML
-	private Button addContent;
-	@FXML
-	private Button browseButton;
-	@FXML
-	private TextField inputTextField;
-	@FXML
-	private BorderPane borderPane;
 
 	//Initialize
 	@FXML
 	public void initialize(){
 		updatePosts();
 	}
-
+	
 	public void updatePosts() {
 		//remove old posts
 		content.getChildren().clear();
@@ -63,12 +74,12 @@ public class AppController
 				e.printStackTrace();
 			}
 		}
-	}
-
+		}
+	
 	public static File getImageFromName(String name) {
 		//To be moved into I/O
 		//gets image given name, assumes images are stored in img under resources.
-
+		
 		String absPath = Paths.get("").toUri().getPath();
 		System.out.println(absPath);
 		if(!Pattern.matches(".*mememedb[/\\\\]*$", absPath)) {
@@ -78,9 +89,10 @@ public class AppController
 		System.out.println(absPath);
 		File image = new File(absPath);
 		return image;
+		
 	}
-
-
+	
+	
 	@FXML
 	public void handleAddContent(){	
 		HBox subContent = new HBox();
@@ -95,22 +107,8 @@ public class AppController
 			e.printStackTrace();
 		}
 	}
-
-	public void imageFileChooser(ActionEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Pick a meme");
-
-		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("All picture files", "*.jpeg", "*.png", "*.jpg"),
-				new FileChooser.ExtensionFilter("JPG files", "*.jpg"),
-				new FileChooser.ExtensionFilter("PNG files", "*.png"),
-				new FileChooser.ExtensionFilter("JPEG files", "*.jpeg")
-				);
-		Stage stage = (Stage)borderPane.getScene().getWindow();
-		fileChooser.showOpenDialog(stage);
-	}
-
-
+	
+	
 }
 
 
