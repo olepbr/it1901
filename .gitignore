@@ -8,3 +8,5 @@ tags
 **/.idea/
 **/mememedb.iml
 **/.theia/
+src/resources/data/user.json
+src/resources/img/
