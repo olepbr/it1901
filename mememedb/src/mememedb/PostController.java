@@ -17,19 +17,14 @@ public class PostController {
 	Post post;
 	
 	
-	@FXML Button testButton;
 	@FXML ImageView postImage;
 	@FXML Label postText;
 	
 	
 	
-	@FXML
-	public void handleTestClicked(){
-		System.out.println("Post made by " + post.getOwner() + ". DO NOT STEAL");
-	}
-	
 	public void setPost(Post post) {
 		this.post = post;
+		//TODO move to IO
 		File image = AppController.getImageFromName(post.getImage());
 		try {
 			postImage.setImage(new Image(image.toURI().toURL().toExternalForm()));
