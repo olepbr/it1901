@@ -12,23 +12,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
+//Java utils:
 import java.util.List;
-//Java Utils
-import java.util.regex.Pattern;
 //File utilities 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
-public class AppController
-{
+public class AppController {
 
-
-	//Storage interface
+	// Storage interface
 	private IO memeIO;
-	
+
 	private File selectedImage;
-	
+
 	@FXML
 	private VBox content;
 	@FXML
@@ -42,21 +38,20 @@ public class AppController
 	@FXML
 	private Label imgSelectorLabel;
 
-	//Initialize
 	@FXML
-	public void initialize(){
+	public void initialize() {
 		memeIO = new LocalIO();
 		updatePosts();
 	}
 
 	public void updatePosts() {
-		//remove old posts and reset post selector
+		// remove old posts and reset post selector
 		content.getChildren().clear();
 		inputTextField.setText(null);
 		imgSelectorLabel.setText("Choose an image");
-		//get collection of posts from I/O
-		List<Post> postList =memeIO.getPostList();
-		//create nodes for each post
+		// get collection of posts from I/O
+		List<Post> postList = memeIO.getPostList();
+		// create nodes for each post
 		for (Post post : postList) {
 			HBox subContent = new HBox();
 			FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
@@ -73,23 +68,21 @@ public class AppController
 		}
 	}
 
-
 	@FXML
-	public void handleAddContent(){
+	public void handleAddContent() {
 		String caption = inputTextField.getText();
 		File image = selectedImage;
-		
-		if(caption == null) {
+
+		if (caption == null) {
 			Alert a = new Alert(Alert.AlertType.ERROR);
 			a.setContentText("Please add a caption");
 			a.show();
-		} else if(image == null){
+		} else if (image == null) {
 			Alert a = new Alert(Alert.AlertType.ERROR);
-			a.setContentText("Please add an image");     
+			a.setContentText("Please add an image");
 			a.show();
-		}
-		else{
-			Post post = new Post("Edgy Grandma", caption, image.getName());
+		} else {
+			Post post = new Post("xXx_gertrude_xXx", caption, image.getName());
 			try {
 				memeIO.savePost(post);
 				memeIO.saveImage(image);
@@ -97,7 +90,7 @@ public class AppController
 				System.out.println("could not save post");
 				e.printStackTrace();
 			}
-			updatePosts();                                                     
+			updatePosts();
 		}
 	}
 
@@ -113,22 +106,16 @@ public class AppController
 				new FileChooser.ExtensionFilter("GIF files", "*.gif")
 
 		);
-	//	Stage stage = (Stage)borderPane.getScene().getWindow();
 		File file = fileChooser.showOpenDialog(null);
-		if(file != null){
-			System.out.println(file.getAbsolutePath());
+		if (file != null) {
 			selectedImage = file;
 			imgSelectorLabel.setText(selectedImage.getName());
-		}else{
+		} else {
 			Alert a = new Alert(Alert.AlertType.ERROR);
 			a.setContentText("Must choose an image!");
 			a.show();
 		}
 
 	}
-
-
-
-
 
 }
