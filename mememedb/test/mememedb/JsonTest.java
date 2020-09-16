@@ -12,16 +12,15 @@ import mememedb.json.MememeModule;
 public class JsonTest extends ApplicationTest {
 
   @Test
-  public void testUserSerializer() {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(new MememeModule());
+  public void testUserSerializer()
+  {
     User user = new User(1, "Ola Nordman", "XxX_SpicyBoi69_XxX", "spice@memes.com");
     Post post = new Post(user.getNickname(), "haha", "files/spice.png");
     user.addPost(post);
 
     try {
-      String json = mapper.writeValueAsString(user);
-      User user2 = mapper.readValue(json, User.class);
+      String json = MememeModule.serializeUser(user);
+      User user2 = MememeModule.deserializeUser(json);
       Assertions.assertTrue(user2 instanceof User);
       Assertions.assertEquals(user.toString(), user2.toString());
     } catch (JsonProcessingException e) {
@@ -30,14 +29,13 @@ public class JsonTest extends ApplicationTest {
   }
 
   @Test
-  public void testPostSerializer() {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule(new MememeModule());
+  public void testPostSerializer()
+  {
     Post post = new Post("XxX_SpicyBoi69[]_XxX", "()Spicy meme{}", "files/spice.png");
 
     try {
-      String json = mapper.writeValueAsString(post);
-      Post post2 = mapper.readValue(json, Post.class);
+      String json = MememeModule.serializePost(post);
+      Post post2 = MememeModule.deserializePost(json);
       Assertions.assertTrue(post2 instanceof Post);
       Assertions.assertEquals(post.toString(), post2.toString());
     } catch (JsonProcessingException e) {

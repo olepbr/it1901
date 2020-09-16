@@ -17,8 +17,10 @@ public class MememeModule extends SimpleModule {
 
 	private static final String NAME = "MememeModule";
 	private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
+  private static final ObjectMapper mapper = new ObjectMapper();
 
-	public MememeModule() {
+	public MememeModule()
+  {
 		super(NAME, VERSION_UTIL.version()); 
 		addSerializer(Post.class, new PostSerializer());
 		addSerializer(User.class, new UserSerializer());
@@ -26,4 +28,27 @@ public class MememeModule extends SimpleModule {
 		addDeserializer(User.class, new UserDeserializer());
 	}
 
+  public static String serializeUser(User user) throws JsonProcessingException
+  {
+    mapper.registerModule(new MememeModule());
+    return(mapper.writeValueAsString(user));
+  }
+
+  public static User deserializeUser(String user) throws JsonProcessingException
+  {
+    mapper.registerModule(new MememeModule());
+    return(mapper.readValue(user, User.class));
+  }
+
+  public static String serializePost(Post post) throws JsonProcessingException
+  {
+    mapper.registerModule(new MememeModule());
+    return(mapper.writeValueAsString(post));
+  }
+
+  public static Post deserializePost(String post) throws JsonProcessingException
+  {
+    mapper.registerModule(new MememeModule());
+    return(mapper.readValue(post, Post.class));
+  }
 }
