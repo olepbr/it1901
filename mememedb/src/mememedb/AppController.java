@@ -4,6 +4,7 @@ package mememedb;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -35,6 +36,8 @@ public class AppController
 	private TextField inputTextField;
 	@FXML
 	private BorderPane borderPane;
+	@FXML
+	private Label imgSelectorLabel;
 
 	//Initialize
 	@FXML
@@ -96,7 +99,7 @@ public class AppController
 		}
 	}
 
-	public void imageFileChooser(ActionEvent event) {
+	public File imageFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Pick a meme");
 
@@ -106,8 +109,10 @@ public class AppController
 				new FileChooser.ExtensionFilter("PNG files", "*.png"),
 				new FileChooser.ExtensionFilter("JPEG files", "*.jpeg")
 		);
-		Stage stage = (Stage)borderPane.getScene().getWindow();
-		fileChooser.showOpenDialog(stage);
+	//	Stage stage = (Stage)borderPane.getScene().getWindow();
+		File file = fileChooser.showOpenDialog(null);
+		System.out.println(file.getAbsolutePath());
+		return file;
 	}
 
 
