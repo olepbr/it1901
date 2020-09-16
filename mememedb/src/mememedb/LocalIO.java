@@ -57,12 +57,10 @@ public class LocalIO implements IO {
 	public File getImageFromName(String name) {
 		//gets image given name, assumes images are stored in img under resources.
 		String absPath = Paths.get("").toUri().getPath();
-		System.out.println(absPath);
 		if(!Pattern.matches(".*mememedb[/\\\\]*$", absPath)) {
 			absPath+="mememedb/";
 		}
 		absPath=absPath + "src/resources/img/" + name;
-		System.out.println(absPath);
 		File image = new File(absPath);
 		return image;
 	}
