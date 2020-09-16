@@ -21,8 +21,7 @@ The following class diagram shows the outline of the code structure:
 ![Class Diagram](ClassDiagram.png)
 
 ## User Story
-As a young student, I have a need to view memes daily.
-Therefore I want to log in to a service and receive, and comment on, memes.
+I want to be able to post a picture to the app, and see it appear on the main page
 
 ## Maven Goals
 
