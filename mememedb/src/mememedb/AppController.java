@@ -45,6 +45,7 @@ public class AppController
 	//Initialize
 	@FXML
 	public void initialize(){
+		memeIO = new LocalIO();
 		updatePosts();
 	}
 
@@ -92,8 +93,8 @@ public class AppController
 		String caption = inputTextField.getText();
 		File image = imageFileChooser();
 		Post post = new Post("Edgy Grandma", caption, image.getName());
-		savePost(post);
-		SaveImage(image);
+		memeIO.savePost(post);
+		memeIO.SaveImage(image);
 		updatePosts();
 	}
 
