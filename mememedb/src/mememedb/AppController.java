@@ -26,6 +26,8 @@ public class AppController
 
 
 	private IO memeIO;
+	private File selectedImage;
+	
 	@FXML
 	private VBox content;
 	@FXML
@@ -53,8 +55,7 @@ public class AppController
 		//remove old posts
 		content.getChildren().clear();
 		//get collection of posts from I/O
-		Collection<Post> postList = new ArrayList<Post>();
-		postList.add(new Post("xXx_Gertrude_xXx", "my beautiful face", "Grandma.png"));
+		List<Post> postList =memeIO.getPostList();
 		for (Post post : postList) {
 			HBox subContent = new HBox();
 			FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
@@ -91,14 +92,20 @@ public class AppController
 	@FXML
 	public void handleAddContent(){
 		String caption = inputTextField.getText();
-		File image = imageFileChooser();
+		File image = selectedImage;
 		Post post = new Post("Edgy Grandma", caption, image.getName());
-		memeIO.savePost(post);
-		memeIO.SaveImage(image);
+		try {
+			memeIO.savePost(post);
+			memeIO.saveImage(image);
+		} catch (IOException e) {
+			System.out.println("could not save post");
+			e.printStackTrace();
+		}
+		
 		updatePosts();
 	}
 
-	public File imageFileChooser() {
+	public void imageFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Pick a meme");
 
@@ -113,7 +120,7 @@ public class AppController
 	//	Stage stage = (Stage)borderPane.getScene().getWindow();
 		File file = fileChooser.showOpenDialog(null);
 		System.out.println(file.getAbsolutePath());
-		return file;
+		selectedImage = file;
 	}
 
 
