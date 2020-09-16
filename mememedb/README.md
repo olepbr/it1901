@@ -8,7 +8,8 @@ and users may add comments to the posted meme.
 
 ## Code Organization
 
-The code is organized by component, and has the following structure:
+The code is organized by component,
+and has the following directory structure:
 
 * **`src/mememedb/`** - contains the main code
 * **`src/mememedb/<component>`** - each subcomponent (e.g json) has its own folder
@@ -17,7 +18,7 @@ The code is organized by component, and has the following structure:
 
 The following class diagram shows the outline of the code structure:
 
-![Class Diagram](Klassediagram.png)
+![Class Diagram](ClassDiagram.png)
 
 ## User Story
 As a young student, I have a need to view memes daily.
