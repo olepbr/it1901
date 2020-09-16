@@ -25,7 +25,7 @@ public class AppController
 
 
 
-
+	private IO memeIO;
 	@FXML
 	private VBox content;
 	@FXML
@@ -38,6 +38,9 @@ public class AppController
 	private BorderPane borderPane;
 	@FXML
 	private Label imgSelectorLabel;
+
+	public AppController() {
+	}
 
 	//Initialize
 	@FXML
@@ -86,17 +89,12 @@ public class AppController
 
 	@FXML
 	public void handleAddContent(){
-		HBox subContent = new HBox();
-		FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
-		subContentLoader.setRoot(subContent);
-		subContentLoader.setController(getClass().getResource("PostController.java"));
-		content.getChildren().add(subContent);
-		try {
-			subContentLoader.load();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String caption = inputTextField.getText();
+		File image = imageFileChooser();
+		Post post = new Post("Edgy Grandma", caption, image.getName());
+		savePost(post);
+		SaveImage(image);
+		updatePosts();
 	}
 
 	public File imageFileChooser() {
@@ -104,16 +102,21 @@ public class AppController
 		fileChooser.setTitle("Pick a meme");
 
 		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter("All picture files", "*.jpeg", "*.png", "*.jpg"),
+				new FileChooser.ExtensionFilter("All image files", "*.jpeg", "*.png", "*.jpg", "*.gif"),
 				new FileChooser.ExtensionFilter("JPG files", "*.jpg"),
 				new FileChooser.ExtensionFilter("PNG files", "*.png"),
-				new FileChooser.ExtensionFilter("JPEG files", "*.jpeg")
+				new FileChooser.ExtensionFilter("JPEG files", "*.jpeg"),
+				new FileChooser.ExtensionFilter("GIF files", "*.gif")
+
 		);
 	//	Stage stage = (Stage)borderPane.getScene().getWindow();
 		File file = fileChooser.showOpenDialog(null);
 		System.out.println(file.getAbsolutePath());
 		return file;
 	}
+
+
+
 
 
 }
