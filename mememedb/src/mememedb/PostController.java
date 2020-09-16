@@ -12,6 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import mememedb.io.LocalIO;
+import mememedb.io.IO;
+
 public class PostController {
 	
 	Post post;

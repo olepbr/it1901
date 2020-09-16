@@ -1,4 +1,4 @@
-package mememedb;
+package mememedb.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import mememedb.json.MememeModule;
+import mememedb.User;
+import mememedb.Post;
 
 public class LocalIO implements IO {
 	

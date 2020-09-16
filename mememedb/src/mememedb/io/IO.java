@@ -1,8 +1,10 @@
-package mememedb;
+package mememedb.io;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import mememedb.Post;
 
 public interface IO {
 	
