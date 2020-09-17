@@ -32,7 +32,8 @@ public class AppTest extends ApplicationTest {
   @Test
   public void testButtons() {
     final Button logoutButton = (Button) parent.lookup("#logout");
-
+    final Button addContent = (Button) parent.lookup("#addContent");
+    clickOn(addContent);
     clickOn(logoutButton);
   }
 
