@@ -11,8 +11,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import mememedb.json.MememeModule;
-import mememedb.User;
-import mememedb.Post;
+import mememedb.datastructures.User;
+import mememedb.datastructures.Post;
 
 public class LocalIO implements IO {
 	

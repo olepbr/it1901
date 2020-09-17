@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root prefHeight="200.0" prefWidth="500.0" type="HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mememedb.PostController">
+<fx:root prefHeight="200.0" prefWidth="500.0" type="HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mememedb.ui.PostController">
    <children>
       <ImageView fx:id="postImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"></ImageView>
       <Label fx:id="postText" text="This is a post, it has an image and some text" HBox.hgrow="ALWAYS" />

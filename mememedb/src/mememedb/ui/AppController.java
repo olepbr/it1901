@@ -1,4 +1,4 @@
-package mememedb;
+package mememedb.ui;
 
 //Import javafx stuff
 import javafx.fxml.FXML;
@@ -22,6 +22,9 @@ import java.io.IOException;
 //Mememe
 import mememedb.io.IO;
 import mememedb.io.LocalIO;
+
+import mememedb.datastructures.Post;
+import mememedb.datastructures.User;
 
 public class AppController {
 

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import mememedb.User;
-import mememedb.Post;
+import mememedb.datastructures.User;
+import mememedb.datastructures.Post;
 
 public class MememeModule extends SimpleModule {
 	/**

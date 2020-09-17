@@ -13,8 +13,8 @@ import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
-import mememedb.Post;
-import mememedb.User;
+import mememedb.datastructures.Post;
+import mememedb.datastructures.User;
 
 public class UserDeserializer extends JsonDeserializer<User> {
 	

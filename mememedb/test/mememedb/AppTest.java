@@ -14,13 +14,15 @@ import javafx.scene.Node;
 
 import javafx.collections.ObservableList;
 
+import mememedb.ui.AppController;
+
 public class AppTest extends ApplicationTest {
   private Parent parent;
   private AppController controller;
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("App.fxml"));
+    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ui/App.fxml"));
     parent = fxmlLoader.load();
     controller = fxmlLoader.getController();
     stage.setScene(new Scene(parent));

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import mememedb.Post;
+import mememedb.datastructures.Post;
 
 public interface IO {
 	

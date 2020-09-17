@@ -1,4 +1,4 @@
-package mememedb;
+package mememedb.datastructures;
 
 import java.util.ArrayList;
 import java.util.List;

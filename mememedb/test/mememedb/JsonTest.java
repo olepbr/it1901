@@ -9,6 +9,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import mememedb.json.MememeModule;
 
+import mememedb.datastructures.User;
+import mememedb.datastructures.Post;
+
 public class JsonTest extends ApplicationTest {
 
   @Test

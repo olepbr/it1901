@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
-import mememedb.Post;
+import mememedb.datastructures.Post;
 
 public class PostDeserializer extends JsonDeserializer<Post> {
 

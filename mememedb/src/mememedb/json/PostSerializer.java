@@ -4,7 +4,8 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import mememedb.Post;
+
+import mememedb.datastructures.Post;
 
 public class PostSerializer extends JsonSerializer<Post> {
 
