@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import mememedb.datastructures.Post;
-
+import mememedb.datastructures.User;
 import mememedb.io.LocalIO;
 import mememedb.io.IO;
 
@@ -21,11 +21,13 @@ public class PostController {
 	
 	Post post;
 	IO io;
-	
+	User activeUser;
 	@FXML ImageView postImage;
 	@FXML Label postText;
 	
-	
+	public void setUser(User user) {
+		activeUser = user;
+	}
 	
 	public void setPost(Post post) {
 		this.post = post;

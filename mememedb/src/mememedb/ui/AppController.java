@@ -30,7 +30,7 @@ public class AppController {
 
 	// Storage interface
 	private IO memeIO;
-
+	private User activeUser;
 	private File selectedImage;
 
 	@FXML
@@ -90,7 +90,7 @@ public class AppController {
 			a.setContentText("Please add an image");
 			a.show();
 		} else {
-			Post post = new Post("xXx_gertrude_xXx", caption, image.getName());
+			Post post = new Post(activeUser.getName(), caption, image.getName());
 			try {
 				memeIO.savePost(post);
 				memeIO.saveImage(image);
