@@ -1,0 +1,98 @@
+@startuml
+package UI <<Frame>> {
+    class AppController
+    class PostController
+    class UserController
+}
+
+package IO <<Frame>> {
+    interface IO
+    class CloudController
+    class LocalIO
+}
+
+package JSON <<Frame>> {
+    class MememeModule
+}
+
+package DataStructures <<Frame>> {
+    class User
+    class Post
+    class Comment
+}
+
+class App {
+    + start(Stage) void
+}
+
+App --> AppController
+
+class AppController {
+}
+
+AppController --> PostController
+
+class PostController {
+}
+
+AppController --> UserController
+
+class UserController {
+}
+
+AppController --> IO
+UserController --> IO
+PostController --> IO
+
+interface IO {
+    + getPostList(): List<Post>
+    + savePost(Post): void
+    + saveImage(File): void
+}
+
+class CloudController implements IO
+class LocalIO implements IO
+CloudController --> MememeModule
+LocalIO --> MememeModule
+
+class MememeModule{
+    + serializeUser(User): String
+    + deserializeUser(String): User
+    + serializePost(Post): String
+    + deserializePost(String): Post
+    + serializeComment(Comment): String
+    + deserializeComment(String): Comment
+}
+
+MememeModule --> User
+MememeModule --> Post
+MememeModule --> Comment
+
+UserController --> User
+AppController --> Post
+
+class User {
+    - id: int
+    - name: String
+    - nickname: String
+    - email: String
+    + addPost(Post): Void
+}
+
+class Post {
+    - caption: String
+    - image: String
+    + addComment(Comment): void
+}
+
+class Comment {
+    - comment: String
+    - date: String
+}
+
+User "1" <--> "*" Post : Owner
+Post "*" <--> "1" Comment : Parent
+Comment "1" <--> "*" User : Owner
+
+
+@enduml
