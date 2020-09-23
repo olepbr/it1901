@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 
 public class LoginController{
 
+    //login
     @FXML
     AnchorPane loginAnchorPane;
     @FXML
@@ -23,19 +25,60 @@ public class LoginController{
     @FXML
     Button registerButton;
 
+    //register
+    @FXML
+    AnchorPane registerAnchorPane;
+    @FXML
+    TextField nameTextField;
+    @FXML
+    TextField emailTextField;
+    @FXML
+    TextField usernameTextField;
+    @FXML
+    TextField passwordTextField;
+    @FXML
+    Button createUserButton;
+
+
     @FXML
     private void initialize(){
-   //     loginAnchorPane.setVisible(false);
+        loginAnchorPane.setVisible(true);
+        registerAnchorPane.setVisible(false);
     }
 
     @FXML
     private void login(ActionEvent e){
-        System.out.println("Testing");
+        System.out.println("You just clicked a button that doesn't work");
     }
 
     @FXML
     private void registerClick(ActionEvent e){
-        System.out.println("Testing");
+        loginAnchorPane.setVisible(false);
+        registerAnchorPane.setVisible(true);
+    }
+
+    @FXML
+    private void createUser(ActionEvent e){
+        if(nameTextField.getText().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Textfields cannot be empty");
+            a.show();
+        } else if(emailTextField.getText().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Textfields cannot be empty");
+            a.show();
+        } else if(usernameTextField.getText().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Textfields cannot be empty");
+            a.show();
+        } else if(passwordTextField.getText().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Textfields cannot be empty");
+            a.show();
+        } else{
+            System.out.println("Creating user... haha jk");
+        }
+
     }
     //sendToApp(){
 
