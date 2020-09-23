@@ -40,15 +40,13 @@ public class AppController {
 	public void initialize() {
 		memeIO = new LocalIO();
 		// Set up Browser window, and add it to the scene'
-		AnchorPane browser = new AnchorPane();
-		FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Browser.fxml"));
-		subContentLoader.setController(getClass().getResource("BrowserController.java"));
-		subContentLoader.setRoot(browser);
-		window.getChildren().add(browser);
+		AnchorPane login = new AnchorPane();
+		FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
+		subContentLoader.setController(getClass().getResource("LoginController.java"));
+		subContentLoader.setRoot(login);
+		window.getChildren().add(login);
 		try {
 			subContentLoader.load();
-			((BrowserController) subContentLoader.getController()).setIO(memeIO);
-			((BrowserController) subContentLoader.getController()).setActiveUser(activeUser);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Error loading content browser");

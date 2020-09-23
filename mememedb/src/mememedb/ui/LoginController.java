@@ -25,7 +25,7 @@ public class LoginController{
 
     @FXML
     private void initialize(){
-        loginAnchorPane.setVisible(false);
+   //     loginAnchorPane.setVisible(false);
     }
 
     @FXML
