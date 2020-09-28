@@ -25,7 +25,39 @@ public class AppController {
    */
   @FXML public void initialize() {
     memeio = new LocalIO();
-    // Set up Browser window, and add it to the scene'
+    // Set up Browser window, and add it to the scene
+    handleLogOut();
+  }
+  
+  /**
+   * Updates active User of app, and switches over to Browser ui.
+   * 
+   * @param user The User that logged on.
+   */
+  public void handleLogin(User user) {
+    activeUser = user;
+    window.getChildren().clear();
+    AnchorPane browser = new AnchorPane();
+    FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Browser.fxml"));
+    subContentLoader.setController(getClass().getResource("BrowserController.java"));
+    subContentLoader.setRoot(browser);
+    window.getChildren().add(browser);
+    try {
+      subContentLoader.load();
+      ((BrowserController) subContentLoader.getController()).setActiveUser(activeUser);
+      ((BrowserController) subContentLoader.getController()).setIO(memeio);
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.out.println("Error loading content browser");
+    }
+  }
+  
+  
+  /**
+   * Clears active User, and returns to login ui.
+   */
+  public void handleLogOut() {
+    activeUser = null;
     AnchorPane login = new AnchorPane();
     FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     subContentLoader.setController(getClass().getResource("LoginController.java"));
