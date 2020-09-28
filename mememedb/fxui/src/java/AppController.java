@@ -1,15 +1,30 @@
-package mememedb.ui;
+package mememedb.fxui;
 
 //File utilities
 import java.io.IOException;
 //Import javafx stuff
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-//Mememedb
-import mememedb.datastructures.User;
-import mememedb.io.IO;
-import mememedb.io.LocalIO;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+
+//Java utils:
+import java.util.List;
+
+//File utilities
+import java.io.File;
+import java.io.IOException;
+
+//Mememe
+import it1901.gr2015.mememedb.io.IO;
+import it1901.gr2015.mememedb.io.LocalIO;
 
 
 public class AppController {

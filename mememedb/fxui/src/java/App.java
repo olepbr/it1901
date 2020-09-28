@@ -1,4 +1,4 @@
-package mememedb;
+package mememedb.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
