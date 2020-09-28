@@ -2,45 +2,51 @@ package mememedb.datastructures;
 
 public class Post {
 
-    private String owner;
-    private String caption;
-    private String image;
-    
-    public Post() {
-    }
+  private String owner;
+  private String caption;
+  private String image;
 
-    public Post(String owner, String caption, String image){
-        this.owner = owner;
-        this.caption = caption;
-        this.image = image;
-    }
+  public Post() {
+  }
 
-    public String getOwner() {
-        return owner;
-    }
+  /**
+   * Initializes a Post object.
+   * @param owner The owner of the post.
+   * @param caption The post's caption.
+   * @param image The image of the post.
+   */
+  public Post(String owner, String caption, String image) {
+    this.owner = owner;
+    this.caption = caption;
+    this.image = image;
+  }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
+  public String getOwner() {
+    return owner;
+  }
 
-    public String getText() {
-        return caption;
-    }
+  public void setOwner(String owner) {
+    this.owner = owner;
+  }
 
-    public void setText(String text) {
-        this.caption = text;
-    }
+  public String getText() {
+    return caption;
+  }
 
-    public String getImage() {
-        return image;
-    }
+  public void setText(String text) {
+    this.caption = text;
+  }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
-    @Override
-    public String toString() {
-    	return String.format("[Post owner=%s caption=%s image=%s]", getOwner(), getText(), getImage());
-    }
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("[Post owner=%s caption=%s image=%s]", getOwner(), getText(), getImage());
+  }
 }
