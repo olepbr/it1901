@@ -2,16 +2,15 @@ package mememedb.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
+import org.apache.commons.validator.routines.EmailValidator;
 
 public class LoginController{
+
+    EmailValidator emailValidator;
 
     //login
     @FXML
@@ -38,6 +37,18 @@ public class LoginController{
     TextField passwordTextField;
     @FXML
     Button createUserButton;
+    @FXML
+    Label nameWarning;
+    @FXML
+    Label usernameWarning;
+    @FXML
+    Label emailWarning;
+    @FXML
+    Label passwordWarning;
+
+
+
+
 
 
     @FXML
@@ -57,71 +68,33 @@ public class LoginController{
         registerAnchorPane.setVisible(true);
     }
 
+    public boolean validateUsername(String username){
+        return true;
+    }
+
     @FXML
     private void createUser(ActionEvent e){
-        if(nameTextField.getText().isEmpty()){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Textfields cannot be empty");
-            a.show();
-        } else if(emailTextField.getText().isEmpty()){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Textfields cannot be empty");
-            a.show();
-        } else if(usernameTextField.getText().isEmpty()){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Textfields cannot be empty");
-            a.show();
+        String email = emailTextField.getText();
+        String name = nameTextField.getText();
+        String username = usernameTextField.getText();
+        if(name.isEmpty()) {
+            nameWarning.setText("Please put your full name");
+        } else if(!emailValidator.getInstance().isValid(email)) {
+            emailWarning.setText("Please put a valid email address");
+        } else if(username.isEmpty()){
+            usernameWarning.setText("Username is taken or not valid");
         } else if(passwordTextField.getText().isEmpty()){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Textfields cannot be empty");
-            a.show();
+            passwordWarning.setText("Password must contain at least x characters");
         } else{
             System.out.println("Creating user... haha jk");
         }
 
-    }
-    //sendToApp(){
 
+    }
+
+
+
+    //sendToApp(){
    // }
 
-
-/*
-
-
-    public void loginPopup(){
-        Stage stage = new Stage();
-
-        FlowPane choiceFlowPane = new FlowPane();
-        FlowPane loginFlowPane = new FlowPane();
-        FlowPane registerFlowPane = new FlowPane();
-
-        Scene loginScene = new Scene(loginFlowPane, 300, 200);
-        Scene registerScene = new Scene(registerFlowPane, 300, 200);
-
-        //Choice scene
-        Button loginButton = new Button("Click here to log in");
-        Button registerButton = new Button("Click here to register");
-        loginButton.setOnAction(e -> stage.setScene(loginScene));
-        registerButton.setOnAction(e -> stage.setScene(registerScene));
-        choiceFlowPane.getChildren().addAll(loginButton, registerButton);
-        choiceFlowPane.setPadding(new Insets(40));
-        choiceFlowPane.setVgap(40);
-        Scene popupScene = new Scene(choiceFlowPane, 300, 200);
-
-
-        //Login scene
-        TextField emaiTextField = new TextField();
-        TextField passwordTextField = new TextField();
-        Button enterButton = new Button("Click here to log in");
-        //Scene loginScene = new Scene(choiceFlowPane, 300, 200);
-
-        //Register scene
-
-        stage.setTitle("Log in or register");
-        stage.setScene(popupScene);
-        stage.show();
-
-    }
-
- */
 }

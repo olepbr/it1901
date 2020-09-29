@@ -4,6 +4,7 @@ module mememedb {
   requires javafx.controls;
 requires com.fasterxml.jackson.databind;
 requires com.fasterxml.jackson.core;
+requires commons.validator;
 
   exports mememedb;
   exports mememedb.io;
