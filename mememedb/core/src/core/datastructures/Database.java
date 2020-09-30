@@ -1,11 +1,11 @@
-package mememedb.datastructures;
+package it1901.mememedb.core.datastructures;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import mememedb.io.IO;
-import mememedb.io.LocalIO;
+import it1901.mememedb.core.io.IO;
+import it1901.mememedb.core.io.LocalIO;
 
 public class Database {
   
@@ -19,23 +19,23 @@ public class Database {
    */
   public Database() {
     storage = new LocalIO();
-    reload();
+    //reload();
   }
   
   
   /**
    * Removes cached database, and reloads from storage.
    */
-  public void reload() {
+  /*public void reload() {
     users = storage.getUserList();
-  }
+  }*/
   
   /**
    * Saves cached database, overwriting previous data in storage.
    */
-  public void saveToStorage() {
+  /*public void saveToStorage() {
     storage.save(users);
-  }
+  }*/
   
   /**
    * Saves post in database for user.
@@ -50,8 +50,8 @@ public class Database {
       users.add(user);
     }
     users.get(users.indexOf(user)).addPost(post);
-    saveToStorage();
-    storage.saveImage(image);
+   // saveToStorage();
+   //storage.saveImage(image);
   }
   
   /**
@@ -64,7 +64,7 @@ public class Database {
     if(!users.contains(user)) {
       users.add(user);
     }
-    saveToStorage();
+    //saveToStorage();
   }
   
   /**
@@ -72,7 +72,7 @@ public class Database {
    * 
    * @return Returns a list containing all posts.
    */
-  public List<Post> getPostList(){
+  /*public List<Post> getPostList(){
     List<Post> posts = new ArrayList<Post>();
     for(User user : users) {
       for(Post post : user.getPosts()) {
@@ -80,7 +80,7 @@ public class Database {
       }
     }
     return posts;
-  }
+  }*/
   
   
   /**
