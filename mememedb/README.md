@@ -19,7 +19,6 @@ and has the following directory structure:
 The following class diagram shows the outline of the code structure:
 
 ```plantuml
-@startuml
 package UI <<Frame>> {
     class AppController
     class PostController
