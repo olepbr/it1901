@@ -165,7 +165,7 @@
                     <rule>
                       <element>PACKAGE</element>
                         <includes>
-                          <include>mememedb.**</include>
+                          <include>it1910.mememedb.**</include>
                         </includes>
                       <limits>
                         <limit>
