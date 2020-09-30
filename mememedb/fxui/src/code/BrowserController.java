@@ -1,4 +1,4 @@
-package mememedb.ui;
+package it1901.mememedb.fxui;
 
 //File utilities
 import java.io.File;
@@ -17,9 +17,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 //Mememedb classes
-import mememedb.datastructures.Post;
-import mememedb.datastructures.User;
-import mememedb.io.IO;
+import it1901.mememedb.core.datastructures.Post;
+import it1901.mememedb.core.datastructures.User;
+import it1901.mememedb.core.io.IO;
 
 
 public class BrowserController {
