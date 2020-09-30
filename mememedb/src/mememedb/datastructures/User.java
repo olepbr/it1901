@@ -16,7 +16,7 @@ public class User {
   private String nickname;
   private String email;
   private List<Post> posts = new ArrayList<>();
-
+  private String password;
   public User() {
 
   }
@@ -76,6 +76,16 @@ public class User {
     posts.add(post);
   }
 
+  public void setPassword(String password) {
+    this.password = password;
+  }
+  
+  public String getPassword() {
+    return password;
+  }
+  
+  
+  
   @Override
   public String toString() {
     return String.format("[User id=%d name=%s nickname=%s email=%s", 

@@ -1,5 +1,6 @@
 package mememedb.datastructures;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,8 @@ import mememedb.io.LocalIO;
 
 public class Database {
   
-  List<User> users;
-  IO storage;
+  private List<User> users;
+  private IO storage;
   
   
   /**
@@ -41,16 +42,16 @@ public class Database {
    * Automatically updates storage.
    * 
    * @param post The Post to save.
+   * @param image The image belonging to the post
    * @param user Owner of the post.
    */
-  public void savePost(Post post, User user) {
+  public void savePost(Post post, File image, User user) {
     if(!users.contains(user)) {
       users.add(user);
     }
-    else {
-      users.get(users.indexOf(user)).addPost(post);
-    }
+    users.get(users.indexOf(user)).addPost(post);
     saveToStorage();
+    storage.saveImage(image);
   }
   
   /**
@@ -91,6 +92,30 @@ public class Database {
     return users;
   }
   
+  /**
+   * Gets a File that references the image in the database with the given name.
+   * 
+   * @param imgName The name of the image to find.
+   * @return File pointing to the given image
+   */
+  public File getImage(String imgName) {
+    return storage.getImageFromName(imgName);
+  }
+  
+  /**
+   * Attempts to find a user in the database with the given information.
+   * @param username Username or email of the user
+   * @param password The password of the User
+   * @return User that logged on if it exists, null if no such user exists
+   */
+  public User tryLogin(String username, String password) {
+    for(User user : users) {
+      if((user.getEmail() == username || user.getNickname() == username) && user.getPassword() == password) {
+        return user;
+      }
+    }
+    return null;
+  }
   
   
   
