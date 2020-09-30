@@ -1,4 +1,4 @@
-package mememedb.json;
+package it1901.mememedb.core.json;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,8 +8,10 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
+
 import java.io.IOException;
-import mememedb.datastructures.Post;
+
+import it1901.mememedb.core.datastructures.Post;
 
 public class PostDeserializer extends JsonDeserializer<Post> {
 

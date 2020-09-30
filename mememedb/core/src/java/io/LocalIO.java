@@ -1,4 +1,4 @@
-package mememedb.io;
+package it1901.mememedb.core.io;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,9 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.regex.Pattern;
-import mememedb.datastructures.Post;
-import mememedb.datastructures.User;
-import mememedb.json.MememeModule;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import it1901.mememedb.core.json.MememeModule;
+import it1901.mememedb.core.datastructures.User;
+import it1901.mememedb.core.datastructures.Post;
 
 public class LocalIO implements IO {
 

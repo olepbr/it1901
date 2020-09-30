@@ -1,8 +1,8 @@
-module mememedb {
-  requires com.fasterxml.jackson.databind;
+module it1901.mememedb.core {
   requires com.fasterxml.jackson.core;
+  requires com.fasterxml.jackson.databind;
 
-  exports mememedb.io;
-  exports mememedb.json;
-  exports mememedb.datastructures;
+  exports it1901.mememedb.core.io;
+  exports it1901.mememedb.core.json;
+  exports it1901.mememedb.core.datastructures;
 }

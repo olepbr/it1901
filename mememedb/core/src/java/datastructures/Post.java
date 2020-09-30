@@ -1,4 +1,4 @@
-package mememedb.datastructures;
+package it1901.mememedb.core.datastructures;
 
 public class Post {
 

@@ -1,4 +1,4 @@
-package mememedb.fxui;
+package it1901.mememedb.fxui;
 
 //File utilities
 import java.io.IOException;
@@ -23,9 +23,11 @@ import java.io.File;
 import java.io.IOException;
 
 //Mememe
-import it1901.gr2015.mememedb.io.IO;
-import it1901.gr2015.mememedb.io.LocalIO;
+import it1901.mememedb.core.io.IO;
+import it1901.mememedb.core.io.LocalIO;
 
+import it1901.mememedb.core.datastructures.Post;
+import it1901.mememedb.core.datastructures.User;
 
 public class AppController {
 

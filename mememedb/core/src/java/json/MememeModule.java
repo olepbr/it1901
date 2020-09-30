@@ -1,11 +1,11 @@
-package mememedb.json;
+package it1901.mememedb.core.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import mememedb.datastructures.Post;
-import mememedb.datastructures.User;
+import it1901.mememedb.core.datastructures.User;
+import it1901.mememedb.core.datastructures.Post;
 
 public class MememeModule extends SimpleModule {
   /**

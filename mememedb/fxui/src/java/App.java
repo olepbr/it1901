@@ -1,4 +1,4 @@
-package mememedb.ui;
+package it1901.mememedb.fxui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ public class App extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final Parent parent = FXMLLoader.load(getClass().getResource("ui/App.fxml"));
+        final Parent parent = FXMLLoader.load(getClass().getResource("App.fxml"));
         primaryStage.setScene(new Scene(parent));
         primaryStage.show();
     }

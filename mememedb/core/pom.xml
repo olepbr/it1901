@@ -2,9 +2,13 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>it1901.gr2015.mememedb</groupId>
+
+  <parent>
+    <groupId>it1901.mememedb</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
   <artifactId>core</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -13,19 +17,6 @@
   </properties>
 
   <dependencies>
-    <!-- Test with JUnit5 -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.4.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.4.2</version>
-      <scope>test</scope>
-    </dependency>
 
     <!-- Jackson for JSON I/O handling -->
     <dependency>
@@ -76,11 +67,6 @@
         <!-- Compiling code -->
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
-          <configuration>
-            <encoding>UTF-8</encoding>
-            <release>14</release>
-          </configuration>
         </plugin>
 
         <!-- Running tests -->

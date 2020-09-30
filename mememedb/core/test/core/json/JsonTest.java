@@ -1,18 +1,17 @@
-package mememedb;
+package it1901.mememedb.core.json;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import mememedb.json.MememeModule;
+import it1901.mememedb.core.json.MememeModule;
 
-import mememedb.datastructures.User;
-import mememedb.datastructures.Post;
+import it1901.mememedb.core.datastructures.User;
+import it1901.mememedb.core.datastructures.Post;
 
-public class JsonTest extends ApplicationTest {
+public class JsonTest{
 
   @Test
   public void testUserSerializer()

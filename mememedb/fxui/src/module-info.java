@@ -1,7 +1,7 @@
 module it1901.mememedb.fxui {
   requires javafx.fxml;
-  requires transitive javafx.graphics;
   requires javafx.controls;
+  requires transitive javafx.graphics;
   requires com.fasterxml.jackson.databind;
   requires com.fasterxml.jackson.core;
   requires commons.validator;
