@@ -48,7 +48,7 @@ public class AppController {
   
   /**
    * Updates active User of app, and switches over to Browser ui.
-   * 
+   *
    * @param user The User that logged on.
    */
   public void handleLogin(User user) {
@@ -82,6 +82,7 @@ public class AppController {
     window.getChildren().add(login);
     try {
       subContentLoader.load();
+      ((LoginController) subContentLoader.getController()).setParent(this);
     } catch (IOException e) {
       e.printStackTrace();
       System.out.println("Error loading content browser");

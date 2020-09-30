@@ -2,53 +2,64 @@ package mememedb.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import mememedb.datastructures.User;
+import mememedb.io.IO;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class LoginController{
 
-    EmailValidator emailValidator;
+    private EmailValidator emailValidator;
+    private IO memeIO;
+    private AppController parent;
+
 
     //login
     @FXML
-    AnchorPane loginAnchorPane;
+    private AnchorPane loginAnchorPane;
     @FXML
-    TextField loginEmailText;
+    private TextField loginEmailText;
     @FXML
-    TextField loginPasswordText;
+    private PasswordField loginPasswordText;
     @FXML
-    Button loginButton;
+    private Button loginButton;
     @FXML
-    Button registerButton;
+    private Button registerButton;
+    @FXML
+    private Label loginEmailWarning;
+    @FXML
+    private Label loginPassWarning;
 
     //register
     @FXML
-    AnchorPane registerAnchorPane;
+    private AnchorPane registerAnchorPane;
     @FXML
-    TextField nameTextField;
+    private TextField nameTextField;
     @FXML
-    TextField emailTextField;
+    private TextField emailTextField;
     @FXML
-    TextField usernameTextField;
+    private TextField usernameTextField;
     @FXML
-    TextField passwordTextField;
+    private PasswordField passwordTextField;
     @FXML
-    Button createUserButton;
+    private Button createUserButton;
     @FXML
-    Label nameWarning;
+    private Label nameWarning;
     @FXML
-    Label usernameWarning;
+    private Label usernameWarning;
     @FXML
-    Label emailWarning;
+    private Label emailWarning;
     @FXML
-    Label passwordWarning;
+    private Label passwordWarning;
 
-
-
-
+    public void setParent(AppController parent){
+        this.parent = parent;
+    }
 
 
     @FXML
@@ -59,7 +70,16 @@ public class LoginController{
 
     @FXML
     private void login(ActionEvent e){
-        System.out.println("You just clicked a button that doesn't work");
+
+        String email = loginEmailText.getText();
+        if(!EmailValidator.getInstance().isValid(email)){
+            loginEmailWarning.setText("Incorrect email");
+        } else if(loginPasswordText.getText().isEmpty()){
+            loginPassWarning.setText("Incorrect password");
+        } else{
+            User u1 = new User(1, "Hest Stein", "Heststein420", "heststein@ntnu.no");
+            parent.handleLogin(u1);
+        }
     }
 
     @FXML
@@ -86,7 +106,7 @@ public class LoginController{
         } else if(passwordTextField.getText().isEmpty()){
             passwordWarning.setText("Password must contain at least x characters");
         } else{
-            System.out.println("Creating user... haha jk");
+            System.out.println("hello");
         }
 
 
