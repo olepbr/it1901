@@ -115,7 +115,6 @@ Post "*" <--> "1" Comment : Parent
 Comment "1" <--> "*" User : Owner
 
 
-@enduml
 ```
 
 ## User Story
