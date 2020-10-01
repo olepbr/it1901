@@ -6,4 +6,5 @@ module it1901.mememedb.core {
   exports it1901.mememedb.core.io;
   exports it1901.mememedb.core.json;
   exports it1901.mememedb.core.datastructures;
+  exports core.datastructures;
 }

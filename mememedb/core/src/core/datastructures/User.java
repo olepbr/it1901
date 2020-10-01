@@ -1,5 +1,8 @@
 package it1901.mememedb.core.datastructures;
 
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +10,6 @@ import java.util.List;
  * Provides a class for Users.
  *
  * @author Magne Halvorsen
- *
  */
 
 public class User {
@@ -16,7 +18,8 @@ public class User {
   private String nickname;
   private String email;
   private List<Post> posts = new ArrayList<>();
-  private String password;
+  private String hashedPassword;
+
   public User() {
 
   }
@@ -76,12 +79,17 @@ public class User {
     posts.add(post);
   }
 
+  public String hashPassword(String password){
+    String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+    return hashedPassword;
+  }
+
   public void setPassword(String password) {
-    this.password = password;
+    this.hashedPassword = hashPassword(password);
   }
   
   public String getPassword() {
-    return password;
+    return hashedPassword;
   }
   
   

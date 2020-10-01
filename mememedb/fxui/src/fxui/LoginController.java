@@ -1,8 +1,9 @@
 package mememedb.ui;
 
+import core.datastructures.PasswordHasher;
+import it1901.mememedb.core.datastructures.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -14,9 +15,14 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 public class LoginController{
 
+    /**
+     *
+     */
+
     private EmailValidator emailValidator;
     private IO memeIO;
     private AppController parent;
+    private User user;
 
 
     //login
@@ -61,7 +67,6 @@ public class LoginController{
         this.parent = parent;
     }
 
-
     @FXML
     private void initialize(){
         loginAnchorPane.setVisible(true);
@@ -70,11 +75,11 @@ public class LoginController{
 
     @FXML
     private void login(ActionEvent e){
-
         String email = loginEmailText.getText();
+        String hashedPassword = user.hashPassword(loginPasswordText.getText());
         if(!EmailValidator.getInstance().isValid(email)){
             loginEmailWarning.setText("Incorrect email");
-        } else if(loginPasswordText.getText().isEmpty()){
+        } else if(!hashedPassword.matches(user.getPassword())){
             loginPassWarning.setText("Incorrect password");
         } else{
             User u1 = new User(1, "Hest Stein", "Heststein420", "heststein@ntnu.no");
