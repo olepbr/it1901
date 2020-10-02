@@ -1,6 +1,7 @@
 package it1901.mememedb.core.datastructures;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +46,13 @@ public class Database {
    * @param image The image belonging to the post
    * @param user Owner of the post.
    */
-  public void savePost(Post post, File image, User user) {
+  public void savePost(Post post, File image, User user) throws IOException {
     if(!users.contains(user)) {
       users.add(user);
     }
     users.get(users.indexOf(user)).addPost(post);
    // saveToStorage();
-   //storage.saveImage(image);
+    storage.saveImage(image);
   }
   
   /**
@@ -72,7 +73,7 @@ public class Database {
    * 
    * @return Returns a list containing all posts.
    */
-  /*public List<Post> getPostList(){
+  public List<Post> getPostList(){
     List<Post> posts = new ArrayList<Post>();
     for(User user : users) {
       for(Post post : user.getPosts()) {
@@ -80,7 +81,7 @@ public class Database {
       }
     }
     return posts;
-  }*/
+  }
   
   
   /**

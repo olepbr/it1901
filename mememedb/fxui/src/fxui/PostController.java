@@ -9,13 +9,12 @@ import javafx.scene.image.ImageView;
 
 import it1901.mememedb.core.datastructures.Post;
 import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.io.LocalIO;
-import it1901.mememedb.core.io.IO;
+import it1901.mememedb.core.datastructures.Database;
 
 public class PostController {
 
   Post post;
-  IO io;
+  Database database;
   User activeUser;
   @FXML ImageView postImage;
   @FXML Label postText;
@@ -37,7 +36,7 @@ public class PostController {
    */
   public void setPost(Post post) {
     this.post = post;
-    File image = io.getImageFromName(post.getImage());
+    File image = database.getImage(post.getImage());
     try {
       postImage.setImage(new Image(image.toURI().toURL().toExternalForm()));
     } catch (MalformedURLException e) {
@@ -49,12 +48,12 @@ public class PostController {
 
   
   /**
-   * Changes the IO this post should use for reading data.
+   * Changes the Database this post should fetch data from.
    * 
-   * @param io The IO to use.
+   * @param database The database to use.
    */
-  public void setIO(IO io) {
-    this.io = io;
+  public void setDatabase(Database database) {
+    this.database = database;
   }
 
 

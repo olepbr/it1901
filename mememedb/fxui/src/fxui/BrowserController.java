@@ -19,16 +19,18 @@ import javafx.stage.FileChooser;
 //Mememedb classes
 import it1901.mememedb.core.datastructures.Post;
 import it1901.mememedb.core.datastructures.User;
+import it1901.mememedb.core.datastructures.Database;
 import it1901.mememedb.core.io.IO;
 
 
 public class BrowserController {
 
   // Storage interface
-  private IO memeio;
+  private Database database;
   private User activeUser;
   private File selectedImage;
-
+  private AppController parent;
+  
   @FXML private VBox content;
   @FXML private Button addContent;
   @FXML private Button browseButton;
@@ -42,12 +44,16 @@ public class BrowserController {
 
   
   /**
-   * Sets the IO object to use for saving and reading posts.
+   * Sets the Database object to use for saving and reading posts.
    * 
-   * @param io The io to use.
+   * @param database The Database to use.
    */
-  public void setIO(IO io) {
-    memeio = io;
+  public void setDatabase(Database database) {
+    this.database = database;
+  }
+  
+  public void setParent(AppController parent) {
+    this.parent = parent;
   }
   
   /**
@@ -68,7 +74,7 @@ public class BrowserController {
     inputTextField.setText(null);
     imgSelectorLabel.setText("Choose an image");
     // get collection of posts from I/O
-    List<Post> postList = memeio.getPostList();
+    List<Post> postList = database.getPostList();
     // create nodes for each post
     for (Post post : postList) {
       HBox subContent = new HBox();
@@ -78,7 +84,7 @@ public class BrowserController {
       content.getChildren().add(subContent);
       try {
         subContentLoader.load();
-        ((PostController) subContentLoader.getController()).setIO(memeio);
+        ((PostController) subContentLoader.getController()).setDatabase(database);
         ((PostController) subContentLoader.getController()).setPost(post);
       } catch (IOException e) {
         System.out.println("Error loading post");
@@ -104,8 +110,7 @@ public class BrowserController {
     } else {
       Post post = new Post(activeUser.getName(), caption, image.getName());
       try {
-        memeio.savePost(post);
-        memeio.saveImage(image);
+        database.savePost(post, image, activeUser);
       } catch (IOException e) {
         System.out.println("could not save post");
         e.printStackTrace();

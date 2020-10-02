@@ -1,7 +1,5 @@
-package mememedb.ui;
+package it1901.mememedb.fxui;
 
-import core.datastructures.PasswordHasher;
-import it1901.mememedb.core.datastructures.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,8 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import mememedb.datastructures.User;
-import mememedb.io.IO;
+import it1901.mememedb.core.datastructures.User;
+import it1901.mememedb.core.datastructures.Database;
+import it1901.mememedb.core.io.IO;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class LoginController{
@@ -20,7 +19,7 @@ public class LoginController{
      */
 
     private EmailValidator emailValidator;
-    private IO memeIO;
+    private Database database;
     private AppController parent;
     private User user;
 
@@ -65,6 +64,10 @@ public class LoginController{
 
     public void setParent(AppController parent){
         this.parent = parent;
+    }
+    
+    public void setDatabase(Database database) {
+      this.database = database;
     }
 
     @FXML

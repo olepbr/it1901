@@ -25,14 +25,14 @@ import java.io.IOException;
 //Mememe
 import it1901.mememedb.core.io.IO;
 import it1901.mememedb.core.io.LocalIO;
-
+import it1901.mememedb.core.datastructures.Database;
 import it1901.mememedb.core.datastructures.Post;
 import it1901.mememedb.core.datastructures.User;
 
 public class AppController {
 
   // Storage interface
-  private IO memeio;
+  private Database database;
   private User activeUser;
 
   @FXML AnchorPane window;
@@ -41,7 +41,7 @@ public class AppController {
    * Initializes the application, and loads the starter login interface.
    */
   @FXML public void initialize() {
-    memeio = new LocalIO();
+    database = new Database();
     // Set up Browser window, and add it to the scene
     handleLogOut();
   }
@@ -62,7 +62,8 @@ public class AppController {
     try {
       subContentLoader.load();
       ((BrowserController) subContentLoader.getController()).setActiveUser(activeUser);
-      ((BrowserController) subContentLoader.getController()).setIO(memeio);
+      ((BrowserController) subContentLoader.getController()).setDatabase(database);
+      ((BrowserController) subContentLoader.getController()).setParent(this);
     } catch (IOException e) {
       e.printStackTrace();
       System.out.println("Error loading content browser");
@@ -75,6 +76,7 @@ public class AppController {
    */
   public void handleLogOut() {
     activeUser = null;
+    window.getChildren().clear();
     AnchorPane login = new AnchorPane();
     FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     subContentLoader.setController(getClass().getResource("LoginController.java"));
@@ -82,6 +84,7 @@ public class AppController {
     window.getChildren().add(login);
     try {
       subContentLoader.load();
+      ((LoginController) subContentLoader.getController()).setDatabase(database);
       ((LoginController) subContentLoader.getController()).setParent(this);
     } catch (IOException e) {
       e.printStackTrace();
