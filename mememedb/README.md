@@ -113,8 +113,6 @@ class Comment {
 User "1" <--> "*" Post : Owner
 Post "*" <--> "1" Comment : Parent
 Comment "1" <--> "*" User : Owner
-
-
 ```
 
 ## User Story
@@ -132,3 +130,4 @@ The goal `jacoco:check` runs as part of this goal.
 * `jacoco:check` - Checks that the code coverage metrics are being met.
 * `jacoco:report` - Generates test coverage report to `target/site/jacoco`.
 * `javafx:run` - Run the javafx app.
+* `javadoc:aggregate` - Generate javadocs for the project
