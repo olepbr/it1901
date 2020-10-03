@@ -1,22 +1,40 @@
 package it1901.mememedb.core.io;
 
+import it1901.mememedb.core.datastructures.Post;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import it1901.mememedb.core.datastructures.Post;
-
 public interface IO {
 
-  // return list of posts in database
+  /**
+   * returns list of posts in database
+   *
+   * @return [TODO:description]
+   */
   public List<Post> getPostList();
 
-  // store post in database
+  /**
+   * stores post in database
+   *
+   * @param post [TODO:description]
+   * @throws IOException [TODO:description]
+   */
   public void savePost(Post post) throws IOException;
 
-  // store image in database (or other storage location)
+  /**
+   * stores image in database (or other storage location)
+   *
+   * @param image [TODO:description]
+   * @throws IOException [TODO:description]
+   */
   public void saveImage(File image) throws IOException;
 
-  // get reference to image given name
+  /**
+   * gets reference to image given name
+   *
+   * @param name [TODO:description]
+   * @return [TODO:description]
+   */
   public File getImageFromName(String name);
 }
