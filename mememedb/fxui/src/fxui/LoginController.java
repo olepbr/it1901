@@ -1,5 +1,8 @@
 package it1901.mememedb.fxui;
 
+import it1901.mememedb.core.datastructures.User;
+import it1901.mememedb.core.io.IO;
+import it1901.mememedb.fxui.AppController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,9 +15,13 @@ import it1901.mememedb.core.datastructures.Database;
 import it1901.mememedb.core.io.IO;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.util.ArrayList;
+
+
 public class LoginController{
 
     /**
+     * Controller class for the login- and register panes
      *
      */
 
@@ -22,45 +29,29 @@ public class LoginController{
     private Database database;
     private AppController parent;
     private User user;
+    private ArrayList<User> users = new ArrayList<>();
 
 
     //login
-    @FXML
-    private AnchorPane loginAnchorPane;
-    @FXML
-    private TextField loginEmailText;
-    @FXML
-    private PasswordField loginPasswordText;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Button registerButton;
-    @FXML
-    private Label loginEmailWarning;
-    @FXML
-    private Label loginPassWarning;
+    @FXML private AnchorPane loginAnchorPane;
+    @FXML private TextField loginEmailText;
+    @FXML private PasswordField loginPasswordText;
+    @FXML private Button loginButton;
+    @FXML private Button registerButton;
+    @FXML private Label loginEmailWarning;
+    @FXML private Label loginPassWarning;
 
     //register
-    @FXML
-    private AnchorPane registerAnchorPane;
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private TextField emailTextField;
-    @FXML
-    private TextField usernameTextField;
-    @FXML
-    private PasswordField passwordTextField;
-    @FXML
-    private Button createUserButton;
-    @FXML
-    private Label nameWarning;
-    @FXML
-    private Label usernameWarning;
-    @FXML
-    private Label emailWarning;
-    @FXML
-    private Label passwordWarning;
+    @FXML private AnchorPane registerAnchorPane;
+    @FXML private TextField nameTextField;
+    @FXML private TextField emailTextField;
+    @FXML private TextField usernameTextField;
+    @FXML private PasswordField passwordTextField;
+    @FXML private Button createUserButton;
+    @FXML private Label nameWarning;
+    @FXML private Label usernameWarning;
+    @FXML private Label emailWarning;
+    @FXML private Label passwordWarning;
 
     public void setParent(AppController parent){
         this.parent = parent;
@@ -76,8 +67,15 @@ public class LoginController{
         registerAnchorPane.setVisible(false);
     }
 
+    /**
+     * Logs in a user when the correct email and password combo is used.
+     *
+     *
+     * @param event
+     */
+
     @FXML
-    private void login(ActionEvent e){
+    private void login(ActionEvent event){
         String email = loginEmailText.getText();
         String hashedPassword = user.hashPassword(loginPasswordText.getText());
         if(!EmailValidator.getInstance().isValid(email)){
@@ -105,24 +103,21 @@ public class LoginController{
         String email = emailTextField.getText();
         String name = nameTextField.getText();
         String username = usernameTextField.getText();
+        String password = passwordTextField.getText();
         if(name.isEmpty()) {
             nameWarning.setText("Please put your full name");
         } else if(!emailValidator.getInstance().isValid(email)) {
             emailWarning.setText("Please put a valid email address");
         } else if(username.isEmpty()){
             usernameWarning.setText("Username is taken or not valid");
-        } else if(passwordTextField.getText().isEmpty()){
-            passwordWarning.setText("Password must contain at least x characters");
+        } else if(password.length() < 8){
+            passwordWarning.setText("Password must contain at least 8 characters");
         } else{
-            System.out.println("hello");
+            int id = users.size(); id++;
+            User user = new User(id, name, username, email);
+            user.setPassword(password);
+            parent.handleLogin(user);
         }
-
-
     }
-
-
-
-    //sendToApp(){
-   // }
 
 }
