@@ -15,19 +15,29 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.regex.Pattern;
 
-/** [TODO:description] */
+/** IO implementation for local file system */
 public class LocalIO implements IO {
 
-  private ObjectMapper mapper = new ObjectMapper();
-  private File dataFile;
+  private ObjectMapper mapper;
+  private File userDir;
+  private File userFile;
   private User user;
+  private File imageDir;
 
   /** Constructor. Initializes user object from file or skeleton. */
   public LocalIO() {
+    // Create object for json-parsing
+    mapper = new ObjectMapper();
+    mapper.registerModule(new MememeModule());
+
     Reader reader = null;
-    File userFile = Paths.get(System.getProperty("user.home"), "user.json").toFile();
+    userDir = Paths.get(System.getProperty("user.home"), "mememedb").toFile();
+    String userFileName = "user.json";
+    userFile = new File(userDir.getAbsolutePath() + "/" + userFileName);
+
+    imageDir = new File(userDir.getAbsolutePath() + "/images");
+
     // Try reading user data from home folder
     if (userFile.exists() && userFile.isFile()) {
       try {
@@ -78,26 +88,37 @@ public class LocalIO implements IO {
     else {
       user = new User();
     }
+
+    // Write to home folder
+    try {
+      if (!userDir.isDirectory()) {
+        userDir.mkdir();
+      }
+      mapper.writeValue(userFile, user);
+    } catch (IOException e) {
+      System.err.println("Error writing file");
+      e.printStackTrace();
+    }
   }
 
   /**
-   * [TODO:description]
+   * Wrapper to get posts from user
    *
-   * @return [TODO:description]
+   * @return A list of posts
    */
   public List<Post> getPostList() {
     return user.getPosts();
   }
 
   /**
-   * [TODO:description]
+   * Adds post object to user object and saves to file
    *
-   * @param post [TODO:description]
+   * @param post The post object to save
    * @throws IOException [TODO:description]
    */
   public void savePost(Post post) throws IOException {
     user.addPost(post);
-    mapper.writeValue(dataFile, user);
+    mapper.writeValue(userFile, user);
   }
 
   /**
@@ -107,11 +128,12 @@ public class LocalIO implements IO {
    * @throws IOException If the file cannot be found.
    */
   public void saveImage(File image) throws IOException {
-    String absPath = Paths.get("").toUri().getPath();
-    if (!Pattern.matches(".*mememedb[/\\\\]*$", absPath)) {
-      absPath += "mememedb/";
+    // Create directory if it does not exist
+    if (!imageDir.isDirectory()) {
+      imageDir.mkdir();
     }
-    absPath = absPath + "src/resources/img/" + image.getName();
+
+    String absPath = imageDir.getAbsolutePath() + "/" + image.getName();
     File file = new File(absPath);
     Files.copy(image.toPath(), file.toPath());
   }
@@ -124,11 +146,7 @@ public class LocalIO implements IO {
    */
   public File getImageFromName(String name) {
     // gets image given name, assumes images are stored in img under resources.
-    String absPath = Paths.get("").toUri().getPath();
-    if (!Pattern.matches(".*mememedb[/\\\\]*$", absPath)) {
-      absPath += "mememedb/";
-    }
-    absPath = absPath + "src/resources/img/" + name;
+    String absPath = imageDir.getAbsolutePath() + "/" + name;
     File image = new File(absPath);
     return image;
   }
