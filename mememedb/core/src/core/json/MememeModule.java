@@ -18,12 +18,11 @@ import java.io.Reader;
 public class MememeModule extends SimpleModule {
 
   private static final String NAME = "MememeModule";
-  private static final VersionUtil VERSION_UTIL = new VersionUtil() {};
   private static final ObjectMapper mapper = new ObjectMapper();
 
   /** Initializes a MememeModule object with serializers and deserializers. */
   public MememeModule() {
-    super(NAME, VERSION_UTIL.version());
+	super(NAME, Version.unknownVersion());
     addSerializer(Post.class, new PostSerializer());
     addSerializer(User.class, new UserSerializer());
     addDeserializer(Post.class, new PostDeserializer());
