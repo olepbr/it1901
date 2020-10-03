@@ -29,7 +29,6 @@ public class LoginController{
      * @author Hanna Thevik
      */
 
-    private EmailValidator emailValidator;
     private Database database;
     private AppController parent;
     private User user;
@@ -116,9 +115,9 @@ public class LoginController{
         String password = passwordTextField.getText();
         if(name.isEmpty()) {
             nameWarning.setText("Please put your full name");
-        } else if(!emailValidator.getInstance().isValid(email)) {
+        } else if(!EmailValidator.getInstance().isValid(email)) {
             emailWarning.setText("Please put a valid email address");
-        } else if(database.usernameExists(username){
+        } else if(database.usernameExists(username)){
             usernameWarning.setText("Username is taken or not valid");
         } else if(password.length() < 8){
             passwordWarning.setText("Password must contain at least 8 characters");
