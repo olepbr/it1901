@@ -10,6 +10,7 @@ import it1901.mememedb.core.io.LocalIO;
 
 public class Database {
   
+  @JsonSerialize(using = UserListSerializer.class)
   private List<User> users;
   private IO storage;
   
