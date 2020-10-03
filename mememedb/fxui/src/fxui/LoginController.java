@@ -1,8 +1,7 @@
 package it1901.mememedb.fxui;
 
+import it1901.mememedb.core.datastructures.Database;
 import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.io.IO;
-import it1901.mememedb.fxui.AppController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,9 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.datastructures.Database;
-import it1901.mememedb.core.io.IO;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.ArrayList;
@@ -21,25 +17,25 @@ import java.util.ArrayList;
 public class LoginController{
 
     /**
-     * Controller class for the login- and register panes
+     * Controller class for the login- and register panes.
      *
+     * @author Hanna Thevik
      */
 
     private EmailValidator emailValidator;
     private Database database;
-    private AppController parent;
+    private it1901.mememedb.fxui.AppController parent;
     private User user;
     private ArrayList<User> users = new ArrayList<>();
 
 
     //login
     @FXML private AnchorPane loginAnchorPane;
-    @FXML private TextField loginEmailText;
+    @FXML private TextField loginUsername;
     @FXML private PasswordField loginPasswordText;
     @FXML private Button loginButton;
     @FXML private Button registerButton;
-    @FXML private Label loginEmailWarning;
-    @FXML private Label loginPassWarning;
+    @FXML private Label loginWarning;
 
     //register
     @FXML private AnchorPane registerAnchorPane;
@@ -53,7 +49,7 @@ public class LoginController{
     @FXML private Label emailWarning;
     @FXML private Label passwordWarning;
 
-    public void setParent(AppController parent){
+    public void setParent(it1901.mememedb.fxui.AppController parent){
         this.parent = parent;
     }
     
@@ -61,6 +57,10 @@ public class LoginController{
       this.database = database;
     }
 
+
+    /**
+     * Initializes the login and register panes. Hides the register pane.
+     */
     @FXML
     private void initialize(){
         loginAnchorPane.setVisible(true);
@@ -70,34 +70,37 @@ public class LoginController{
     /**
      * Logs in a user when the correct email and password combo is used.
      *
-     *
      * @param event
      */
-
     @FXML
     private void login(ActionEvent event){
-        String email = loginEmailText.getText();
-        String hashedPassword = user.hashPassword(loginPasswordText.getText());
-        if(!EmailValidator.getInstance().isValid(email)){
-            loginEmailWarning.setText("Incorrect email");
-        } else if(!hashedPassword.matches(user.getPassword())){
-            loginPassWarning.setText("Incorrect password");
-        } else{
-            User u1 = new User(1, "Hest Stein", "Heststein420", "heststein@ntnu.no");
-            parent.handleLogin(u1);
+        String username = loginUsername.getText();
+        String password = loginPasswordText.getText();
+        if(!database.tryLogin(username, password).equals(null)){
+            parent.handleLogin(database.tryLogin(username, password));
+            }
+        else {
+            loginWarning.setText("Password and email do not match!");
         }
     }
 
+    /**
+     * Switches panes if the registerButton is clicked.
+     * @param e
+     */
     @FXML
     private void registerClick(ActionEvent e){
         loginAnchorPane.setVisible(false);
         registerAnchorPane.setVisible(true);
     }
 
-    public boolean validateUsername(String username){
-        return true;
-    }
 
+    /**
+     * Checks if all the strings in TextFields are valid.
+     * @param e
+     *
+     * Creates a new User object and saves it in database if all the fields are valid.
+     */
     @FXML
     private void createUser(ActionEvent e){
         String email = emailTextField.getText();
@@ -108,14 +111,14 @@ public class LoginController{
             nameWarning.setText("Please put your full name");
         } else if(!emailValidator.getInstance().isValid(email)) {
             emailWarning.setText("Please put a valid email address");
-        } else if(username.isEmpty()){
+        } else if(database.usernameExists(username){
             usernameWarning.setText("Username is taken or not valid");
         } else if(password.length() < 8){
             passwordWarning.setText("Password must contain at least 8 characters");
         } else{
-            int id = users.size(); id++;
-            User user = new User(id, name, username, email);
+            User user = new User(database.getNewID(), name, username, email);
             user.setPassword(password);
+            database.saveUser(user);
             parent.handleLogin(user);
         }
     }

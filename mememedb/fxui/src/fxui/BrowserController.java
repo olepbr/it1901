@@ -51,7 +51,11 @@ public class BrowserController {
   public void setDatabase(Database database) {
     this.database = database;
   }
-  
+
+  /**
+   * Sets the parent controller.
+   * @param parent
+   */
   public void setParent(AppController parent) {
     this.parent = parent;
   }
