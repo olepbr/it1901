@@ -1,10 +1,10 @@
-package it1901.mememedb.core.io;
+package core.io;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it1901.mememedb.core.datastructures.Post;
-import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.json.MememeModule;
+import core.datastructures.Post;
+import core.datastructures.User;
+import core.json.MememeModule;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;

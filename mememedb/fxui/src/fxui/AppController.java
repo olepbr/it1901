@@ -1,4 +1,4 @@
-package it1901.mememedb.fxui;
+package fxui;
 
 //File utilities
 import java.io.IOException;
@@ -23,11 +23,11 @@ import java.io.File;
 import java.io.IOException;
 
 //Mememe
-import it1901.mememedb.core.io.IO;
-import it1901.mememedb.core.io.LocalIO;
-import it1901.mememedb.core.datastructures.Database;
-import it1901.mememedb.core.datastructures.Post;
-import it1901.mememedb.core.datastructures.User;
+import core.io.IO;
+import core.io.LocalIO;
+import core.datastructures.Database;
+import core.datastructures.Post;
+import core.datastructures.User;
 
 public class AppController {
 
@@ -44,7 +44,6 @@ public class AppController {
     database = new Database();
     // Set up Browser window, and add it to the scene
     handleLogOut();
-    handleLogin(activeUser);
   }
   
   /**
@@ -56,7 +55,7 @@ public class AppController {
     activeUser = user;
     window.getChildren().clear();
     AnchorPane browser = new AnchorPane();
-    FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Browser.fxml"));
+    FXMLLoader subContentLoader = new FXMLLoader(getClass().getClassLoader().getResource("Browser.fxml"));
     subContentLoader.setController(getClass().getResource("BrowserController.java"));
     subContentLoader.setRoot(browser);
     window.getChildren().add(browser);
@@ -65,6 +64,7 @@ public class AppController {
       ((BrowserController) subContentLoader.getController()).setActiveUser(activeUser);
       ((BrowserController) subContentLoader.getController()).setDatabase(database);
       ((BrowserController) subContentLoader.getController()).setParent(this);
+      ((BrowserController) subContentLoader.getController()).updatePosts();
     } catch (IOException e) {
       e.printStackTrace();
       System.out.println("Error loading content browser");
@@ -79,7 +79,7 @@ public class AppController {
     activeUser = null;
     window.getChildren().clear();
     AnchorPane login = new AnchorPane();
-    FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
+    FXMLLoader subContentLoader = new FXMLLoader(getClass().getClassLoader().getResource("Login.fxml"));
     subContentLoader.setController(getClass().getResource("LoginController.java"));
     subContentLoader.setRoot(login);
     window.getChildren().add(login);

@@ -1,10 +1,10 @@
-package it1901.mememedb.core.io;
+package core.io;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import it1901.mememedb.core.datastructures.Post;
+import core.datastructures.Post;
 
 public interface IO {
 

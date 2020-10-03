@@ -1,4 +1,4 @@
-module it1901.mememedb.fxui {
+module fxui {
   requires javafx.fxml;
   requires javafx.controls;
   requires transitive javafx.graphics;
@@ -6,9 +6,9 @@ module it1901.mememedb.fxui {
   requires com.fasterxml.jackson.core;
   requires commons.validator;
 
-  requires it1901.mememedb.core;
+  requires core;
 
-  exports it1901.mememedb.fxui;
+  exports fxui;
 
-  opens it1901.mememedb.fxui to javafx.fxml;
+  opens fxui to javafx.fxml;
 }

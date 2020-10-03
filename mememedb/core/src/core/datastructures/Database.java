@@ -1,12 +1,15 @@
-package it1901.mememedb.core.datastructures;
+package core.datastructures;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it1901.mememedb.core.io.IO;
-import it1901.mememedb.core.io.LocalIO;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import core.io.IO;
+import core.io.LocalIO;
+import core.json.UserListSerializer;
 
 public class Database {
   
@@ -21,6 +24,7 @@ public class Database {
    */
   public Database() {
     storage = new LocalIO();
+    users = new ArrayList<User>();
     //reload();
   }
   

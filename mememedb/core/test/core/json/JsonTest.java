@@ -1,8 +1,8 @@
-package it1901.mememedb.core.json;
+package core.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it1901.mememedb.core.datastructures.Post;
-import it1901.mememedb.core.datastructures.User;
+import core.datastructures.Post;
+import core.datastructures.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package it1901.mememedb.fxui;
+package fxui;
 
 //File utilities
 import java.io.File;
@@ -17,10 +17,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 //Mememedb classes
-import it1901.mememedb.core.datastructures.Post;
-import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.datastructures.Database;
-import it1901.mememedb.core.io.IO;
+import core.datastructures.Post;
+import core.datastructures.User;
+import core.datastructures.Database;
+import core.io.IO;
 
 
 public class BrowserController {
@@ -39,7 +39,7 @@ public class BrowserController {
   @FXML private Label imgSelectorLabel;
 
   @FXML public void initialize() {
-    updatePosts();
+    //updatePosts();
   }
 
   
@@ -74,11 +74,12 @@ public class BrowserController {
     inputTextField.setText(null);
     imgSelectorLabel.setText("Choose an image");
     // get collection of posts from I/O
+    try{
     List<Post> postList = database.getPostList();
     // create nodes for each post
     for (Post post : postList) {
       HBox subContent = new HBox();
-      FXMLLoader subContentLoader = new FXMLLoader(getClass().getResource("Post.fxml"));
+      FXMLLoader subContentLoader = new FXMLLoader(getClass().getClassLoader().getResource("Post.fxml"));
       subContentLoader.setRoot(subContent);
       subContentLoader.setController(getClass().getResource("PostController.java"));
       content.getChildren().add(subContent);
@@ -89,6 +90,9 @@ public class BrowserController {
       } catch (IOException e) {
         System.out.println("Error loading post");
       }
+    }}
+    catch(Exception e){
+        e.printStackTrace();
     }
   }
   

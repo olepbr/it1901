@@ -1,4 +1,4 @@
-package it1901.mememedb.core.io;
+package core.io;
 
 import org.junit.jupiter.api.Test;
 

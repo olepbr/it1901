@@ -1,4 +1,4 @@
-package it1901.mememedb.core.datastructures;
+package core.datastructures;
 
 import com.google.common.hash.Hashing;
 

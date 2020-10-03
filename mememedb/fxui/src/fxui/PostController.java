@@ -1,4 +1,4 @@
-package it1901.mememedb.fxui;
+package fxui;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -7,9 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import it1901.mememedb.core.datastructures.Post;
-import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.datastructures.Database;
+import core.datastructures.Post;
+import core.datastructures.User;
+import core.datastructures.Database;
 
 public class PostController {
 

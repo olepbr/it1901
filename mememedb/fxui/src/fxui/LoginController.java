@@ -1,8 +1,8 @@
-package it1901.mememedb.fxui;
+package fxui;
 
-import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.io.IO;
-import it1901.mememedb.fxui.AppController;
+import core.datastructures.User;
+import core.io.IO;
+import fxui.AppController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,9 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import it1901.mememedb.core.datastructures.User;
-import it1901.mememedb.core.datastructures.Database;
-import it1901.mememedb.core.io.IO;
+import core.datastructures.User;
+import core.datastructures.Database;
+import core.io.IO;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.ArrayList;

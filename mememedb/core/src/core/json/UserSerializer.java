@@ -1,4 +1,4 @@
-package it1901.mememedb.core.json;
+package core.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-import it1901.mememedb.core.datastructures.Post;
-import it1901.mememedb.core.datastructures.User;
+import core.datastructures.Post;
+import core.datastructures.User;
 
 public class UserSerializer extends JsonSerializer<User> {
 
