@@ -19,26 +19,32 @@ and has the following directory structure:
 The following class diagram shows the outline of the code structure:
 
 ```plantuml
-package UI <<Frame>> {
+package fxui <<Frame>> {
+    class App
     class AppController
     class PostController
-    class UserController
+    class BrowserController
+    class LoginController
 }
 
-package IO <<Frame>> {
+package core.io <<Frame>> {
     interface IO
-    class CloudController
     class LocalIO
 }
 
-package JSON <<Frame>> {
+package core.json <<Frame>> {
     class MememeModule
+    class PostSerializer
+    class PostDeserializer
+    class UserSerializer
+    class UserDeserializer
+    class UserListSerializer
 }
 
-package DataStructures <<Frame>> {
+package core.datastructures <<Frame>> {
     class User
     class Post
-    class Comment
+    class Database
 }
 
 class App {
@@ -55,14 +61,19 @@ AppController --> PostController
 class PostController {
 }
 
-AppController --> UserController
+AppController --> BrowserController
 
-class UserController {
+class BrowserController {
+}
+
+AppController --> LoginController
+
+class LoginController {
 }
 
 AppController --> IO
-UserController --> IO
 PostController --> IO
+BrowserController --> IO
 
 interface IO {
     + getPostList(): List<Post>
@@ -70,9 +81,8 @@ interface IO {
     + saveImage(File): void
 }
 
-class CloudController implements IO
 class LocalIO implements IO
-CloudController --> MememeModule
+IO --> Post
 LocalIO --> MememeModule
 
 class MememeModule{
@@ -80,16 +90,34 @@ class MememeModule{
     + deserializeUser(String): User
     + serializePost(Post): String
     + deserializePost(String): Post
-    + serializeComment(Comment): String
-    + deserializeComment(String): Comment
 }
 
 MememeModule --> User
 MememeModule --> Post
-MememeModule --> Comment
+MememeModule --> PostSerializer
+MememeModule --> PostDeserializer
+MememeModule --> UserSerializer
+MememeModule --> UserDeserializer
 
-UserController --> User
+UserListSerializer --> User
+UserSerializer --> User
+UserSerializer --> Post
+UserDeserializer --> User
+UserDeserializer --> Post
+PostSerializer --> Post
+PostDeserializer --> Post
+
+AppController --> User
 AppController --> Post
+AppController --> Database
+BrowserController --> User
+BrowserController --> Post
+BrowserController --> Database
+LoginController --> User
+LoginController --> Database
+PostController --> User
+PostController --> Post
+PostController --> Database
 
 class User {
     - id: int
@@ -102,17 +130,14 @@ class User {
 class Post {
     - caption: String
     - image: String
-    + addComment(Comment): void
 }
 
-class Comment {
-    - comment: String
-    - date: String
+class Database {
 }
 
 User "1" <--> "*" Post : Owner
-Post "*" <--> "1" Comment : Parent
-Comment "1" <--> "*" User : Owner
+Database --> IO
+Database --> UserListSerializer
 ```
 
 ## User Story
