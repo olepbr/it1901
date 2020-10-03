@@ -102,15 +102,6 @@ public class LocalIO implements IO {
   }
 
   /**
-   * Wrapper to get posts from user
-   *
-   * @return A list of posts
-   */
-  public List<Post> getPostList() {
-    return user.getPosts();
-  }
-
-  /**
    * Adds post object to user object and saves to file
    *
    * @param post The post object to save
@@ -149,5 +140,11 @@ public class LocalIO implements IO {
     String absPath = imageDir.getAbsolutePath() + "/" + name;
     File image = new File(absPath);
     return image;
+  }
+
+  @Override
+  public List<User> getUserList() {
+      // TODO Implement userList fetching
+      return null;
   }
 }
