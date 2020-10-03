@@ -25,7 +25,10 @@ public class LocalIO implements IO {
   private User user;
   private File imageDir;
 
-  /** Constructor. Initializes user object from file or skeleton. */
+  /**
+   * Constructor. Initializes user object from file or skeleton. Also checks for image folder and
+   * copies images from resources.
+   */
   public LocalIO() {
     // Create object for json-parsing
     mapper = new ObjectMapper();
@@ -33,10 +36,9 @@ public class LocalIO implements IO {
 
     Reader reader = null;
     userDir = Paths.get(System.getProperty("user.home"), "mememedb").toFile();
+    imageDir = new File(userDir.getAbsolutePath() + "/images");
     String userFileName = "user.json";
     userFile = new File(userDir.getAbsolutePath() + "/" + userFileName);
-
-    imageDir = new File(userDir.getAbsolutePath() + "/images");
 
     // Try reading user data from home folder
     if (userFile.exists() && userFile.isFile()) {
@@ -64,7 +66,7 @@ public class LocalIO implements IO {
     // Start with null user
     user = null;
 
-    // Try reading from file
+    // Try reading user data from file
     if (reader != null) {
       try {
         user = MememeModule.deserializeUser(reader);
@@ -89,7 +91,7 @@ public class LocalIO implements IO {
       user = new User();
     }
 
-    // Write to home folder
+    // Write user data to home folder
     try {
       if (!userDir.isDirectory()) {
         userDir.mkdir();
@@ -98,6 +100,28 @@ public class LocalIO implements IO {
     } catch (IOException e) {
       System.err.println("Error writing file");
       e.printStackTrace();
+    }
+
+    // Check image folder
+    if (!(imageDir.exists() && imageDir.isDirectory())) {
+      imageDir.mkdir();
+      // Find built in example memes
+      File resourceImageDir = new File(getClass().getResource("/img").getFile());
+      System.out.println(resourceImageDir.getPath());
+      // List with files in img directory
+      File[] resourceImages = resourceImageDir.listFiles();
+      if (resourceImages != null) {
+        // Iterate trough images
+        for (File image : resourceImages) {
+          File file = new File(imageDir.getAbsolutePath() + "/" + image.getName());
+          try {
+            Files.copy(image.toPath(), file.toPath());
+          } catch (IOException e) {
+            System.err.println("IO error");
+            e.printStackTrace();
+          }
+        }
+      }
     }
   }
 
