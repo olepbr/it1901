@@ -44,6 +44,7 @@ public class AppController {
     database = new Database();
     // Set up Browser window, and add it to the scene
     handleLogOut();
+    handleLogin(activeUser);
   }
   
   /**
