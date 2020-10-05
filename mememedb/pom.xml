@@ -124,7 +124,8 @@
                                     <rule>
                                         <element>PACKAGE</element>
                                         <includes>
-                                            <include>it1910.mememedb.**</include>
+                                            <include>core.**</include>
+                                            <include>fxui.**</include>
                                         </includes>
                                         <limits>
                                             <limit>
@@ -148,6 +149,7 @@
                     <configuration>
                         <xmlOutput>false</xmlOutput>
                         <htmlOutput>true</htmlOutput>
+                        <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>
                     </configuration>
                     <executions>
                         <execution>

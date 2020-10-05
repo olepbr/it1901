@@ -77,12 +77,10 @@ public class LocalIO implements IO {
         System.out.println("Error reading file.");
         e.printStackTrace();
       } finally {
-        if (reader != null) {
-          try {
-            reader.close();
-          } catch (IOException e) {
-            // ???
-          }
+        try {
+          reader.close();
+        } catch (IOException e) {
+          // ???
         }
       }
     }
@@ -93,18 +91,16 @@ public class LocalIO implements IO {
 
     // Write user data to home folder
     try {
-      if (!userDir.isDirectory()) {
-        userDir.mkdir();
+      if (!userDir.isDirectory() && userDir.mkdir()) {
+        mapper.writeValue(userFile, user);
       }
-      mapper.writeValue(userFile, user);
     } catch (IOException e) {
       System.err.println("Error writing file");
       e.printStackTrace();
     }
 
     // Check image folder
-    if (!(imageDir.exists() && imageDir.isDirectory())) {
-      imageDir.mkdir();
+    if (!(imageDir.exists() && imageDir.isDirectory()) && imageDir.mkdir()) {
       // Find built in example memes
       File resourceImageDir = new File(getClass().getResource("/img").getFile());
       System.out.println(resourceImageDir.getPath());
@@ -144,13 +140,11 @@ public class LocalIO implements IO {
    */
   public void saveImage(File image) throws IOException {
     // Create directory if it does not exist
-    if (!imageDir.isDirectory()) {
-      imageDir.mkdir();
+    if (!imageDir.isDirectory() && imageDir.mkdir()) {
+      String absPath = imageDir.getAbsolutePath() + "/" + image.getName();
+      File file = new File(absPath);
+      Files.copy(image.toPath(), file.toPath());
     }
-
-    String absPath = imageDir.getAbsolutePath() + "/" + image.getName();
-    File file = new File(absPath);
-    Files.copy(image.toPath(), file.toPath());
   }
 
   /**
