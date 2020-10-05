@@ -82,7 +82,7 @@ public class LoginController{
     private void login(ActionEvent event){
         String username = loginUsername.getText();
         String password = loginPasswordText.getText();
-        if(!database.tryLogin(username, password).equals(null)){
+        if(database.tryLogin(username, password) != null){
             parent.handleLogin(database.tryLogin(username, password));
             }
         else {

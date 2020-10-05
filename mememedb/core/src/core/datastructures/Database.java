@@ -54,7 +54,7 @@ public class Database {
    * @param user Owner of the post.
    */
   public void savePost(Post post, File image, User user) throws IOException {
-    if(!users.contains(user)) {
+    if(users.contains(user)) {
       users.add(user);
     }
     users.get(users.indexOf(user)).addPost(post);
