@@ -147,4 +147,10 @@ public class LocalIO implements IO {
       // TODO Implement userList fetching
       return null;
   }
+
+  @Override
+  public void save(List<User> userlist) {
+      // TODO Implement updating of json storage
+
+  }
 }
