@@ -3,21 +3,21 @@
 
 MEMEMEDB is a meme sharing application.
 With this application users may view, share, post and comment on memes.
-A meme consists of a picture and a caption,
-and users may add comments to the posted meme.
+A meme consists of a picture and a caption.
 
 ## Code Organization
 
 The code is organized by component,
 and has the following directory structure:
 
-* **`src/mememedb/`** - contains the main code
-* **`src/mememedb/<component>`** - each subcomponent (e.g json) has its own folder
-* **`src/resources/`** - contains images etc.
-* **`test/mememedb/`** - contains the tests
+* **`<module>/src/<module>/`** - contains the module code
+* **`<module>/src/<module>/<component>`** - each subcomponent (e.g json) has its own folder
+* **`<module>/src/resources/`** - contains images etc.
+* **`<module>/test/<module>/<component>`** - contains the tests
 
 The following class diagram shows the outline of the code structure:
 
+![Class Diagram](ClassDiagram.png)
 ```plantuml
 package fxui <<Frame>> {
     class App
@@ -154,5 +154,5 @@ to ensure quality criteria are met.
 The goal `jacoco:check` runs as part of this goal.
 * `jacoco:check` - Checks that the code coverage metrics are being met.
 * `jacoco:report` - Generates test coverage report to `target/site/jacoco`.
-* `javafx:run` - Run the javafx app.
+* `javafx:run` - Run the javafx app from fxui directory.
 * `javadoc:aggregate` - Generate javadocs for the project
