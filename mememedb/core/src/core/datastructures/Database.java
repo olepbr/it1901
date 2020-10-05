@@ -30,6 +30,17 @@ public class Database {
     reload();
   }
 
+  /**
+   * Generates a new database object, using the given IO-object to fetch and save data, for testing purposes
+   * 
+   * @param io The IO to use
+   */
+  public Database(IO io){
+    storage = io;
+    users = new ArrayList<User>();
+    reload();
+  }
+
 
   /**
    * Removes cached database, and reloads from storage.
@@ -54,12 +65,22 @@ public class Database {
    * @param user Owner of the post.
    */
   public void savePost(Post post, File image, User user) throws IOException {
-    if(users.contains(user)) {
+    for(User userr : users) {
+      for(Post postt : userr.getPosts()) {
+        System.out.println("Before contains " + postt.getText() + " " + postt.getOwner());
+      }
+    }
+    if(!users.contains(user)) {
       users.add(user);
     }
     users.get(users.indexOf(user)).addPost(post);
     saveToStorage();
     storage.saveImage(image);
+    for(User userr : users) {
+      for(Post postt : userr.getPosts()) {
+        System.out.println("After contains " + postt.getText() + " " + postt.getOwner());
+      }
+    }
   }
 
   /**

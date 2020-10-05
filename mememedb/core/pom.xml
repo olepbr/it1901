@@ -19,7 +19,13 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
         </dependency>
-
+        <!-- Mockito for object mocking in tests -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.5.13</version>
+            <scope>test</scope>
+        </dependency>
         <!-- Jackson for JSON I/O handling -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
