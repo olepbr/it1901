@@ -38,6 +38,7 @@ public class BrowserController {
   @FXML private TextField inputTextField;
   @FXML private BorderPane borderPane;
   @FXML private Label imgSelectorLabel;
+  @FXML private Label username;
 
   @FXML public void initialize() {
     //updatePosts();
@@ -68,6 +69,7 @@ public class BrowserController {
    */
   public void setActiveUser(User user) {
     activeUser = user;
+    username.setText(user.getNickname());
   }
   
   /**
@@ -151,6 +153,14 @@ public class BrowserController {
       a.show();
     }
 
+  }
+
+  /**
+   * Closes the browser and returns to the Login-screen, clearing active user
+   */
+  @FXML
+  public void handleLogOut(){
+    parent.handleLogOut();
   }
 
 }

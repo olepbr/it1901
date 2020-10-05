@@ -32,7 +32,7 @@
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </padding>
                </Label>
-                  <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" text="Log out" />
+                  <Button fx:id="logoutButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="75.0" text="Log out" onAction="#handleLogOut" />
                   <Separator orientation="VERTICAL" prefHeight="65.0" prefWidth="19.0" />
                   <AnchorPane prefHeight="65.0" prefWidth="511.0">
                       <children>
