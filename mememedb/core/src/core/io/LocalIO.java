@@ -143,7 +143,9 @@ public class LocalIO implements IO {
     if (!imageDir.isDirectory() && imageDir.mkdir()) {
       String absPath = imageDir.getAbsolutePath() + "/" + image.getName();
       File file = new File(absPath);
-      Files.copy(image.toPath(), file.toPath());
+      if (!file.exists()) {
+        Files.copy(image.toPath(), file.toPath());
+      }
     }
   }
 
@@ -162,13 +164,13 @@ public class LocalIO implements IO {
 
   @Override
   public List<User> getUserList() {
-      // TODO Implement userList fetching
-      return null;
+    // TODO Implement userList fetching
+    return null;
   }
 
   @Override
   public void save(List<User> userlist) {
-      // TODO Implement updating of json storage
+    // TODO Implement updating of json storage
 
   }
 }
