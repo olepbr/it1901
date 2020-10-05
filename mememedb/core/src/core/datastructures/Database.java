@@ -1,17 +1,15 @@
 package core.datastructures;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import core.io.IO;
 import core.io.LocalIO;
-import core.json.UserListSerializer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Database {
 
-  @JsonSerialize(using = UserListSerializer.class)
   private List<User> users;
 
   private IO storage;

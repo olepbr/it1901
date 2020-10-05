@@ -2,9 +2,9 @@ package core.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import core.datastructures.Database;
 import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.File;
@@ -26,6 +26,7 @@ public class MememeModule extends SimpleModule {
 	super(NAME, Version.unknownVersion());
     addSerializer(Post.class, new PostSerializer());
     addSerializer(User.class, new UserSerializer());
+    addSerializer(Database.class, new DatabaseSerializer());
     addDeserializer(Post.class, new PostDeserializer());
     addDeserializer(User.class, new UserDeserializer());
   }
