@@ -84,7 +84,7 @@
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>it1901.mememedb.fxui.App</mainClass>
+                    <mainClass>fxui.App</mainClass>
                 </configuration>
             </plugin>
 
