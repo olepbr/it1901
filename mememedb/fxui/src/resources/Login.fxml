@@ -23,8 +23,8 @@
       </AnchorPane>
       <AnchorPane fx:id="registerAnchorPane" prefHeight="410.0" prefWidth="610.0">
          <children>
-            <TextField fx:id="emailTextField" layoutX="328.0" layoutY="134.0" />
             <TextField fx:id="nameTextField" layoutX="95.0" layoutY="134.0" />
+            <TextField fx:id="emailTextField" layoutX="328.0" layoutY="134.0" />
             <TextField fx:id="usernameTextField" layoutX="95.0" layoutY="221.0" />
             <PasswordField fx:id="passwordTextField" layoutX="328.0" layoutY="221.0" />
             <Label layoutX="95.0" layoutY="106.0" text="Full name" />
