@@ -14,18 +14,12 @@ public class PostController {
   Post post;
   Database database;
   // User activeUser;
-  @FXML ImageView postImage;
-  @FXML Label postText;
-  @FXML Label postPoster;
-
-  /**
-   * Sets current active User.
-   *
-   * @param user The new User.
-   */
-  // public void setUser(User user) {
-  //   activeUser = user;
-  // }
+  @FXML
+  ImageView postImage;
+  @FXML
+  Label postText;
+  @FXML
+  Label postPoster;
 
   /**
    * Sets and displays the post this controller should correspond to.

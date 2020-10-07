@@ -1,33 +1,15 @@
 package fxui;
 
+//Mememedb
+import core.datastructures.Database;
+import core.datastructures.User;
 //File utilities
 import java.io.IOException;
 //Import javafx stuff
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
-//Java utils:
-import java.util.List;
-
-//File utilities
-import java.io.File;
-import java.io.IOException;
-
-//Mememe
-import core.io.IO;
-import core.io.LocalIO;
-import core.datastructures.Database;
-import core.datastructures.Post;
-import core.datastructures.User;
 
 public class AppController {
 
@@ -55,7 +37,8 @@ public class AppController {
     activeUser = user;
     window.getChildren().clear();
     AnchorPane browser = new AnchorPane();
-    FXMLLoader subContentLoader = new FXMLLoader(getClass().getClassLoader().getResource("Browser.fxml"));
+    FXMLLoader subContentLoader = new FXMLLoader(
+        getClass().getClassLoader().getResource("Browser.fxml"));
     subContentLoader.setController(getClass().getResource("BrowserController.java"));
     subContentLoader.setRoot(browser);
     window.getChildren().add(browser);
@@ -79,7 +62,8 @@ public class AppController {
     activeUser = null;
     window.getChildren().clear();
     AnchorPane login = new AnchorPane();
-    FXMLLoader subContentLoader = new FXMLLoader(getClass().getClassLoader().getResource("Login.fxml"));
+    FXMLLoader subContentLoader = new FXMLLoader(
+        getClass().getClassLoader().getResource("Login.fxml"));
     subContentLoader.setController(getClass().getResource("LoginController.java"));
     subContentLoader.setRoot(login);
     window.getChildren().add(login);

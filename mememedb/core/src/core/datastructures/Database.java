@@ -23,6 +23,15 @@ public class Database {
     users = new ArrayList<User>();
   }
 
+  /**
+   * Generates a new database object, Database contains all Users and Posts of the app, and
+   * corresponds with an IO-object to read and write data.
+   */
+  public Database(IO io) {
+    storage = io;
+    users = new ArrayList<User>();
+  }
+
   /** Saves cached database, overwriting previous data in storage. */
   public void saveToStorage() {
     storage.saveDatabase(this);

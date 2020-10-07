@@ -1,5 +1,9 @@
 package fxui;
 
+//Mememedb classes
+import core.datastructures.Database;
+import core.datastructures.Post;
+import core.datastructures.User;
 //File utilities
 import java.io.File;
 import java.io.IOException;
@@ -16,13 +20,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-//Mememedb classes
-import core.datastructures.Post;
-import core.datastructures.User;
-import core.datastructures.Database;
-import core.io.IO;
-
-
 
 public class BrowserController {
 
@@ -31,23 +28,30 @@ public class BrowserController {
   private User activeUser;
   private File selectedImage;
   private AppController parent;
-  
-  @FXML private VBox content;
-  @FXML private Button addContent;
-  @FXML private Button browseButton;
-  @FXML private TextField inputTextField;
-  @FXML private BorderPane borderPane;
-  @FXML private Label imgSelectorLabel;
-  @FXML private Label username;
 
-  @FXML public void initialize() {
-    //updatePosts();
+  @FXML
+  private VBox content;
+  @FXML
+  private Button addContent;
+  @FXML
+  private Button browseButton;
+  @FXML
+  private TextField inputTextField;
+  @FXML
+  private BorderPane borderPane;
+  @FXML
+  private Label imgSelectorLabel;
+  @FXML
+  private Label username;
+
+  @FXML
+  public void initialize() {
+    // updatePosts();
   }
 
-  
   /**
    * Sets the Database object to use for saving and reading posts.
-   * 
+   *
    * @param database The Database to use.
    */
   public void setDatabase(Database database) {
@@ -56,12 +60,13 @@ public class BrowserController {
 
   /**
    * Sets the parent controller.
-   * @param parent
+   *
+   * @param parent The parent controller
    */
   public void setParent(AppController parent) {
     this.parent = parent;
   }
-  
+
   /**
    * Sets current User of the app.
    *
@@ -71,7 +76,7 @@ public class BrowserController {
     activeUser = user;
     username.setText(user.getNickname());
   }
-  
+
   /**
    * Removes old posts from browser, fetches and displays updated list of posts.
    */
@@ -81,33 +86,35 @@ public class BrowserController {
     inputTextField.setText(null);
     imgSelectorLabel.setText("Choose an image");
     // get collection of posts from I/O
-    try{
-    List<Post> postList = database.getPostList();
-    // create nodes for each post
-    for (Post post : postList) {
-      HBox subContent = new HBox();
-      FXMLLoader subContentLoader = new FXMLLoader(getClass().getClassLoader().getResource("Post.fxml"));
-      subContentLoader.setRoot(subContent);
-      subContentLoader.setController(getClass().getResource("PostController.java"));
-      content.getChildren().add(subContent);
-      try {
-        subContentLoader.load();
-        ((PostController) subContentLoader.getController()).setDatabase(database);
-        ((PostController) subContentLoader.getController()).setPost(post);
-      } catch (IOException e) {
-        e.printStackTrace();
-        System.out.println("Error loading post");
+    try { 
+      List<Post> postList = database.getPostList();
+      // create nodes for each post
+      for (Post post : postList) {
+        HBox subContent = new HBox();
+        FXMLLoader subContentLoader = new FXMLLoader(
+            getClass().getClassLoader().getResource("Post.fxml"));
+        subContentLoader.setRoot(subContent);
+        subContentLoader.setController(getClass().getResource("PostController.java"));
+        content.getChildren().add(subContent);
+        try {
+          subContentLoader.load();
+          ((PostController) subContentLoader.getController()).setDatabase(database);
+          ((PostController) subContentLoader.getController()).setPost(post);
+        } catch (IOException e) {
+          e.printStackTrace();
+          System.out.println("Error loading post");
+        }
       }
-    }}
-    catch(Exception e){
-        e.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
-  
+
   /**
    * Attempts to create a new Post object, and passes it to the memeIO object.
    */
-  @FXML public void handleAddContent() {
+  @FXML
+  public void handleAddContent() {
     String caption = inputTextField.getText();
     File image = selectedImage;
 
@@ -130,20 +137,19 @@ public class BrowserController {
       updatePosts();
     }
   }
-  
+
   /**
-   * Shows a  fileselect menu for images.
+   * Shows a fileselect menu for images.
    */
   public void imageFileChooser() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Pick a meme");
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("All image files", "*.jpeg", "*.png", "*.jpg", "*.gif"),
-        new FileChooser.ExtensionFilter("JPG files", "*.jpg"),
+        new FileChooser.ExtensionFilter("JPG files", "*.jpg"), 
         new FileChooser.ExtensionFilter("PNG files", "*.png"),
-        new FileChooser.ExtensionFilter("JPEG files", "*.jpeg"),
-        new FileChooser.ExtensionFilter("GIF files", "*.gif")
-    );
+        new FileChooser.ExtensionFilter("JPEG files", "*.jpeg"), 
+        new FileChooser.ExtensionFilter("GIF files", "*.gif"));
     File file = fileChooser.showOpenDialog(null);
     if (file != null) {
       selectedImage = file;
@@ -157,10 +163,10 @@ public class BrowserController {
   }
 
   /**
-   * Closes the browser and returns to the Login-screen, clearing active user
+   * Closes the browser and returns to the Login-screen, clearing active user.
    */
   @FXML
-  public void handleLogOut(){
+  public void handleLogOut() {
     parent.handleLogOut();
   }
 

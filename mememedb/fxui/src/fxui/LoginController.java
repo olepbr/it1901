@@ -25,24 +25,40 @@ public class LoginController {
   // private ArrayList<User> users = new ArrayList<>();
 
   // login
-  @FXML private AnchorPane loginAnchorPane;
-  @FXML private TextField loginUsername;
-  @FXML private PasswordField loginPasswordText;
-  @FXML private Button loginButton;
-  @FXML private Button registerButton;
-  @FXML private Label loginWarning;
+  @FXML
+  private AnchorPane loginAnchorPane;
+  @FXML
+  private TextField loginUsername;
+  @FXML
+  private PasswordField loginPasswordText;
+  @FXML
+  private Button loginButton;
+  @FXML
+  private Button registerButton;
+  @FXML
+  private Label loginWarning;
 
   // register
-  @FXML private AnchorPane registerAnchorPane;
-  @FXML private TextField nameTextField;
-  @FXML private TextField emailTextField;
-  @FXML private TextField usernameTextField;
-  @FXML private PasswordField passwordTextField;
-  @FXML private Button createUserButton;
-  @FXML private Label nameWarning;
-  @FXML private Label usernameWarning;
-  @FXML private Label emailWarning;
-  @FXML private Label passwordWarning;
+  @FXML
+  private AnchorPane registerAnchorPane;
+  @FXML
+  private TextField nameTextField;
+  @FXML
+  private TextField emailTextField;
+  @FXML
+  private TextField usernameTextField;
+  @FXML
+  private PasswordField passwordTextField;
+  @FXML
+  private Button createUserButton;
+  @FXML
+  private Label nameWarning;
+  @FXML
+  private Label usernameWarning;
+  @FXML
+  private Label emailWarning;
+  @FXML
+  private Label passwordWarning;
 
   public void setParent(AppController parent) {
     this.parent = parent;
@@ -61,11 +77,9 @@ public class LoginController {
 
   /**
    * Logs in a user when the correct email and password combo is used.
-   *
-   * @param event
    */
   @FXML
-  private void login(ActionEvent event) {
+  private void login() {
     String username = loginUsername.getText();
     String password = loginPasswordText.getText();
     if (database.tryLogin(username, password) != null) {
@@ -77,23 +91,19 @@ public class LoginController {
 
   /**
    * Switches panes if the registerButton is clicked.
-   *
-   * @param e
    */
   @FXML
-  private void registerClick(ActionEvent e) {
+  private void registerClick() {
     loginAnchorPane.setVisible(false);
     registerAnchorPane.setVisible(true);
   }
 
   /**
    * Checks if all the strings in TextFields are valid.
-   *
-   * @param e
-   *     <p>Creates a new User object and saves it in database if all the fields are valid.
+   * Creates a new User object and saves it in database if all the fields are valid.     
    */
   @FXML
-  private void createUser(ActionEvent e) {
+  private void createUser() {
     String email = emailTextField.getText();
     String name = nameTextField.getText();
     String username = usernameTextField.getText();
