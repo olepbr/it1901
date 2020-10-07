@@ -6,83 +6,83 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+
+import static org.mockito.Mockito.*;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.File;
 
 
 public class AppTest extends ApplicationTest {
+    
     private Parent parent;
     private AppController controller;
+    private LoginController loginController;
+    private BrowserController browserController;
 
-    @Mock
-    FileChooser fileChooser = Mockito.mock(FileChooser.class);
+  
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ui/App.fxml"));
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("App.fxml"));
         parent = fxmlLoader.load();
         controller = fxmlLoader.getController();
         stage.setScene(new Scene(parent));
         stage.show();
     }
 
-    @Test
-    public void testButtons() {
-        final Button logoutButton = (Button) parent.lookup("#logout");
-        final Button addContent = (Button) parent.lookup("#addContent");
-        final Button registerClick = (Button) parent.lookup("#registerClick");
-        final Button browseButton = (Button) parent.lookup("browsebutton");
-        clickOn(addContent);
-        clickOn(logoutButton);
-        clickOn(registerClick);
+    public void register(){
+        final Button registerButton = (Button) parent.lookup("#registerButton");
+        clickOn(registerButton);
+
+        final TextField nameTextField = (TextField) parent.lookup("#nameTextField");
+        final TextField emailTextField = (TextField) parent.lookup("#emailTextField");
+        final TextField usernameTextField = (TextField) parent.lookup("#usernameTextField");
+        final PasswordField passwordTextField = (PasswordField) parent.lookup("#passwordTextField");
+        
+        final Button createUserButton = (Button) parent.lookup("#createUserButton");
+
+
+        clickOn(nameTextField);
+        write("John Doe");
+        clickOn(emailTextField);
+        write("johndoe@example.com");
+        clickOn(usernameTextField);
+        write("DoeMan69");
+        clickOn(passwordTextField);
+        write("iLoveMyMom123");
+
+        clickOn(createUserButton);
     }
 
 
     @Test
-    public void testTextFields(){
-        //Browser
-        final TextField inputField = (TextField) parent.lookup("inputTextField");
-        //Register
-        final TextField nameTextField = (TextField) parent.lookup("nameTextField");
-        final TextField emailTextField = (TextField) parent.lookup("emailTextField");
-        final TextField usernameTextField = (TextField) parent.lookup("usernameTextField");
-        final PasswordField passwordTextField = (PasswordField) parent.lookup("passwordTextField");
-        //Login
-        final TextField loginUsername = (TextField) parent.lookup("loginUsername");
-        final PasswordField loginPasswordText = (PasswordField) parent.lookup("loginPassWordText");
-        clickOn(inputField);
-        write("This is a caption");
-
-
+    public void registerTest(){
+        register();
     }
-
-
-
-
-
+/*
     @Test
-    public void testAddContent(){
-        final TextField inputField = (TextField) parent.lookup("inputTextField");
-        final Button browseButton = (Button) parent.lookup("browsebutton");
+    public void testAddFile(){
+      register();
+      final Button browseButton = (Button) parent.lookup("#browseButton");
+      final TextField inputTextField = (TextField) parent.lookup("#inputTextField");
+      
+      
+      browserController.setImg("pangolin.jpg");
+      File inputFile = new File(getClass().getClassLoader().getResource("pangolin.jpg").getPath());
+      when(fileChooser.showOpenDialog(this.targetWindow())).thenReturn(inputFile);
 
-        clickOn(browseButton);
-        File inputFile = new File(getClass().getClassLoader().getResource("pangolin.png").getPath());
-
+      clickOn(inputTextField);
+      write("This is a very nice animal");
+        
     }
 
-
-    @Test
-    public void testSwitchLoginScenes(){
-        final Button registerClick = (Button) parent.lookup("#registerClick");
-        clickOn(registerClick);
-
-    }
+    */
 
 
 
