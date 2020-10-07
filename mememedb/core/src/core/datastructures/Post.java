@@ -11,6 +11,7 @@ public class Post {
 
   /**
    * Initializes a Post object.
+   *
    * @param owner The owner of the post.
    * @param caption The post's caption.
    * @param image The image of the post.

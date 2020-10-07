@@ -82,7 +82,7 @@ public class Database {
   }
 
   /**
-   * Fetches a list of all users in the database
+   * Fetches a list of all users in the database.
    *
    * @return returns a list of all users
    */
@@ -120,7 +120,7 @@ public class Database {
   /**
    * Checks if the input username already exists in the database.
    *
-   * @param username
+   * @param username The username to check
    * @return true if the username exists in the database
    */
   public boolean usernameExists(String username) {
@@ -137,7 +137,7 @@ public class Database {
    *
    * @return a new ID for a user being created.
    */
-  public int getNewID() {
+  public int getNewId() {
     int id = users.size();
     id++;
     return id;

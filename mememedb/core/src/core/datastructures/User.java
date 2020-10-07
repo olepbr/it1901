@@ -1,7 +1,6 @@
 package core.datastructures;
 
 import com.google.common.hash.Hashing;
-
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class User {
 
   /**
    * Initializes a User object.
-   * 
+   *
    * @param id This user's id.
    * @param name This user's name.
    * @param nickname This user's nickname.
@@ -78,8 +77,15 @@ public class User {
     posts.add(post);
   }
 
-  public String hashPassword(String password){
-    String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+  /**
+   * Hashes the given String using SHA256 encryption.
+   *
+   * @param password The password to check
+   * @return The hashed password as String
+   */
+  public String hashPassword(String password) {
+    String hashedPassword = Hashing.sha256().hashString(
+        password, StandardCharsets.UTF_8).toString();
     return hashedPassword;
   }
 
