@@ -95,6 +95,7 @@ public class BrowserController {
         ((PostController) subContentLoader.getController()).setDatabase(database);
         ((PostController) subContentLoader.getController()).setPost(post);
       } catch (IOException e) {
+        e.printStackTrace();
         System.out.println("Error loading post");
       }
     }}

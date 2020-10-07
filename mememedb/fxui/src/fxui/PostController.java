@@ -16,6 +16,7 @@ public class PostController {
   // User activeUser;
   @FXML ImageView postImage;
   @FXML Label postText;
+  @FXML Label postPoster;
 
   /**
    * Sets current active User.
@@ -41,6 +42,7 @@ public class PostController {
       e.printStackTrace();
     }
     postText.setText(this.post.getText());
+    postPoster.setText("Made by " + this.post.getOwner());
   }
 
   /**
