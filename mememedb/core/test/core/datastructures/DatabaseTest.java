@@ -68,6 +68,16 @@ public class DatabaseTest {
     assertEquals(new ArrayList<Post>(Arrays.asList(post1, post2, post3)), database.getPostList(), "Database does not return posts after addition");
   }
 
+  @Test
+  public void TestIdAssigner() {
+    final IO mockIO = mock(IO.class);
+    Database database = new Database(mockIO);
+    doReturn(testData).when(mockIO).getUserList();
+    assertEquals(1, database.getNewID(), "Error in id assignment, expected 1, got " + database.getNewID());
+    database.reload();
+    assertEquals(3, database.getNewID(), "Error in id assignment, expected 3, got " + database.getNewID());
+  }
+
 
   
 

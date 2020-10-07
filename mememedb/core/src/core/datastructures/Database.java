@@ -24,7 +24,6 @@ public class Database {
     reload();
   }
 
-<<<<<<< HEAD
   /**
    * Generates a new database object, using the given IO-object to fetch and save data, for testing purposes
    * 
@@ -40,11 +39,11 @@ public class Database {
   /**
    * Removes cached database, and reloads from storage.
    */
-=======
-  /** Removes cached database, and reloads from storage. */
->>>>>>> da1feec33bd41bbf388a717fb7e8c7298c333327
   public void reload() {
     users = storage.getUserList();
+    if(users == null){
+      users = new ArrayList<User>();
+    }
   }
 
   /** Saves cached database, overwriting previous data in storage. */
