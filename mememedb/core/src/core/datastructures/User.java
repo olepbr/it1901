@@ -21,7 +21,6 @@ public class User {
   private String hashedPassword;
 
   public User() {
-
   }
 
   /**
@@ -30,7 +29,7 @@ public class User {
    * @param id This user's id.
    * @param name This user's name.
    * @param nickname This user's nickname.
-   * @param email This user's email.
+   * @param email This user's email.A
    */
   public User(int id, String name, String nickname, String email) {
     this.id = id;

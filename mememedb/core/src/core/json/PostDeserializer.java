@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import core.datastructures.Post;
 
-public class PostDeserializer extends JsonDeserializer<Post> {
+class PostDeserializer extends JsonDeserializer<Post> {
 
   @Override
   public Post deserialize(JsonParser parser, DeserializationContext ctxt) 

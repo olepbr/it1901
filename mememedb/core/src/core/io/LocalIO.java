@@ -2,6 +2,7 @@ package core.io;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.datastructures.Database;
 import core.datastructures.Post;
 import core.datastructures.User;
 import core.json.MememeModule;
@@ -14,7 +15,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 
 /** IO implementation for local file system */
 public class LocalIO implements IO {
@@ -163,14 +163,13 @@ public class LocalIO implements IO {
   }
 
   @Override
-  public List<User> getUserList() {
+  public Database getDatabase() {
     // TODO Implement userList fetching
     return null;
   }
 
   @Override
-  public void save(List<User> userlist) {
+  public void saveDatabase(Database database) {
     // TODO Implement updating of json storage
-
   }
 }

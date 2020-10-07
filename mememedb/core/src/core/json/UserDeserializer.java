@@ -16,12 +16,11 @@ import java.io.IOException;
 import core.datastructures.Post;
 import core.datastructures.User;
 
-public class UserDeserializer extends JsonDeserializer<User> {
+class UserDeserializer extends JsonDeserializer<User> {
 
   /**
-   * Class for deserializing JSON into User objects 
-   * format: { "id": "...", "name": "...", "nickname": "...", 
-   * "email": "...", "posts": [ ... ] }
+   * Class for deserializing JSON into User objects format: { "id": "...", "name": "...", "nickname":
+   * "...", "email": "...", "posts": [ ... ] }
    * 
    * @author Ole Peder Brandtzæg
    */
@@ -32,8 +31,12 @@ public class UserDeserializer extends JsonDeserializer<User> {
   public User deserialize(JsonParser parser, DeserializationContext ctxt) 
       throws IOException, JsonProcessingException {
     TreeNode treeNode = parser.getCodec().readTree(parser);
-    if (treeNode instanceof ObjectNode) {
-      ObjectNode objectNode = (ObjectNode) treeNode;
+    return deserialize((JsonNode) treeNode);
+  }
+
+  public User deserialize(JsonNode jsonNode) {
+    if (jsonNode instanceof ObjectNode) {
+      ObjectNode objectNode = (ObjectNode) jsonNode;
       User user = new User();
       JsonNode idNode = objectNode.get("id");
       if (idNode instanceof IntNode) {

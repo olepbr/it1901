@@ -1,11 +1,8 @@
 package core.io;
 
+import core.datastructures.Database;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-
-import core.datastructures.Post;
-import core.datastructures.User;
 
 
 public interface IO {
@@ -27,18 +24,18 @@ public interface IO {
   public File getImageFromName(String name);
 
   /**
-   * Gets a List containing all users in the app
+   * Gets a database of users.
    * 
-   * @return A List containing all currently stored users
+   * @return A database containing currently stored users.
    */
-  public List<User> getUserList();
+  public Database getDatabase();
 
   /**
-   * Writes the given userlist to file.
+   * Writes the given database to file.
    * 
-   * @param userlist The List to save;
+   * @param database The database to save;
    */
-  public void save(List<User> userlist);
+  public void saveDatabase(Database database);
 }
 
 

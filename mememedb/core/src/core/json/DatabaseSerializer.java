@@ -10,9 +10,9 @@ import core.datastructures.User;
 class DatabaseSerializer extends JsonSerializer<Database> {
 
 	/**
-	 * Class for serializing a database of users 
+	 * Class for serializing a database of users
 	 * format: { "users": [ ... ] }
-	 * 
+	 *
 	 * @author Ole Peder Brandtzæg
 	 * 
 	 */

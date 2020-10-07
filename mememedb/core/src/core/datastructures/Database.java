@@ -21,34 +21,11 @@ public class Database {
   public Database() {
     storage = new LocalIO();
     users = new ArrayList<User>();
-    reload();
-  }
-
-  /**
-   * Generates a new database object, using the given IO-object to fetch and save data, for testing purposes
-   * 
-   * @param io The IO to use
-   */
-  public Database(IO io){
-    storage = io;
-    users = new ArrayList<User>();
-    reload();
-  }
-
-
-  /**
-   * Removes cached database, and reloads from storage.
-   */
-  public void reload() {
-    users = storage.getUserList();
-    if(users == null){
-      users = new ArrayList<User>();
-    }
   }
 
   /** Saves cached database, overwriting previous data in storage. */
   public void saveToStorage() {
-    storage.save(users);
+    storage.saveDatabase(this);
   }
 
   /**
@@ -74,10 +51,10 @@ public class Database {
    * @param user The User to save.
    */
   public void saveUser(User user) {
-    if (!users.contains(user)) {
+    if (! users.contains(user)) {
       users.add(user);
+      saveToStorage();
     }
-    saveToStorage();
   }
 
   /**

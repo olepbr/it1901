@@ -9,7 +9,7 @@ import java.io.IOException;
 import core.datastructures.Post;
 import core.datastructures.User;
 
-public class UserSerializer extends JsonSerializer<User> {
+class UserSerializer extends JsonSerializer<User> {
 
   /**
    * Class for serializing User objects format: { "id": "...", "name": "...", "nickname": "...",

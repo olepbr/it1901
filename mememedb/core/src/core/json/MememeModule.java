@@ -29,6 +29,8 @@ public class MememeModule extends SimpleModule {
     addSerializer(Database.class, new DatabaseSerializer());
     addDeserializer(Post.class, new PostDeserializer());
     addDeserializer(User.class, new UserDeserializer());
+    addDeserializer(Database.class, new DatabaseDeserializer());
+    mapper.registerModule(this);
   }
 
   /**
@@ -39,7 +41,6 @@ public class MememeModule extends SimpleModule {
    * @throws JsonProcessingException [TODO:description]
    */
   public static String serializeUser(User user) throws JsonProcessingException {
-    mapper.registerModule(new MememeModule());
     return (mapper.writeValueAsString(user));
   }
 
@@ -51,7 +52,6 @@ public class MememeModule extends SimpleModule {
    * @throws JsonProcessingException [TODO:description]
    */
   public static User deserializeUser(String user) throws JsonProcessingException {
-    mapper.registerModule(new MememeModule());
     return (mapper.readValue(user, User.class));
   }
 
@@ -63,7 +63,6 @@ public class MememeModule extends SimpleModule {
    * @throws IOException [TODO:description]
    */
   public static User deserializeUser(File file) throws IOException {
-    mapper.registerModule(new MememeModule());
     return (mapper.readValue(file, User.class));
   }
 
@@ -75,7 +74,6 @@ public class MememeModule extends SimpleModule {
    * @throws IOException [TODO:description]
    */
   public static User deserializeUser(Reader reader) throws IOException {
-    mapper.registerModule(new MememeModule());
     return (mapper.readValue(reader, User.class));
   }
 
@@ -87,7 +85,6 @@ public class MememeModule extends SimpleModule {
    * @throws JsonProcessingException [TODO:description]
    */
   public static String serializePost(Post post) throws JsonProcessingException {
-    mapper.registerModule(new MememeModule());
     return (mapper.writeValueAsString(post));
   }
 
@@ -99,7 +96,6 @@ public class MememeModule extends SimpleModule {
    * @throws JsonProcessingException [TODO:description]
    */
   public static Post deserializePost(String post) throws JsonProcessingException {
-    mapper.registerModule(new MememeModule());
     return (mapper.readValue(post, Post.class));
   }
 }
