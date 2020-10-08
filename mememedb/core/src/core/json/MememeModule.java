@@ -98,4 +98,12 @@ public class MememeModule extends SimpleModule {
   public static Post deserializePost(String post) throws JsonProcessingException {
     return (mapper.readValue(post, Post.class));
   }
+
+  public static String serializeDatabase(Database database) throws JsonProcessingException {
+    return (mapper.writeValueAsString(database));
+  }
+
+  public static Database deserializeDatabase(Reader reader) throws IOException {
+    return (mapper.readValue(reader, Database.class));
+  }
 }
