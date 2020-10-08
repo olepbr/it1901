@@ -3,6 +3,9 @@ package fxui;
 //Mememedb
 import core.datastructures.Database;
 import core.datastructures.User;
+import core.io.IO;
+import core.io.LocalIO;
+
 //File utilities
 import java.io.IOException;
 //Import javafx stuff
@@ -23,7 +26,8 @@ public class AppController {
    * Initializes the application, and loads the starter login interface.
    */
   @FXML public void initialize() {
-    database = new Database();
+    IO io = new LocalIO();
+    database = new Database(io);
     // Set up Browser window, and add it to the scene
     handleLogOut();
   }

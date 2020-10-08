@@ -89,6 +89,10 @@ public class User {
     return hashedPassword;
   }
 
+  public void setHashedPassword(String password){
+    this.hashedPassword = password;
+  }
+
   public void setPassword(String password) {
     this.hashedPassword = hashPassword(password);
   }

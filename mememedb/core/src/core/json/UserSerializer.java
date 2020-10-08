@@ -13,7 +13,7 @@ class UserSerializer extends JsonSerializer<User> {
 
   /**
    * Class for serializing User objects format: { "id": "...", "name": "...", "nickname": "...",
-   * "email": "...", "posts": [ ... ] }
+   * "email": "...", "password": "...", "posts": [ ... ] }
    * 
    * @author Ole Peder Brandtzæg
    * 
@@ -27,6 +27,7 @@ class UserSerializer extends JsonSerializer<User> {
     jsonGen.writeStringField("name", user.getName());
     jsonGen.writeStringField("nickname", user.getNickname());
     jsonGen.writeStringField("email", user.getEmail());
+    jsonGen.writeStringField("password", user.getPassword());
     jsonGen.writeArrayFieldStart("posts");
     for (Post post : user.getPosts()) {
       jsonGen.writeObject(post);

@@ -1,7 +1,6 @@
 package core.datastructures;
 
 import core.io.IO;
-import core.io.LocalIO;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,26 +14,26 @@ public class Database {
   private IO storage;
 
   /**
-   * Generates a new database object, Database contains all Users and Posts of the app, and
-   * corresponds with an IO-object to read and write data.
+   * Generates a new empty database object, Database contains all Users and Posts of the app.
    */
   public Database() {
-    storage = new LocalIO();
     users = new ArrayList<User>();
   }
 
   /**
-   * Generates a new database object, Database contains all Users and Posts of the app, and
-   * corresponds with an IO-object to read and write data.
+   * Generates a new database object, Initialized with data from the given IO
+   * Stores database changes using the IO
    */
   public Database(IO io) {
     storage = io;
-    users = new ArrayList<User>();
+    users = io.getDatabase().getUsers();
   }
 
   /** Saves cached database, overwriting previous data in storage. */
   public void saveToStorage() {
-    storage.saveDatabase(this);
+    if(storage != null){
+      storage.saveDatabase(this);
+    }
   }
 
   /**
@@ -110,7 +109,7 @@ public class Database {
   public User tryLogin(String username, String password) {
     for (User user : users) {
       if ((user.getEmail().equals(username) || user.getNickname().equals(username))
-          && user.getPassword().equals(password)) {
+          && user.getPassword().equals(user.hashPassword(password))) {
         return user;
       }
     }

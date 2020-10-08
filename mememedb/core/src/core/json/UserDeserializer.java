@@ -54,6 +54,10 @@ class UserDeserializer extends JsonDeserializer<User> {
       if (emailNode instanceof TextNode) {
         user.setEmail(((TextNode) emailNode).asText());
       }
+      JsonNode passwordNode = objectNode.get("password");
+      if (passwordNode instanceof TextNode) {
+        user.setHashedPassword(((TextNode) passwordNode).asText());
+      }
       JsonNode postsNode = objectNode.get("posts");
       if (postsNode instanceof ArrayNode) {
         for (JsonNode elementNode : ((ArrayNode) postsNode)) {
