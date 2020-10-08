@@ -132,7 +132,8 @@ public class LocalIO implements IO {
    */
   public void saveImage(File image) throws IOException {
     // Create directory if it does not exist
-    if (!imageDir.isDirectory() && imageDir.mkdir()) {
+    System.out.println(imageDir.isDirectory());
+    if (imageDir.isDirectory() || imageDir.mkdir()) {
       String absPath = imageDir.getAbsolutePath() + "/" + image.getName();
       File file = new File(absPath);
       if (!file.exists()) {
