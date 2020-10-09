@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-/** IO implementation for local file system */
+/** IO implementation for local file system. */
 public class LocalIO implements IO {
 
   private ObjectMapper mapper;
@@ -48,9 +48,8 @@ public class LocalIO implements IO {
         System.err.println("Could not read user.json from home folder.");
         e.printStackTrace();
       }
-    }
-    // If not, try reading from skeleton in resources
-    else {
+    } else {
+      // If not, try reading from skeleton in resources
       URL skeletonUrl = getClass().getResource("/data/user.json");
       try {
         reader = new InputStreamReader(skeletonUrl.openStream(), StandardCharsets.UTF_8);
@@ -164,7 +163,7 @@ public class LocalIO implements IO {
   public void saveDatabase(Database database) {
     FileWriter writer = null;
     try {
-      writer = new FileWriter(userFile);
+      writer = new FileWriter(userFile, StandardCharsets.UTF_8);
       writer.write(MememeModule.serializeDatabase(database));
     } catch (JsonProcessingException e) {
       System.out.println("Error processing data serialization");
@@ -173,11 +172,13 @@ public class LocalIO implements IO {
       System.out.println("Error writing to file");
       e.printStackTrace();
     } finally {
-      try {
-        writer.close();
-      } catch (IOException e) {
-        System.out.println("Error closing file");
-        e.printStackTrace();
+      if (writer != null) {
+        try {
+          writer.close();
+        } catch (IOException e) {
+          System.out.println("Error closing file");
+          e.printStackTrace();
+        }
       }
     }
   }

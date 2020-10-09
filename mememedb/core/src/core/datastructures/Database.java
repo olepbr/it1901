@@ -13,14 +13,14 @@ public class Database {
 
   private IO storage;
 
-  /** Generates a new empty database object, Database contains all Users and Posts of the app. */
+  /** Generates a new empty database object. Database contains all Users and Posts of the app. */
   public Database() {
     users = new ArrayList<User>();
   }
 
   /**
-   * Generates a new database object, Initialized with data from the given IO Stores database
-   * changes using the IO
+   * Generates a new database object, Initialized with data from the given IO Stores database.
+   * changes using the IO.
    */
   public Database(IO io) {
     storage = io;
