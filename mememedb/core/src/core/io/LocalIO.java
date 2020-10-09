@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.Database;
-import core.datastructures.Post;
-import core.datastructures.User;
 import core.json.MememeModule;
 import java.io.File;
 import java.io.FileReader;
@@ -13,7 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.Writer;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -29,8 +26,8 @@ public class LocalIO implements IO {
   private File imageDir;
 
   /**
-   * Constructor. Initializes database object from file or skeleton. Also checks for
-   * image folder and copies images from resources.
+   * Constructor. Initializes database object from file or skeleton. Also checks for image folder
+   * and copies images from resources.
    */
   public LocalIO() {
     // Create object for json-parsing
@@ -159,6 +156,11 @@ public class LocalIO implements IO {
     return database;
   }
 
+  /**
+   * Writes serialized data to file.
+   *
+   * @param database Database object with data.
+   */
   public void saveDatabase(Database database) {
     FileWriter writer = null;
     try {
