@@ -2,7 +2,6 @@ package fxui;
 
 import core.datastructures.Database;
 import core.datastructures.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,54 +10,36 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import org.apache.commons.validator.routines.EmailValidator;
 
+/**
+ * Controller class for the login- and register panes.
+ *
+ * @author Hanna Thevik
+ */
 public class LoginController {
 
-  /**
-   * Controller class for the login- and register panes.
-   *
-   * @author Hanna Thevik
-   */
   private Database database;
 
   private AppController parent;
-  // private User user;
-  // private ArrayList<User> users = new ArrayList<>();
 
   // login
-  @FXML
-  private AnchorPane loginAnchorPane;
-  @FXML
-  private TextField loginUsername;
-  @FXML
-  private PasswordField loginPasswordText;
-  @FXML
-  private Button loginButton;
-  @FXML
-  private Button registerButton;
-  @FXML
-  private Label loginWarning;
+  @FXML private AnchorPane loginAnchorPane;
+  @FXML private TextField loginUsername;
+  @FXML private PasswordField loginPasswordText;
+  @FXML private Button loginButton;
+  @FXML private Button registerButton;
+  @FXML private Label loginWarning;
 
   // register
-  @FXML
-  private AnchorPane registerAnchorPane;
-  @FXML
-  private TextField nameTextField;
-  @FXML
-  private TextField emailTextField;
-  @FXML
-  private TextField usernameTextField;
-  @FXML
-  private PasswordField passwordTextField;
-  @FXML
-  private Button createUserButton;
-  @FXML
-  private Label nameWarning;
-  @FXML
-  private Label usernameWarning;
-  @FXML
-  private Label emailWarning;
-  @FXML
-  private Label passwordWarning;
+  @FXML private AnchorPane registerAnchorPane;
+  @FXML private TextField nameTextField;
+  @FXML private TextField emailTextField;
+  @FXML private TextField usernameTextField;
+  @FXML private PasswordField passwordTextField;
+  @FXML private Button createUserButton;
+  @FXML private Label nameWarning;
+  @FXML private Label usernameWarning;
+  @FXML private Label emailWarning;
+  @FXML private Label passwordWarning;
 
   public void setParent(AppController parent) {
     this.parent = parent;
@@ -75,9 +56,7 @@ public class LoginController {
     registerAnchorPane.setVisible(false);
   }
 
-  /**
-   * Logs in a user when the correct email and password combo is used.
-   */
+  /** Logs in a user when the correct email and password combo is used. */
   @FXML
   private void login() {
     String username = loginUsername.getText();
@@ -89,9 +68,7 @@ public class LoginController {
     }
   }
 
-  /**
-   * Switches panes if the registerButton is clicked.
-   */
+  /** Switches panes if the registerButton is clicked. */
   @FXML
   private void registerClick() {
     loginAnchorPane.setVisible(false);
@@ -99,8 +76,8 @@ public class LoginController {
   }
 
   /**
-   * Checks if all the strings in TextFields are valid.
-   * Creates a new User object and saves it in database if all the fields are valid.     
+   * Checks if all the strings in TextFields are valid. Creates a new User object and saves it in
+   * database if all the fields are valid.
    */
   @FXML
   private void createUser() {

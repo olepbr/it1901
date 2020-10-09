@@ -1,18 +1,13 @@
 package fxui;
 
-//Mememedb
 import core.datastructures.Database;
 import core.datastructures.User;
 import core.io.IO;
 import core.io.LocalIO;
-
-//File utilities
 import java.io.IOException;
-//Import javafx stuff
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-
 
 public class AppController {
 
@@ -22,16 +17,15 @@ public class AppController {
 
   @FXML AnchorPane window;
 
-  /**
-   * Initializes the application, and loads the starter login interface.
-   */
-  @FXML public void initialize() {
+  /** Initializes the application, and loads the starter login interface. */
+  @FXML
+  public void initialize() {
     IO io = new LocalIO();
     database = new Database(io);
     // Set up Browser window, and add it to the scene
     handleLogOut();
   }
-  
+
   /**
    * Updates active User of app, and switches over to Browser ui.
    *
@@ -41,8 +35,8 @@ public class AppController {
     activeUser = user;
     window.getChildren().clear();
     AnchorPane browser = new AnchorPane();
-    FXMLLoader subContentLoader = new FXMLLoader(
-        getClass().getClassLoader().getResource("Browser.fxml"));
+    FXMLLoader subContentLoader =
+        new FXMLLoader(getClass().getClassLoader().getResource("Browser.fxml"));
     subContentLoader.setController(getClass().getResource("BrowserController.java"));
     subContentLoader.setRoot(browser);
     window.getChildren().add(browser);
@@ -57,17 +51,14 @@ public class AppController {
       System.out.println("Error loading content browser");
     }
   }
-  
-  
-  /**
-   * Clears active User, and returns to login ui.
-   */
+
+  /** Clears active User, and returns to login ui. */
   public void handleLogOut() {
     activeUser = null;
     window.getChildren().clear();
     AnchorPane login = new AnchorPane();
-    FXMLLoader subContentLoader = new FXMLLoader(
-        getClass().getClassLoader().getResource("Login.fxml"));
+    FXMLLoader subContentLoader =
+        new FXMLLoader(getClass().getClassLoader().getResource("Login.fxml"));
     subContentLoader.setController(getClass().getResource("LoginController.java"));
     subContentLoader.setRoot(login);
     window.getChildren().add(login);
@@ -80,8 +71,4 @@ public class AppController {
       System.out.println("Error loading content browser");
     }
   }
-
-
-
-
 }

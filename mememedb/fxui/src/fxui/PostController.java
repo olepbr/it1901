@@ -13,13 +13,9 @@ public class PostController {
 
   Post post;
   Database database;
-  // User activeUser;
-  @FXML
-  ImageView postImage;
-  @FXML
-  Label postText;
-  @FXML
-  Label postPoster;
+  @FXML ImageView postImage;
+  @FXML Label postText;
+  @FXML Label postPoster;
 
   /**
    * Sets and displays the post this controller should correspond to.
