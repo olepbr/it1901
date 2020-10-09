@@ -3,24 +3,20 @@ package core.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
-import java.io.IOException;
-
 import core.datastructures.Post;
 import core.datastructures.User;
+import java.io.IOException;
 
+/**
+ * Class for serializing User objects format: { "id": "...", "name": "...", "nickname": "...",
+ * "email": "...", "password": "...", "posts": [ ... ] }
+ *
+ * @author Ole Peder Brandtzæg
+ */
 class UserSerializer extends JsonSerializer<User> {
 
-  /**
-   * Class for serializing User objects format: { "id": "...", "name": "...", "nickname": "...",
-   * "email": "...", "password": "...", "posts": [ ... ] }
-   * 
-   * @author Ole Peder Brandtzæg
-   * 
-   */
-
   @Override
-  public void serialize(User user, JsonGenerator jsonGen, SerializerProvider serializerProvider) 
+  public void serialize(User user, JsonGenerator jsonGen, SerializerProvider serializerProvider)
       throws IOException {
     jsonGen.writeStartObject();
     jsonGen.writeNumberField("id", user.getId());

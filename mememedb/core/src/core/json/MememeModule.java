@@ -23,7 +23,7 @@ public class MememeModule extends SimpleModule {
 
   /** Initializes a MememeModule object with serializers and deserializers. */
   public MememeModule() {
-	super(NAME, Version.unknownVersion());
+    super(NAME, Version.unknownVersion());
     addSerializer(Post.class, new PostSerializer());
     addSerializer(User.class, new UserSerializer());
     addSerializer(Database.class, new DatabaseSerializer());
@@ -33,68 +33,26 @@ public class MememeModule extends SimpleModule {
     mapper.registerModule(this);
   }
 
-  /**
-   * [TODO:description]
-   *
-   * @param user [TODO:description]
-   * @return [TODO:description]
-   * @throws JsonProcessingException [TODO:description]
-   */
   public static String serializeUser(User user) throws JsonProcessingException {
     return (mapper.writeValueAsString(user));
   }
 
-  /**
-   * [TODO:description]
-   *
-   * @param user [TODO:description]
-   * @return [TODO:description]
-   * @throws JsonProcessingException [TODO:description]
-   */
   public static User deserializeUser(String user) throws JsonProcessingException {
     return (mapper.readValue(user, User.class));
   }
 
-  /**
-   * [TODO:description]
-   *
-   * @param file [TODO:description]
-   * @return [TODO:description]
-   * @throws IOException [TODO:description]
-   */
   public static User deserializeUser(File file) throws IOException {
     return (mapper.readValue(file, User.class));
   }
 
-  /**
-   * [TODO:description]
-   *
-   * @param reader [TODO:description]
-   * @return [TODO:description]
-   * @throws IOException [TODO:description]
-   */
   public static User deserializeUser(Reader reader) throws IOException {
     return (mapper.readValue(reader, User.class));
   }
 
-  /**
-   * [TODO:description]
-   *
-   * @param post [TODO:description]
-   * @return [TODO:description]
-   * @throws JsonProcessingException [TODO:description]
-   */
   public static String serializePost(Post post) throws JsonProcessingException {
     return (mapper.writeValueAsString(post));
   }
 
-  /**
-   * [TODO:description]
-   *
-   * @param post [TODO:description]
-   * @return [TODO:description]
-   * @throws JsonProcessingException [TODO:description]
-   */
   public static Post deserializePost(String post) throws JsonProcessingException {
     return (mapper.readValue(post, Post.class));
   }

@@ -6,17 +6,15 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import core.datastructures.Post;
 import java.io.IOException;
 
+/**
+ * Class for serializing Post objects format: { "owner": "...", "caption": "...", "image": "..." }
+ *
+ * @author Ole Peder Brandtzæg
+ */
 class PostSerializer extends JsonSerializer<Post> {
 
-  /**
-   * Class for serializing Post objects format: { "owner": "...", "caption": "...", "image": "..." }
-   * 
-   * @author Ole Peder Brandtzæg
-   * 
-   */
-
   @Override
-  public void serialize(Post post, JsonGenerator jsonGen, SerializerProvider serializerProvider) 
+  public void serialize(Post post, JsonGenerator jsonGen, SerializerProvider serializerProvider)
       throws IOException {
     jsonGen.writeStartObject();
     jsonGen.writeStringField("owner", post.getOwner());

@@ -12,17 +12,23 @@ import core.datastructures.Database;
 import core.datastructures.User;
 import java.io.IOException;
 
+/**
+ * Class for deserializing JSON into Database objects format: { "users": [ ... ] }
+ *
+ * @author Ole Peder Brandtzæg
+ */
 class DatabaseDeserializer extends JsonDeserializer<Database> {
-
-  /**
-   * Class for deserializing JSON into Database objects
-   * format: { "users": [ ... ] }
-   *
-   * @author Ole Peder Brandtzæg
-   */
-
   private UserDeserializer userDeserializer = new UserDeserializer();
 
+  /**
+   * [TODO:description]
+   *
+   * @param parser [TODO:description]
+   * @param ctxt [TODO:description]
+   * @return [TODO:description]
+   * @throws IOException [TODO:description]
+   * @throws JsonProcessingException [TODO:description]
+   */
   @Override
   public Database deserialize(JsonParser parser, DeserializationContext ctxt)
       throws IOException, JsonProcessingException {
@@ -43,5 +49,4 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
     }
     return null;
   }
-
 }

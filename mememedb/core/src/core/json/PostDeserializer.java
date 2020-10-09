@@ -8,15 +8,18 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-
+import core.datastructures.Post;
 import java.io.IOException;
 
-import core.datastructures.Post;
-
+/**
+ * Class for deserializing Post objects format: { "owner": "...", "caption": "...", "image": "..." }
+ *
+ * @author Ole Peder Brandtzæg
+ */
 class PostDeserializer extends JsonDeserializer<Post> {
 
   @Override
-  public Post deserialize(JsonParser parser, DeserializationContext ctxt) 
+  public Post deserialize(JsonParser parser, DeserializationContext ctxt)
       throws IOException, JsonProcessingException {
     TreeNode treeNode = parser.getCodec().readTree(parser);
     return deserialize((JsonNode) treeNode);
@@ -24,11 +27,10 @@ class PostDeserializer extends JsonDeserializer<Post> {
 
   /**
    * Reads a JsonNode and converts it to a Post object.
-   * 
+   *
    * @param jsonNode The node to be read.
    * @return A new Post object containing the information from the JsonNode.
    */
-
   public Post deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode) {
       ObjectNode objectNode = (ObjectNode) jsonNode;
@@ -49,5 +51,4 @@ class PostDeserializer extends JsonDeserializer<Post> {
     }
     return null;
   }
-
 }

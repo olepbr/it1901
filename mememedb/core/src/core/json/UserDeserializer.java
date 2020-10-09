@@ -10,25 +10,22 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-
-import java.io.IOException;
-
 import core.datastructures.Post;
 import core.datastructures.User;
+import java.io.IOException;
 
+/**
+ * Class for deserializing JSON into User objects format: { "id": "...", "name": "...", "nickname":
+ * "...", "email": "...", "posts": [ ... ] }
+ *
+ * @author Ole Peder Brandtzæg
+ */
 class UserDeserializer extends JsonDeserializer<User> {
-
-  /**
-   * Class for deserializing JSON into User objects format: { "id": "...", "name": "...", "nickname":
-   * "...", "email": "...", "posts": [ ... ] }
-   * 
-   * @author Ole Peder Brandtzæg
-   */
 
   private PostDeserializer postDeserializer = new PostDeserializer();
 
   @Override
-  public User deserialize(JsonParser parser, DeserializationContext ctxt) 
+  public User deserialize(JsonParser parser, DeserializationContext ctxt)
       throws IOException, JsonProcessingException {
     TreeNode treeNode = parser.getCodec().readTree(parser);
     return deserialize((JsonNode) treeNode);
@@ -71,5 +68,4 @@ class UserDeserializer extends JsonDeserializer<User> {
     }
     return null;
   }
-
 }
