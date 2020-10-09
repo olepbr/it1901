@@ -1,13 +1,13 @@
 package core.datastructures;
 
+/** Provides a class for representing posts. */
 public class Post {
 
   private String owner;
   private String caption;
   private String image;
 
-  public Post() {
-  }
+  public Post() {}
 
   /**
    * Initializes a Post object.

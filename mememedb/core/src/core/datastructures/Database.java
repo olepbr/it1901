@@ -6,23 +6,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/** Class that represents all the data in the application. */
 public class Database {
 
   private List<User> users;
 
   private IO storage;
 
-  /**
-   * Generates a new empty database object, Database contains all Users and Posts of the app.
-   */
+  /** Generates a new empty database object, Database contains all Users and Posts of the app. */
   public Database() {
     users = new ArrayList<User>();
   }
 
   /**
-   * Generates a new database object, Initialized with data from the given IO
-   * Stores database changes using the IO
+   * Generates a new database object, Initialized with data from the given IO Stores database
+   * changes using the IO
    */
   public Database(IO io) {
     storage = io;
@@ -31,7 +29,7 @@ public class Database {
 
   /** Saves cached database, overwriting previous data in storage. */
   public void saveToStorage() {
-    if(storage != null){
+    if (storage != null) {
       storage.saveDatabase(this);
     }
   }
@@ -59,7 +57,7 @@ public class Database {
    * @param user The User to save.
    */
   public void saveUser(User user) {
-    if (! users.contains(user)) {
+    if (!users.contains(user)) {
       users.add(user);
       saveToStorage();
     }

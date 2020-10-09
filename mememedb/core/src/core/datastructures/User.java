@@ -10,7 +10,6 @@ import java.util.List;
  *
  * @author Magne Halvorsen
  */
-
 public class User {
   private int id;
   private String name;
@@ -19,8 +18,7 @@ public class User {
   private List<Post> posts = new ArrayList<>();
   private String hashedPassword;
 
-  public User() {
-  }
+  public User() {}
 
   /**
    * Initializes a User object.
@@ -84,29 +82,26 @@ public class User {
    * @return The hashed password as String
    */
   public String hashPassword(String password) {
-    String hashedPassword = Hashing.sha256().hashString(
-        password, StandardCharsets.UTF_8).toString();
+    String hashedPassword =
+        Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
     return hashedPassword;
   }
 
-  public void setHashedPassword(String password){
+  public void setHashedPassword(String password) {
     this.hashedPassword = password;
   }
 
   public void setPassword(String password) {
     this.hashedPassword = hashPassword(password);
   }
-  
+
   public String getPassword() {
     return hashedPassword;
   }
-  
-  
-  
+
   @Override
   public String toString() {
-    return String.format("[User id=%d name=%s nickname=%s email=%s", 
-        getId(), getName(), getNickname(), getEmail());
+    return String.format(
+        "[User id=%d name=%s nickname=%s email=%s", getId(), getName(), getNickname(), getEmail());
   }
-
 }
