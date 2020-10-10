@@ -15,7 +15,7 @@ and has the following directory structure:
 * **`<module>/src/resources/`** - contains images etc.
 * **`<module>/test/<module>/<component>`** - contains the tests
 
-The following class diagram shows the outline of the code structure:
+The following class diagram shows the basic outline of the code structure:
 
 ![Class Diagram](ClassDiagram.png)
 ```plantuml
@@ -56,7 +56,7 @@ App --> AppController
 class AppController {
 }
 
-AppController --> PostController
+BrowserController --> PostController
 
 class PostController {
 }
@@ -71,10 +71,6 @@ AppController --> LoginController
 class LoginController {
 }
 
-AppController --> IO
-PostController --> IO
-BrowserController --> IO
-
 interface IO {
     + getPostList(): List<Post>
     + savePost(Post): void
@@ -82,7 +78,6 @@ interface IO {
 }
 
 class LocalIO implements IO
-IO --> Post
 LocalIO --> MememeModule
 
 class MememeModule{
@@ -92,32 +87,15 @@ class MememeModule{
     + deserializePost(String): Post
 }
 
-MememeModule --> User
-MememeModule --> Post
 MememeModule --> PostSerializer
 MememeModule --> PostDeserializer
 MememeModule --> UserSerializer
 MememeModule --> UserDeserializer
+MememeModule --> UserListSerializer
 
-UserListSerializer --> User
-UserSerializer --> User
-UserSerializer --> Post
-UserDeserializer --> User
-UserDeserializer --> Post
-PostSerializer --> Post
-PostDeserializer --> Post
-
-AppController --> User
-AppController --> Post
-AppController --> Database
-BrowserController --> User
-BrowserController --> Post
-BrowserController --> Database
-LoginController --> User
-LoginController --> Database
-PostController --> User
+AppController "activeUser"--> User
+AppController "database"--> Database
 PostController --> Post
-PostController --> Database
 
 class User {
     - id: int
@@ -136,12 +114,13 @@ class Database {
 }
 
 User "1" <--> "*" Post : Owner
-Database --> IO
-Database --> UserListSerializer
+Database "storage" --> IO
+Database --> "*" User
 ```
 
-## User Story
-I want to be able to post a picture to the app, and see it appear on the main page
+## User Stories
+* I want to be able to post a picture to the app, and see it appear on the main page
+* I want to be able to create and log in with my account
 
 ## Maven Goals
 
