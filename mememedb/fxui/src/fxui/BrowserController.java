@@ -110,7 +110,7 @@ public class BrowserController {
       a.setContentText("Please add an image");
       a.show();
     } else {
-      Post post = new Post(activeUser.getName(), caption, image.getName());
+      Post post = new Post(activeUser.getNickname(), caption, image.getName());
       try {
         database.savePost(post, image, activeUser);
       } catch (IOException e) {

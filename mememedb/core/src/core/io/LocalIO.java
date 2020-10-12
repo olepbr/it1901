@@ -39,9 +39,9 @@ public class LocalIO implements IO {
     imageDir = new File(userDir.getAbsolutePath() + "/images");
     String userFileName = "user.json";
     userFile = new File(userDir.getAbsolutePath() + "/" + userFileName);
-
     // Try reading data from home folder
     if (userFile.exists() && userFile.isFile()) {
+      System.out.println("help");
       try {
         reader = new FileReader(userFile, StandardCharsets.UTF_8);
       } catch (IOException e) {
@@ -49,8 +49,9 @@ public class LocalIO implements IO {
         e.printStackTrace();
       }
     } else {
+      System.out.println("me");
       // If not, try reading from skeleton in resources
-      URL skeletonUrl = getClass().getResource("/data/user.json");
+      URL skeletonUrl = getClass().getClassLoader().getResource("user.json");
       try {
         reader = new InputStreamReader(skeletonUrl.openStream(), StandardCharsets.UTF_8);
       } catch (IOException e) {
@@ -68,7 +69,7 @@ public class LocalIO implements IO {
     // Try reading data from file
     if (reader != null) {
       try {
-        database = MememeModule.deserializeDatabase(reader);
+        database = mapper.readValue(reader, Database.class);
       } catch (JsonParseException e) {
         System.out.println("Error parsing file.");
         e.printStackTrace();
@@ -99,7 +100,7 @@ public class LocalIO implements IO {
     }
 
     // Check image folder
-    if (!(imageDir.exists() && imageDir.isDirectory()) && imageDir.mkdir()) {
+    if ((imageDir.exists() && imageDir.isDirectory()) || imageDir.mkdir()) {
       // Find built in example memes
       File resourceImageDir = new File(getClass().getResource("/img").getFile());
       System.out.println(resourceImageDir.getPath());

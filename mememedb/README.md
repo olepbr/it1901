@@ -200,5 +200,5 @@ to ensure quality criteria are met.
 The goal `jacoco:check` runs as part of this goal.
 * `jacoco:check` - Checks that the code coverage metrics are being met.
 * `jacoco:report` - Generates test coverage report to `target/site/jacoco`.
-* `javafx:run -f fxui/pom.xml` - Run the javafx app from fxui directory.
+* `javafx:run -f fxui/pom.xml` - Run the javafx app.
 * `javadoc:aggregate` - Generate javadocs for the project

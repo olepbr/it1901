@@ -41,13 +41,13 @@ public class AppTest extends ApplicationTest {
     final Button createUserButton = (Button) parent.lookup("#createUserButton");
 
     clickOn(nameTextField);
-    write("John Doe");
+    write("Gertrude Doubtfire");
     clickOn(emailTextField);
-    write("johndoe@example.com");
+    write("gertrudedf@online.no");
     clickOn(usernameTextField);
-    write("DoeMan69");
+    write("xXx_gertrude_xXx");
     clickOn(passwordTextField);
-    write("iLoveMyMom123");
+    write("strawberryjam");
 
     clickOn(createUserButton);
   }
