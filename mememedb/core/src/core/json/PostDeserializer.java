@@ -12,7 +12,8 @@ import core.datastructures.Post;
 import java.io.IOException;
 
 /**
- * Class for deserializing Post objects format: { "owner": "...", "caption": "...", "image": "..." }
+ * Class for deserializing Post objects.
+ * Format: { "owner": "...", "caption": "...", "image": "..." }
  *
  * @author Ole Peder Brandtzæg
  */

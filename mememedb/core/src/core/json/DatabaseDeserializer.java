@@ -13,7 +13,8 @@ import core.datastructures.User;
 import java.io.IOException;
 
 /**
- * Class for deserializing JSON into Database objects format: { "users": [ ... ] }
+ * Class for deserializing JSON into Database objects.
+ * Format: { "users": [ ... ] }
  *
  * @author Ole Peder Brandtzæg
  */
@@ -21,13 +22,13 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
   private UserDeserializer userDeserializer = new UserDeserializer();
 
   /**
-   * [TODO:description]
+   * Class for deserializing JSON into a Database object.
    *
-   * @param parser [TODO:description]
-   * @param ctxt [TODO:description]
-   * @return [TODO:description]
-   * @throws IOException [TODO:description]
-   * @throws JsonProcessingException [TODO:description]
+   * @param parser JsonParser object used for parsing the JSON (provided by Jackson).
+   * @param ctxt DeseralizationContext object used for aiding the JSON parsing (provided by Jackson).
+   * @return The Database object resulting from the deserialization or null if the JSON doesn't have the correct format.
+   * @throws IOException If a more general I/O error occurs.
+   * @throws JsonProcessingException If an error occurs when processing the JSON.
    */
   @Override
   public Database deserialize(JsonParser parser, DeserializationContext ctxt)
