@@ -121,6 +121,10 @@ public class BrowserController {
     }
   }
 
+  public void setSelectedImage(File file){
+    this.selectedImage = file;
+  }
+
   /** Shows a fileselect menu for images. */
   public void imageFileChooser() {
     FileChooser fileChooser = new FileChooser();
