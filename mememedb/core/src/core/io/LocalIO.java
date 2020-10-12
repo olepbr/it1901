@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
@@ -26,8 +27,8 @@ public class LocalIO implements IO {
   private File imageDir;
 
   /**
-   * Constructor. Initializes database object from file or skeleton. Also checks for image folder
-   * and copies images from resources.
+   * Constructor. Initializes database object from file or skeleton. Also checks for image folder and
+   * copies images from resources.
    */
   public LocalIO() {
     // Create object for json-parsing
@@ -41,7 +42,6 @@ public class LocalIO implements IO {
     userFile = new File(userDir.getAbsolutePath() + "/" + userFileName);
     // Try reading data from home folder
     if (userFile.exists() && userFile.isFile()) {
-      System.out.println("help");
       try {
         reader = new FileReader(userFile, StandardCharsets.UTF_8);
       } catch (IOException e) {
@@ -49,9 +49,8 @@ public class LocalIO implements IO {
         e.printStackTrace();
       }
     } else {
-      System.out.println("me");
       // If not, try reading from skeleton in resources
-      URL skeletonUrl = getClass().getClassLoader().getResource("user.json");
+      URL skeletonUrl = getClass().getResource("user.json");
       try {
         reader = new InputStreamReader(skeletonUrl.openStream(), StandardCharsets.UTF_8);
       } catch (IOException e) {
@@ -71,21 +70,21 @@ public class LocalIO implements IO {
       try {
         database = mapper.readValue(reader, Database.class);
       } catch (JsonParseException e) {
-        System.out.println("Error parsing file.");
+        System.err.println("Error parsing file.");
         e.printStackTrace();
       } catch (IOException e) {
-        System.out.println("Error reading file.");
+        System.err.println("Error reading file.");
         e.printStackTrace();
       } finally {
         try {
           reader.close();
         } catch (IOException e) {
-          // ???
+          System.err.println("Error closing reader.");
+          e.printStackTrace();
         }
       }
-    }
-    // Or just create an empty database
-    else {
+    } else {
+      // Or just create an empty database
       database = new Database();
     }
 
@@ -100,22 +99,15 @@ public class LocalIO implements IO {
     }
 
     // Check image folder
-    if ((imageDir.exists() && imageDir.isDirectory()) || imageDir.mkdir()) {
-      // Find built in example memes
-      File resourceImageDir = new File(getClass().getResource("/img").getFile());
-      System.out.println(resourceImageDir.getPath());
-      // List with files in img directory
-      File[] resourceImages = resourceImageDir.listFiles();
-      if (resourceImages != null) {
-        // Iterate trough images
-        for (File image : resourceImages) {
-          File file = new File(imageDir.getAbsolutePath() + "/" + image.getName());
-          try {
-            Files.copy(image.toPath(), file.toPath());
-          } catch (IOException e) {
-            System.err.println("IO error");
-            e.printStackTrace();
-          }
+    if (!(imageDir.exists() && imageDir.isDirectory())) {
+      if (imageDir.mkdir()) {
+        // Find built in example meme
+        File file = new File(imageDir.getAbsolutePath() + "/Grandma.png");
+        try (InputStream image = getClass().getResourceAsStream("Grandma.png")) {
+          Files.copy(image, file.toPath());
+        } catch (IOException e) {
+          System.err.println("IO error");
+          e.printStackTrace();
         }
       }
     }

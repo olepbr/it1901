@@ -50,18 +50,8 @@
         <sourceDirectory>src</sourceDirectory>
         <resources>
             <resource>
-                <directory>src</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.png</include>
-                    <include>**/*.css</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
+                <targetPath>core/io</targetPath>
+                <directory>src/resources/core/io</directory>
             </resource>
         </resources>
         <testSourceDirectory>test</testSourceDirectory>

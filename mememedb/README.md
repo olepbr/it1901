@@ -2,8 +2,11 @@
 # MEMEMEDB
 
 MEMEMEDB is a meme sharing application.
-With this application users may view, share, post and comment on memes.
-A meme consists of a picture and a caption.
+With this application users may view, share, and post memes.
+A meme consists of a picture and a caption. 
+Example memes can be found in the project directory in the folder **memes**.
+By default, the application has a default user, the credentials of which are:
+username: **xXx_gertrude_xXx**, password: **strawberryjam**.
 
 ## Code Organization
 

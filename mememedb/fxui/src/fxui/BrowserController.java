@@ -121,7 +121,7 @@ public class BrowserController {
     }
   }
 
-  public void setSelectedImage(File file){
+  public void setSelectedImage(File file) {
     this.selectedImage = file;
   }
 

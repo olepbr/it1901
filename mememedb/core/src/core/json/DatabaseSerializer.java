@@ -20,8 +20,10 @@ class DatabaseSerializer extends JsonSerializer<Database> {
    *
    * @param database The database object to serialize.
    * @param jsonGen The JsonGenerator object writing the JSON (provided by Jackson).
-   * @param serializerProvider The SerializerProvider object obtaining the necessary serializers (also provided by Jackson).
-   * @throws IOException In the event that the JsonGenerator encounters an error in writing the JSON object.
+   * @param serializerProvider The SerializerProvider object obtaining
+   *        the necessary serializers (also provided by Jackson).
+   * @throws IOException In the event that the JsonGenerator encounters
+   *        an error in writing the JSON object.
    */
   @Override
   public void serialize(

@@ -25,8 +25,10 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
    * Class for deserializing JSON into a Database object.
    *
    * @param parser JsonParser object used for parsing the JSON (provided by Jackson).
-   * @param ctxt DeseralizationContext object used for aiding the JSON parsing (provided by Jackson).
-   * @return The Database object resulting from the deserialization or null if the JSON doesn't have the correct format.
+   * @param ctxt DeseralizationContext object used for
+   *        aiding the JSON parsing (provided by Jackson).
+   * @return The Database object resulting from the deserialization
+   *        or null if the JSON doesn't have the correct format.
    * @throws IOException If a more general I/O error occurs.
    * @throws JsonProcessingException If an error occurs when processing the JSON.
    */
