@@ -15,9 +15,49 @@ and has the following directory structure:
 * **`<module>/src/resources/`** - contains images etc.
 * **`<module>/test/<module>/<component>`** - contains the tests
 
-The following class diagram shows the basic outline of the code structure:
+The following diagram shows the dependencies between the various internal and external modules
 
-![Class Diagram](ClassDiagram.png)
+```plantuml
+component core {
+	package core.io
+	package core.json
+	package core.datastructures
+}
+
+component jackson {
+}
+
+component guava{
+}
+
+component org.apache.commons.validator{
+}
+
+core.json ..> jackson
+core.datastructures ..> core.io
+core.io ..> core.datastructures
+core.io ..> core.json
+core.datastructures ..> guava
+
+component fxui {
+	package fxui.fxui
+}
+
+fxui ..> core.datastructures
+fxui ..> core.io
+fxui ..> org.apache.commons.validator
+
+component javafx {
+	component fxml {
+	}
+}
+
+fxui ..> javafx
+fxui ..> fxml
+```
+
+The following class diagram shows the basic outline of the internal class structure:
+
 ```plantuml
 package fxui <<Frame>> {
     class App
@@ -54,27 +94,39 @@ class App {
 App --> AppController
 
 class AppController {
+    - database: Database
+    - activeUser: User
+    + handleLogin(): void
+    + handleLogout(): void
 }
 
 BrowserController --> PostController
 
 class PostController {
+    - post: Post
 }
 
 AppController --> BrowserController
 
 class BrowserController {
+    + handleAddContent(): void
+    + updatePosts(): void
+    + handleLogout(): void
 }
 
 AppController --> LoginController
 
 class LoginController {
+    + login(): void
+    + registerClick(): void
+    + createUser(): void
 }
 
 interface IO {
-    + getPostList(): List<Post>
-    + savePost(Post): void
+    + getDatabase(): Database
+    + saveDatabase(Post): void
     + saveImage(File): void
+    + getImage(String): File
 }
 
 class LocalIO implements IO
@@ -102,20 +154,30 @@ class User {
     - name: String
     - nickname: String
     - email: String
+    - posts: List<Post>
     + addPost(Post): Void
 }
 
 class Post {
     - caption: String
     - image: String
+    - owner: String
 }
 
 class Database {
+    - users: List<User>
+    - storage: IO
+    + saveToStorage(): void
+    + savePost(Post, File, User): void
+    + saveUser(User): void
+    + getPostList(): List<Post>
+    + getUsers(): List<User>
+    
 }
 
 User "1" <--> "*" Post : Owner
 Database "storage" --> IO
-Database --> "*" User
+Database "users" --> "*" User
 ```
 
 ## User Stories
@@ -133,5 +195,5 @@ to ensure quality criteria are met.
 The goal `jacoco:check` runs as part of this goal.
 * `jacoco:check` - Checks that the code coverage metrics are being met.
 * `jacoco:report` - Generates test coverage report to `target/site/jacoco`.
-* `javafx:run` - Run the javafx app from fxui directory.
+* `javafx:run -f fxui/pom.xml` - Run the javafx app from fxui directory.
 * `javadoc:aggregate` - Generate javadocs for the project
