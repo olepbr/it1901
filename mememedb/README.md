@@ -185,7 +185,7 @@ Database "users" --> "*" User
 * I want to be able to create and log in with my account
 
 ## Storage method
-This appp uses an implicit storage method, where the user is not directly informed of how or where data is stored. 
+This app uses an implicit storage method, where the user is not directly informed of how or where data is stored. 
 Implicit storage is used as it allows multiple users to interact with a shared database, which is an integral part of our idea, even though only local storage is supported at the moment.
 
 

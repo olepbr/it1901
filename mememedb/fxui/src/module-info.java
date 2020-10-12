@@ -6,7 +6,7 @@ module fxui {
   requires com.fasterxml.jackson.core;
   requires commons.validator;
 
-  requires core;
+  requires transitive core;
 
   exports fxui;
 
