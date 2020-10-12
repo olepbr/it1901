@@ -13,4 +13,4 @@ These classes are all located in the **[mememedb.core.datastructures](src/core/d
 The persistence layer contains the classes for saving the domain layer's data.
 For this application, persistence is achieved by writing the data to file using JSON syntax.
 Our persistence layer is split into two packages: the **[mememedb.core.io](src/core/io/README.md)** package, which handles writing and reading from file,
-and the **[memememedb.core.json](src/core/json/README.md)** package, which contains the different classes for serialization/deserialization to/from JSON.
+and the **[mememedb.core.json](src/core/json/README.md)** package, which contains the different classes for serialization/deserialization to/from JSON.
