@@ -83,11 +83,13 @@ public class BrowserController {
         content.getChildren().add(subContent);
         try {
           subContentLoader.load();
-          ((PostController) subContentLoader.getController()).setDatabase(database);
           ((PostController) subContentLoader.getController()).setPost(post);
         } catch (IOException e) {
           e.printStackTrace();
           System.out.println("Error loading post");
+        } catch (IllegalArgumentException e) {
+          e.printStackTrace();
+          System.out.println("Error loading image");
         }
       }
     } catch (Exception e) {
@@ -110,9 +112,9 @@ public class BrowserController {
       a.setContentText("Please add an image");
       a.show();
     } else {
-      Post post = new Post(activeUser.getNickname(), caption, image.getName());
       try {
-        database.savePost(post, image, activeUser);
+        Post post = new Post(activeUser.getNickname(), caption, image);
+        database.savePost(post, activeUser);
       } catch (IOException e) {
         System.out.println("could not save post");
         e.printStackTrace();

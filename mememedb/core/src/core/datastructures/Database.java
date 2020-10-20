@@ -1,7 +1,6 @@
 package core.datastructures;
 
 import core.io.IO;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +37,14 @@ public class Database {
    * Saves post in database for user. Automatically updates storage.
    *
    * @param post The Post to save.
-   * @param image The image belonging to the post
    * @param user Owner of the post.
    */
-  public void savePost(Post post, File image, User user) throws IOException {
+  public void savePost(Post post, User user) throws IOException {
     if (!users.contains(user)) {
       users.add(user);
     }
     users.get(users.indexOf(user)).addPost(post);
     saveToStorage();
-    storage.saveImage(image);
   }
 
   /**
@@ -85,16 +82,6 @@ public class Database {
    */
   public List<User> getUsers() {
     return users;
-  }
-
-  /**
-   * Gets a File that references the image in the database with the given name.
-   *
-   * @param imgName The name of the image to find.
-   * @return File pointing to the given image
-   */
-  public File getImage(String imgName) {
-    return storage.getImageFromName(imgName);
   }
 
   /**
