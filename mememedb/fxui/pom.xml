@@ -34,7 +34,13 @@
             <artifactId>javafx-fxml</artifactId>
             <version>14.0.1</version>
         </dependency>
-
+        <!-- JavaFX module for transforming BufferedImages to javaFX format -->
+        <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-swing</artifactId>
+          <version>16-ea+2</version>
+        </dependency>
+        
         <!-- Test with TextFX -->
         <dependency>
             <groupId>org.testfx</groupId>

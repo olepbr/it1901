@@ -46,7 +46,7 @@ class PostDeserializer extends JsonDeserializer<Post> {
       }
       JsonNode imageNode = objectNode.get("image");
       if (imageNode instanceof TextNode) {
-        post.setImage(((TextNode) imageNode).asText());
+        post.setImageData(((TextNode) imageNode).asText());
       }
       return post;
     }

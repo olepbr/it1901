@@ -1,25 +1,47 @@
 package core.datastructures;
 
-/** Provides a class for representing posts. */
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Base64;
+
+/** Provides a class for representing posts. 
+ * Images are stored in base64 format for ease of use
+ */
 public class Post {
 
   private String owner;
   private String caption;
   private String image;
 
-  public Post() {}
+  public Post() {
+  }
 
   /**
    * Initializes a Post object.
    *
-   * @param owner The owner of the post.
+   * @param owner   The owner of the post.
    * @param caption The post's caption.
-   * @param image The image of the post.
+   * @param image   The image of the post as a base64-encoded String.
    */
   public Post(String owner, String caption, String image) {
-    this.owner = owner;
-    this.caption = caption;
-    this.image = image;
+    this.setOwner(owner);
+    this.setImageData(image);
+    this.setText(caption);
+  }
+
+  /**
+   * Initializes a Post object.
+   *
+   * @param owner   The owner of the post.
+   * @param caption The post's caption.
+   * @param image   The image of the post.
+   * @throws IOException If a problem occurs when reading the image File
+   */
+  public Post(String owner, String caption, File image) throws IOException {
+    this.setOwner(owner);
+    this.setImage(image);
+    this.setText(caption);
   }
 
   public String getOwner() {
@@ -42,7 +64,31 @@ public class Post {
     return image;
   }
 
-  public void setImage(String image) {
+
+  /**
+   * Sets the image of the post to the data in the given file.
+   *
+   * @param image The image file to use.
+   * @throws IOException If an error occurs during reading.
+   */
+  public void setImage(File image) throws IOException {
+    try (FileInputStream imageStream = new FileInputStream(image)) {
+      byte[] data = imageStream.readAllBytes();
+      String data64 = Base64.getEncoder().encodeToString(data);
+      this.image = data64;
+    } catch (IOException e) {
+      throw e;
+    }
+  }
+
+
+  /**
+   * Bypasses the need to use a File to set image,
+   * expects a base64 encoded image as a String.
+   *
+   * @param image The image to save, given as a base64 encoded String
+   */
+  public void setImageData(String image) {
     this.image = image;
   }
 

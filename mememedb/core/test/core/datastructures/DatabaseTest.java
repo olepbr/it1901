@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 import core.io.IO;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -88,9 +87,9 @@ public class DatabaseTest {
     Post post2 = new Post("jomama", "YO MAMA", "sofat.png");
     Post post3 = new Post("jomama", "YO 1231232MAMAs", "sofat1223.png");
     try {
-      database.savePost(post1, new File("C:/"), testData.get(0));
-      database.savePost(post2, new File("C:/"), testData.get(1));
-      database.savePost(post3, new File("C:/"), testData.get(1));
+      database.savePost(post1, testData.get(0));
+      database.savePost(post2, testData.get(1));
+      database.savePost(post3, testData.get(1));
     } catch (Exception e) {
       e.printStackTrace();
       fail("Unknown error when saving posts");
@@ -114,17 +113,6 @@ public class DatabaseTest {
         3, database2.getNewId(), "Error in id assignment, expected 3, got " + database.getNewId());
     assertEquals(
         3, database2.getNewId(), "Error in id assignment, expected 3, got " + database.getNewId());
-  }
-
-  @Test
-  public void TestgetImage() {
-    final IO mockIO = mock(IO.class);
-    doReturn(getEmptyMock()).when(mockIO).getDatabase();
-    Database database = new Database(mockIO);
-    doReturn(new File("/C:/TEST")).when(mockIO).getImageFromName("testImage");     
-    assertEquals("/C:/TEST",database.getImage("testImage").getAbsolutePath(),
-        "Error in /image fetching, database does not retain url");
-    verify(mockIO, times(1)).getImageFromName("testImage");
   }
 
   @Test

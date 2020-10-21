@@ -1,18 +1,18 @@
 package fxui;
 
-import core.datastructures.Database;
 import core.datastructures.Post;
-import java.io.File;
-import java.net.MalformedURLException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Base64;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javax.imageio.ImageIO;
 
 public class PostController {
 
   Post post;
-  Database database;
   @FXML ImageView postImage;
   @FXML Label postText;
   @FXML Label postPoster;
@@ -24,23 +24,15 @@ public class PostController {
    */
   public void setPost(Post post) {
     this.post = post;
-    File image = database.getImage(this.post.getImage());
     try {
-      postImage.setImage(new Image(image.toURI().toURL().toExternalForm()));
-    } catch (MalformedURLException e) {
-      System.out.println("Could not find image");
+      byte[] imageData = Base64.getDecoder().decode(post.getImage());
+      postImage.setImage(SwingFXUtils.toFXImage(
+          ImageIO.read(new ByteArrayInputStream(imageData)), null));
+    } catch (IOException e) {
+      System.out.println("Could not decode image");
       e.printStackTrace();
     }
     postText.setText(this.post.getText());
     postPoster.setText("Made by " + this.post.getOwner());
-  }
-
-  /**
-   * Changes the Database this post should fetch data from.
-   *
-   * @param database The database to use.
-   */
-  public void setDatabase(Database database) {
-    this.database = database;
   }
 }

@@ -9,12 +9,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /** IO implementation for local file system. */
@@ -24,11 +22,9 @@ public class LocalIO implements IO {
   private File userDir;
   private File userFile;
   private Database database;
-  private File imageDir;
 
   /**
-   * Constructor. Initializes database object from file or skeleton. Also checks for image folder and
-   * copies images from resources.
+   * Constructor. Initializes database object from file or skeleton.
    */
   public LocalIO() {
     // Create object for json-parsing
@@ -37,7 +33,6 @@ public class LocalIO implements IO {
 
     Reader reader = null;
     userDir = Paths.get(System.getProperty("user.home"), "mememedb").toFile();
-    imageDir = new File(userDir.getAbsolutePath() + "/images");
     String userFileName = "user.json";
     userFile = new File(userDir.getAbsolutePath() + "/" + userFileName);
     // Try reading data from home folder
@@ -97,51 +92,6 @@ public class LocalIO implements IO {
       System.err.println("Error writing file");
       e.printStackTrace();
     }
-
-    // Check image folder
-    if (!(imageDir.exists() && imageDir.isDirectory())) {
-      if (imageDir.mkdir()) {
-        // Find built in example meme
-        File file = new File(imageDir.getAbsolutePath() + "/Grandma.png");
-        try (InputStream image = getClass().getResourceAsStream("Grandma.png")) {
-          Files.copy(image, file.toPath());
-        } catch (IOException e) {
-          System.err.println("IO error");
-          e.printStackTrace();
-        }
-      }
-    }
-  }
-
-  /**
-   * Saves a specified image.
-   *
-   * @param image The image to save.
-   * @throws IOException If the file cannot be found.
-   */
-  public void saveImage(File image) throws IOException {
-    // Create directory if it does not exist
-    System.out.println(imageDir.isDirectory());
-    if (imageDir.isDirectory() || imageDir.mkdir()) {
-      String absPath = imageDir.getAbsolutePath() + "/" + image.getName();
-      File file = new File(absPath);
-      if (!file.exists()) {
-        Files.copy(image.toPath(), file.toPath());
-      }
-    }
-  }
-
-  /**
-   * Gets an image from a string path.
-   *
-   * @param name The path of the image.
-   * @return The File object for the image.
-   */
-  public File getImageFromName(String name) {
-    // gets image given name, assumes images are stored in img under resources.
-    String absPath = imageDir.getAbsolutePath() + "/" + name;
-    File image = new File(absPath);
-    return image;
   }
 
   public Database getDatabase() {
