@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import mememedb.restapi.DatabaseService;
 
 public class MememeGrizzlyApp {
 
@@ -33,7 +34,7 @@ public class MememeGrizzlyApp {
     }
     while (waitSecondsForServer > 0) {
       try {
-        URL clientUrl = new URL(baseUri + MememeService.MEMEME_SERVICE_PATH);
+        URL clientUrl = new URL(baseUri + DatabaseService.DATABASE_SERVICE_PATH);
         HttpURLConnection connection = (HttpURLConnection) clientUrl.openConnection();
         int responseCode = connection.getResponseCode();
         System.out.println("Trying " + clientUrl + ": " + responseCode);

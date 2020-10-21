@@ -11,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import simpleex.core.LatLong;
 import core.datastructures.Database;
 
 @Path(DatabaseService.DATABASE_SERVICE_PATH)
@@ -24,7 +23,7 @@ public class DatabaseService {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  public Database getDatabase() {
+  public String getDatabase() {
     return "I am in so much pain";
   }
 }
