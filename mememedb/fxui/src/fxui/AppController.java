@@ -14,6 +14,7 @@ public class AppController {
   // Storage interface
   private Database database;
   private User activeUser;
+  private Object child;
 
   @FXML AnchorPane window;
 
@@ -24,6 +25,10 @@ public class AppController {
     database = new Database(io);
     // Set up Browser window, and add it to the scene
     handleLogOut();
+  }
+
+  public Object getChild() {
+    return child;
   }
 
   /**
@@ -46,10 +51,16 @@ public class AppController {
       ((BrowserController) subContentLoader.getController()).setDatabase(database);
       ((BrowserController) subContentLoader.getController()).setParent(this);
       ((BrowserController) subContentLoader.getController()).updatePosts();
+      child = subContentLoader.getController();
     } catch (IOException e) {
       e.printStackTrace();
       System.out.println("Error loading content browser");
     }
+  }
+
+  /** Help method for the AppTest */
+  public void setDatabase(Database database){
+    this.database = database;
   }
 
   /** Clears active User, and returns to login ui. */
@@ -66,9 +77,12 @@ public class AppController {
       subContentLoader.load();
       ((LoginController) subContentLoader.getController()).setDatabase(database);
       ((LoginController) subContentLoader.getController()).setParent(this);
+      child = subContentLoader.getController();
     } catch (IOException e) {
       e.printStackTrace();
       System.out.println("Error loading content browser");
     }
   }
+
+  
 }
