@@ -1,6 +1,11 @@
 package fxui;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
+
+import java.io.File;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,11 +13,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
+import org.junit.Rule;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.matcher.base.WindowMatchers;
+
+import core.datastructures.Database;
+import core.io.IO;
 
 public class AppTest extends ApplicationTest {
+
+  private Database emptyDatabase = new Database();
 
   private Parent parent;
   private AppController controller;
@@ -21,15 +42,28 @@ public class AppTest extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader fxmlLoader =
-        new FXMLLoader(getClass().getClassLoader().getResource("App.fxml"));
+    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("App.fxml"));
     parent = fxmlLoader.load();
     controller = fxmlLoader.getController();
+    controller.setDatabase(this.emptyDatabase);
+    controller.handleLogOut();
     stage.setScene(new Scene(parent));
     stage.show();
   }
 
-  public void register() {
+  @Test 
+  public void switchPanesTest(){
+    final Button registerButton = (Button) parent.lookup("#registerButton");
+    final AnchorPane loginAnchorPane = (AnchorPane) parent.lookup("#loginAnchorPane");
+    final AnchorPane registerAnchorPane = (AnchorPane) parent.lookup("#registerAnchorPane");
+    clickOn(registerButton);
+    assertFalse(loginAnchorPane.isVisible());
+    assertTrue(registerAnchorPane.isVisible());
+  }
+
+  @Test
+  public void appTest(){
+    /* Test register */
     final Button registerButton = (Button) parent.lookup("#registerButton");
     clickOn(registerButton);
 
@@ -40,20 +74,65 @@ public class AppTest extends ApplicationTest {
 
     final Button createUserButton = (Button) parent.lookup("#createUserButton");
 
-    clickOn(nameTextField);
-    write("Gertrude Doubtfire");
-    clickOn(emailTextField);
-    write("gertrudedf@online.no");
-    clickOn(usernameTextField);
-    write("xXx_gertrude_xXx");
-    clickOn(passwordTextField);
-    write("strawberryjam");
+    clickOn(nameTextField).write("Jostein Bakkevig");
+    clickOn(emailTextField).write("jostbak@stud.ntnu.no");
+    clickOn(usernameTextField).write("HestStein");
+    clickOn(passwordTextField).write("strawberryjam2");
 
     clickOn(createUserButton);
+    sleep(1000);
+
+    /*Test logout */ 
+    
+    final Button logoutButton = (Button) parent.lookup("#logoutButton");
+    clickOn(logoutButton);
+  
+    /*Test login */
+
+    final Button loginButton = (Button) parent.lookup("#loginButton");
+    final TextField loginUsername = (TextField) parent.lookup("#loginUsername");
+    final PasswordField loginPasswordText = (PasswordField) parent.lookup("#loginPasswordText");
+    clickOn(loginUsername).write("HestStein");
+    clickOn(loginPasswordText).write("strawberryjam2");
+    clickOn(loginButton);
+
+    /*Test add post */
+
+  //  browserController.setDatabase(emptyDatabase);
+    File inputFile = new File(getClass().getClassLoader().getResource("pangolin.jpg").getPath());
+    System.out.println(inputFile.getAbsolutePath());
+    browserController = ((BrowserController) controller.getChild());
+    browserController.setSelectedImage(inputFile);
+    final Button addContnt  = (Button) parent.lookup("#addContent");
+    final TextField inputTextField = (TextField) parent.lookup("#inputTextField");
+    clickOn("#inputTextField");
+    write("This is a very nice animal");
+    clickOn("#addContent");
+    sleep(3000);
+
   }
 
+  
+
+/*
+
   @Test
-  public void registerTest() {
-    register();
+  public void addPostTest(){
+    browserController.setDatabase(emptyDatabase);
+    File inputFile = new File(getClass().getClassLoader().getResource("pangolin.jpg").getPath());
+    browserController.setSelectedImage(inputFile);
+    final Button addContent  = (Button) parent.lookup("#addContent");
+    final TextField inputTextField = (TextField) parent.lookup("#inputTextField");
+    clickOn("#inputTextField");
+    write("This is a very nice animal");
+      //clickOn("#addContent");
+
+  
   }
+  */
+
+
+  
+
+  
 }

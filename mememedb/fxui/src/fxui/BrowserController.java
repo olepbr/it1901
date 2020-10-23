@@ -102,7 +102,7 @@ public class BrowserController {
   public void handleAddContent() {
     String caption = inputTextField.getText();
     File image = selectedImage;
-
+    System.out.println(selectedImage);
     if (caption == null) {
       Alert a = new Alert(Alert.AlertType.ERROR);
       a.setContentText("Please add a caption");
