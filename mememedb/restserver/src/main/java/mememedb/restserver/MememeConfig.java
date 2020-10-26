@@ -1,27 +1,27 @@
 package mememedb.restserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.datastructures.Database;
+import core.io.LocalIO;
 import java.io.IOException;
+import mememedb.restapi.DatabaseService;
+import mememedb.restapi.MememeObjectMapperProvider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import core.datastructures.Database;
-import mememedb.restapi.MememeObjectMapperProvider;
-import mememedb.restapi.DatabaseService;
 
 public class MememeConfig extends ResourceConfig {
 
-
   public MememeConfig() {
-    this(new Database());
+    this(createDefaultDatabase());
   }
 
   private static Database readValue(final String json) {
     try {
       Database database =
-          new MememeObjectMapperProvider().getContext(
-            ObjectMapper.class
-          ).readValue(json, Database.class);
+          new MememeObjectMapperProvider()
+              .getContext(ObjectMapper.class)
+              .readValue(json, Database.class);
       System.out.println("Read " + json + " as " + database);
       return database;
     } catch (final Exception e) {
@@ -35,8 +35,7 @@ public class MememeConfig extends ResourceConfig {
   }
 
   /**
-   * Initialize this MememeConfig so the server starts out
-   * with the provided Database.
+   * Initialize this MememeConfig so the server starts out with the provided Database.
    *
    * @param database the initial Database
    */
@@ -46,11 +45,16 @@ public class MememeConfig extends ResourceConfig {
     register(MememeObjectMapperProvider.class);
     register(JacksonFeature.class);
 
-    register(new AbstractBinder() {
-      @Override
-      protected void configure() {
-        bind(database);
-      }
-    });
+    register(
+        new AbstractBinder() {
+          @Override
+          protected void configure() {
+            bind(database);
+          }
+        });
+  }
+
+  private static Database createDefaultDatabase() {
+    return new Database(new LocalIO());
   }
 }
