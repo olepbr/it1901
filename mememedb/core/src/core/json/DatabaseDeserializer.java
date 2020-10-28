@@ -20,7 +20,9 @@ import java.io.IOException;
  * @author Ole Peder Brandtzæg
  */
 class DatabaseDeserializer extends JsonDeserializer<Database> {
+
   private UserDeserializer userDeserializer = new UserDeserializer();
+  private PostDeserializer postDeserializer = new PostDeserializer();
 
   /**
    * Class for deserializing JSON into a Database object.
@@ -58,6 +60,7 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
           }
         }
       return database;
+      }
     }
     return null;
   }
