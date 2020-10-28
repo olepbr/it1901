@@ -3,7 +3,9 @@ package core.datastructures;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 /** Provides a class for representing posts. 
  * Images are stored in base64 format for ease of use
@@ -13,6 +15,7 @@ public class Post {
   private String owner;
   private String caption;
   private String image;
+  private List<Comment> comments = new ArrayList<Comment>();
 
   public Post() {
   }
@@ -64,7 +67,6 @@ public class Post {
     return image;
   }
 
-
   /**
    * Sets the image of the post to the data in the given file.
    *
@@ -91,6 +93,21 @@ public class Post {
   public void setImageData(String image) {
     this.image = image;
   }
+
+  public List<Comment> getComments() {
+    return comments;
+  }
+
+  /**Adds a new comment to the post.
+   *
+   * @param comment The comment to add.
+   */
+  public void addComment(Comment comment) {
+    comments.add(comment);
+  }
+  
+
+
 
   @Override
   public String toString() {

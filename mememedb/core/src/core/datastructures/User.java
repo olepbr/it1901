@@ -15,7 +15,7 @@ public class User {
   private String name;
   private String nickname;
   private String email;
-  private List<Post> posts = new ArrayList<>();
+  private List<String> posts = new ArrayList<String>();
   private String hashedPassword;
 
   public User() {}
@@ -26,7 +26,7 @@ public class User {
    * @param id This user's id.
    * @param name This user's name.
    * @param nickname This user's nickname.
-   * @param email This user's email.A
+   * @param email This user's email.
    */
   public User(int id, String name, String nickname, String email) {
     this.id = id;
@@ -67,12 +67,12 @@ public class User {
     this.email = email;
   }
 
-  public List<Post> getPosts() {
+  public List<String> getPosts() {
     return posts;
   }
 
-  public void addPost(Post post) {
-    posts.add(post);
+  public void addPost(String postId) {
+    posts.add(postId);
   }
 
   /**
