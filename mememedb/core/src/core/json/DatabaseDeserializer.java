@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import core.datastructures.Database;
 import core.datastructures.User;
+import core.datastructures.Post;
 import java.io.IOException;
 
 /**
@@ -48,6 +49,14 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
           }
         }
       }
+      JsonNode postsNode = objectNode.get("posts");
+      if (postsNode instanceof ArrayNode) {
+        for (JsonNode elementNode : ((ArrayNode) postsNode)) {
+          Post post = postDeserializer.deserialize(elementNode);
+          if (post != null) {
+            database.addPost(post);
+          }
+        }
       return database;
     }
     return null;

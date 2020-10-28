@@ -9,6 +9,7 @@ import java.util.List;
 public class Database {
 
   private List<User> users;
+  private List<Post> posts;
 
   private IO storage;
 
@@ -75,6 +76,10 @@ public class Database {
     return posts;
   }
 
+  public void addPost(Post post) {
+    posts.add(post);
+  }
+
   /**
    * Fetches a list of all users in the database.
    *
@@ -82,6 +87,15 @@ public class Database {
    */
   public List<User> getUsers() {
     return users;
+  }
+
+  /**
+   * Fetches a list of all posts in the database.
+   *
+   * @return returns a list of all posts
+   */
+  public List<Post> getPosts() {
+    return posts;
   }
 
   /**
