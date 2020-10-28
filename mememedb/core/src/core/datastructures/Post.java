@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Post {
 
+  private String id;
   private String owner;
   private String caption;
   private String image;
@@ -23,28 +24,32 @@ public class Post {
   /**
    * Initializes a Post object.
    *
+   * @param id the Id of the post.
    * @param owner   The owner of the post.
    * @param caption The post's caption.
    * @param image   The image of the post as a base64-encoded String.
    */
-  public Post(String owner, String caption, String image) {
+  public Post(String id, String owner, String caption, String image) {
     this.setOwner(owner);
     this.setImageData(image);
     this.setText(caption);
+    this.setId(id);
   }
 
   /**
    * Initializes a Post object.
    *
+   * @param Id the Id of the post.
    * @param owner   The owner of the post.
    * @param caption The post's caption.
    * @param image   The image of the post.
    * @throws IOException If a problem occurs when reading the image File
    */
-  public Post(String owner, String caption, File image) throws IOException {
+  public Post(String Id, String owner, String caption, File image) throws IOException {
     this.setOwner(owner);
     this.setImage(image);
     this.setText(caption);
+    this.setId(id);
   }
 
   public String getOwner() {
@@ -65,6 +70,14 @@ public class Post {
 
   public String getImage() {
     return image;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   /**

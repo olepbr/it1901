@@ -2,20 +2,25 @@ package core.datastructures;
 
 import core.io.IO;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Class that represents all the data in the application. */
 public class Database {
-
-  private List<User> users;
-  private List<Post> posts;
+  /* Maps are used, as the ordering of objects is less important compared
+     to the connection between the name/id and the object itself. */
+  private Map<String, User> users;
+  private Map<String, Post> posts;
 
   private IO storage;
 
-  /** Generates a new empty database object. Database contains all Users and Posts of the app. */
+  /**
+   * Generates a new empty database object. Database contains all Users and Posts
+   * of the app.
+   */
   public Database() {
-    users = new ArrayList<User>();
+    users = new HashMap<String, User>();
   }
 
   /**
@@ -24,7 +29,7 @@ public class Database {
    */
   public Database(IO io) {
     storage = io;
-    users = io.getDatabase().getUsers();
+    users = io.getDatabase().getUserMap();
   }
 
   /** Saves cached database, overwriting previous data in storage. */
@@ -40,11 +45,9 @@ public class Database {
    * @param post The Post to save.
    * @param user Owner of the post.
    */
-  public void savePost(Post post, User user) throws IOException {
-    if (!users.contains(user)) {
-      users.add(user);
-    }
-    users.get(users.indexOf(user)).addPost(post);
+  public void savePost(Post post) throws IOException {
+    users.get(post.getOwner()).addPost(post.getId());
+    posts.put(post.getId(), post);
     saveToStorage();
   }
 
@@ -55,37 +58,40 @@ public class Database {
    * @param user The User to save.
    */
   public void saveUser(User user) {
-    if (!users.contains(user)) {
-      users.add(user);
+    if (!users.keySet().contains(user.getNickname())) {
+      users.put(user.getNickname(), user);
       saveToStorage();
     }
   }
 
   /**
-   * Fetches a list of all posts in the current database.
+   * Fetches a collection of all posts in the current database.
    *
-   * @return Returns a list containing all posts.
+   * @return Returns a collection containing all posts.
    */
-  public List<Post> getPostList() {
-    List<Post> posts = new ArrayList<Post>();
-    for (User user : users) {
-      for (Post post : user.getPosts()) {
-        posts.add(post);
-      }
-    }
+  public Map<String, Post> getPostList() {
     return posts;
   }
 
   public void addPost(Post post) {
-    posts.add(post);
+    posts.put(post.getId(), post);
   }
 
   /**
-   * Fetches a list of all users in the database.
+   * Fetches a collection of all users in the database.
    *
-   * @return returns a list of all users
+   * @return returns a collection of all users
    */
-  public List<User> getUsers() {
+  public Collection<User> getUsers() {
+    return users.values();
+  }
+
+    /**
+   * Fetches the mapping between users and usernames
+   *
+   * @return A map mapping users to their usernames
+   */
+  public Map<String, User> getUserMap() {
     return users;
   }
 
@@ -94,7 +100,16 @@ public class Database {
    *
    * @return returns a list of all posts
    */
-  public List<Post> getPosts() {
+  public Collection<Post> getPosts() {
+    return posts.values();
+  }
+
+  /**
+   * Fetches the mapping between posts and Ids
+   *
+   * @return A map mapping posts to their Ids
+   */
+  public Map<String, Post> getPostMap() {
     return posts;
   }
 
@@ -106,11 +121,9 @@ public class Database {
    * @return User that logged on if it exists, null if no such user exists
    */
   public User tryLogin(String username, String password) {
-    for (User user : users) {
-      if ((user.getEmail().equals(username) || user.getNickname().equals(username))
-          && user.getPassword().equals(user.hashPassword(password))) {
-        return user;
-      }
+    User user = users.getOrDefault(username, null);
+    if(user!= null && user.getPassword() == user.hashPassword(password)){
+      return user;
     }
     return null;
   }
@@ -122,12 +135,8 @@ public class Database {
    * @return true if the username exists in the database
    */
   public boolean usernameExists(String username) {
-    for (User user : users) {
-      if (user.getNickname().equals(username)) {
-        return true;
-      }
-    }
-    return false;
+    boolean exists = (users.getOrDefault(username, null) != null);
+    return exists;
   }
 
   /**
