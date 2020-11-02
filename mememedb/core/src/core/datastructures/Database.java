@@ -1,7 +1,6 @@
 package core.datastructures;
 
 import core.io.IO;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,18 +8,16 @@ import java.util.Map;
 /** Class that represents all the data in the application. */
 public class Database {
   /* Maps are used, as the ordering of objects is less important compared
-     to the connection between the name/id and the object itself. */
+  to the connection between the name/id and the object itself. */
   private Map<String, User> users;
   private Map<String, Post> posts;
 
   private IO storage;
 
-  /**
-   * Generates a new empty database object. Database contains all Users and Posts
-   * of the app.
-   */
+  /** Generates a new empty database object. Database contains all Users and Posts of the app. */
   public Database() {
     users = new HashMap<String, User>();
+    posts = new HashMap<String, Post>();
   }
 
   /**
@@ -30,6 +27,7 @@ public class Database {
   public Database(IO io) {
     storage = io;
     users = io.getDatabase().getUserMap();
+    posts = io.getDatabase().getPostMap();
   }
 
   /** Saves cached database, overwriting previous data in storage. */
@@ -40,14 +38,14 @@ public class Database {
   }
 
   /**
-   * Saves post in database for user. Automatically updates storage.
+   * Creates a new User in the database, unless the user already exists. Automatically updates
+   * storage.
    *
-   * @param post The Post to save.
-   * @param user Owner of the post.
+   * @param user The User to add.
    */
-  public void savePost(Post post) throws IOException {
-    users.get(post.getOwner()).addPost(post.getId());
-    posts.put(post.getId(), post);
+  public void addPost(Post post) {
+    users.get(post.getOwner()).addPost(post.getUUID());
+    posts.put(post.getUUID(), post);
     saveToStorage();
   }
 
@@ -57,24 +55,11 @@ public class Database {
    *
    * @param user The User to save.
    */
-  public void saveUser(User user) {
+  public void addUser(User user) {
     if (!users.keySet().contains(user.getNickname())) {
       users.put(user.getNickname(), user);
-      saveToStorage();
     }
-  }
-
-  /**
-   * Fetches a collection of all posts in the current database.
-   *
-   * @return Returns a collection containing all posts.
-   */
-  public Map<String, Post> getPostList() {
-    return posts;
-  }
-
-  public void addPost(Post post) {
-    posts.put(post.getId(), post);
+    saveToStorage();
   }
 
   /**
@@ -86,7 +71,7 @@ public class Database {
     return users.values();
   }
 
-    /**
+  /**
    * Fetches the mapping between users and usernames
    *
    * @return A map mapping users to their usernames
@@ -122,7 +107,7 @@ public class Database {
    */
   public User tryLogin(String username, String password) {
     User user = users.getOrDefault(username, null);
-    if(user!= null && user.getPassword() == user.hashPassword(password)){
+    if (user != null && user.getPassword() == user.hashPassword(password)) {
       return user;
     }
     return null;
@@ -137,16 +122,5 @@ public class Database {
   public boolean usernameExists(String username) {
     boolean exists = (users.getOrDefault(username, null) != null);
     return exists;
-  }
-
-  /**
-   * Makes a unique ID based on the amount of users that already exist in the database.
-   *
-   * @return a new ID for a user being created.
-   */
-  public int getNewId() {
-    int id = users.size();
-    id++;
-    return id;
   }
 }

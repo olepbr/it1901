@@ -8,49 +8,62 @@ import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
-/** Provides a class for representing posts. 
- * Images are stored in base64 format for ease of use
- */
+/** Provides a class for representing posts. Images are stored in base64 format for ease of use */
 public class Post {
 
-  private String id;
+  private String uuid;
   private String owner;
   private String caption;
   private String image;
   private List<Comment> comments = new ArrayList<Comment>();
 
-  public Post() {
-  }
+  public Post() {}
 
   /**
    * Initializes a Post object.
    *
-   * @param owner   The owner of the post.
+   * @param owner The owner of the post.
    * @param caption The post's caption.
-   * @param image   The image of the post as a base64-encoded String.
+   * @param image The image of the post as a base64-encoded String.
    */
   public Post(String owner, String caption, String image) {
     this.setOwner(owner);
     this.setImageData(image);
     this.setText(caption);
-    id = UUID.randomUUID().toString();
+    this.uuid = UUID.randomUUID().toString();
   }
 
   /**
    * Initializes a Post object.
    *
-   * @param owner   The owner of the post.
+   * @param owner The owner of the post.
    * @param caption The post's caption.
-   * @param image   The image of the post.
+   * @param image The image of the post.
    * @throws IOException If a problem occurs when reading the image File
    */
   public Post(String owner, String caption, File image) throws IOException {
     this.setOwner(owner);
     this.setImage(image);
     this.setText(caption);
-    id = (UUID.randomUUID().toString());
+    this.uuid = (UUID.randomUUID().toString());
   }
 
+  public void updatePost(Post post) {
+    this.owner = post.owner;
+    this.caption = post.caption;
+    this.image = post.image;
+  }
+
+  /* Get/Set ID */
+  public String getUUID() {
+    return uuid;
+  }
+
+  public void setUUID(String uuid) {
+    this.uuid = uuid;
+  }
+
+  /* Get/Set Owner */
   public String getOwner() {
     return owner;
   }
@@ -59,6 +72,7 @@ public class Post {
     this.owner = owner;
   }
 
+  /* Get/Set Text */
   public String getText() {
     return caption;
   }
@@ -67,12 +81,9 @@ public class Post {
     this.caption = text;
   }
 
+  /* Get/Set Image */
   public String getImage() {
     return image;
-  }
-
-  public String getId() {
-    return id;
   }
 
   /**
@@ -91,10 +102,8 @@ public class Post {
     }
   }
 
-
   /**
-   * Bypasses the need to use a File to set image,
-   * expects a base64 encoded image as a String.
+   * Bypasses the need to use a File to set image, expects a base64 encoded image as a String.
    *
    * @param image The image to save, given as a base64 encoded String
    */
@@ -106,19 +115,18 @@ public class Post {
     return comments;
   }
 
-  /**Adds a new comment to the post.
+  /**
+   * Adds a new comment to the post.
    *
    * @param comment The comment to add.
    */
   public void addComment(Comment comment) {
     comments.add(comment);
   }
-  
-
-
 
   @Override
   public String toString() {
-    return String.format("[Post owner=%s caption=%s image=%s]", getOwner(), getText(), getImage());
+    return String.format(
+        "[Post id=%s owner=%s caption=%s image=%s]", getUUID(), getOwner(), getText(), getImage());
   }
 }

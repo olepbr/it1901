@@ -11,11 +11,12 @@ import java.util.List;
  * @author Magne Halvorsen
  */
 public class User {
+
   private int id;
   private String name;
   private String nickname;
   private String email;
-  private List<String> posts = new ArrayList<String>();
+  private List<String> posts = new ArrayList<>();
   private String hashedPassword;
 
   public User() {}
@@ -28,13 +29,13 @@ public class User {
    * @param nickname This user's nickname.
    * @param email This user's email.
    */
-  public User(int id, String name, String nickname, String email) {
-    this.id = id;
+  public User(String name, String nickname, String email) {
     this.name = name;
     this.nickname = nickname;
     this.email = email;
   }
 
+  /* Get/Set ID */
   public int getId() {
     return id;
   }
@@ -43,6 +44,7 @@ public class User {
     this.id = id;
   }
 
+  /* Get/Set Name */
   public String getName() {
     return name;
   }
@@ -51,6 +53,7 @@ public class User {
     this.name = name;
   }
 
+  /* Get/Set Nickname */
   public String getNickname() {
     return nickname;
   }
@@ -59,6 +62,7 @@ public class User {
     this.nickname = nickname;
   }
 
+  /* Get/Set email */
   public String getEmail() {
     return email;
   }
@@ -71,10 +75,11 @@ public class User {
     return posts;
   }
 
-  public void addPost(String postId) {
-    posts.add(postId);
+  public void addPost(String postUUID) {
+    posts.add(postUUID);
   }
 
+  /* Passwords */
   /**
    * Hashes the given String using SHA256 encryption.
    *
@@ -102,6 +107,6 @@ public class User {
   @Override
   public String toString() {
     return String.format(
-        "[User id=%d name=%s nickname=%s email=%s", getId(), getName(), getNickname(), getEmail());
+        "[User name=%s nickname=%s email=%s]", getName(), getNickname(), getEmail());
   }
 }
