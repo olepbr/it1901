@@ -103,36 +103,19 @@ public class AppTest extends ApplicationTest {
     System.out.println(inputFile.getAbsolutePath());
     browserController = ((BrowserController) controller.getChild());
     browserController.setSelectedImage(inputFile);
-    final Button addContnt  = (Button) parent.lookup("#addContent");
+    final Button addContent  = (Button) parent.lookup("#addContent");
     final TextField inputTextField = (TextField) parent.lookup("#inputTextField");
     clickOn("#inputTextField");
     write("This is a very nice animal");
     clickOn("#addContent");
     sleep(3000);
 
+    /* Test comment */
+    final ImageView postImage  = (ImageView) parent.lookup("#postImage");
+    clickOn(postImage);
+    final TextField commentInput = (TextField) parent.lookup("#commentInput");
+    final Button commentButton = (Button) parent.lookup("#commentButton");
+    clickOn(commentInput).write("Haha this is such a cool animal right??");
+    clickOn(commentButton);
   }
-
-  
-
-/*
-
-  @Test
-  public void addPostTest(){
-    browserController.setDatabase(emptyDatabase);
-    File inputFile = new File(getClass().getClassLoader().getResource("pangolin.jpg").getPath());
-    browserController.setSelectedImage(inputFile);
-    final Button addContent  = (Button) parent.lookup("#addContent");
-    final TextField inputTextField = (TextField) parent.lookup("#inputTextField");
-    clickOn("#inputTextField");
-    write("This is a very nice animal");
-      //clickOn("#addContent");
-
-  
-  }
-  */
-
-
-  
-
-  
 }
