@@ -191,6 +191,354 @@ Database "users" --> "*" User
 This app uses an implicit storage method, where the user is not directly informed of how or where data is stored. 
 Implicit storage is used as it allows multiple users to interact with a shared database, which is an integral part of our idea, even though only local storage is supported at the moment.
 
+## REST API
+
+### /user
+
+#### GET
+
+returns:
+
+```json
+[
+  {
+    'nickname': 'string',
+    'name': 'string',
+    'email': 'string',
+    'posts':
+      ['UUID', 'UUID', ..., 'UUID'],
+    'hashedPassword': 'string'
+  }
+]
+```
+
+#### POST
+
+body:
+
+```json
+{
+  'nickname': 'string',
+  'name': 'string',
+  'email': 'string',
+  'hashedPassword':  'string'
+}
+```
+return:
+
+```json
+{
+  'nickname': 'string',
+  'name': 'string',
+  'email': 'string',
+  'posts':
+    ['UUID', 'UUID', ..., 'UUID'],
+  'hashedPassword': 'string'
+}
+```
+
+### /user/{nickname}
+
+#### GET
+
+return:
+
+```json
+{
+  'nickname': 'string',
+  'name': 'string',
+  'email': 'string',
+  'posts':
+    ['UUID', 'UUID', ..., 'UUID'],
+  'hashedPassword': 'string'
+}
+```
+
+#### PUT
+
+body:
+
+```json
+{
+  'nickname': 'string',
+  'name': 'string',
+  'email': 'string',
+  'posts':
+    ['UUID', 'UUID', ..., 'UUID'],
+  'hashedPassword': 'string'
+}
+```
+
+return:
+
+```json
+{
+  'nickname': 'string',
+  'name': 'string',
+  'email': 'string',
+  'posts':
+    ['UUID', 'UUID', ..., 'UUID'],
+  'hashedPassword': 'string'
+}
+```
+
+#### DELETE
+
+return:
+
+```json
+{
+  'nickname': 'string',
+  'name': 'string',
+  'email': 'string',
+  'posts':
+    ['UUID', 'UUID', ..., 'UUID'],
+  'hashedPassword': 'string'
+}
+```
+
+### /user/{nickname}/post
+
+#### GET
+
+return:
+
+```json
+[
+  {
+    'UUID': 'string',
+    'title': 'string',
+    'caption': 'string',
+    'image': 'string',
+    'comments':
+      [
+        {
+          'UUID': 'string',
+          'author': 'user nickname',
+          'text': 'string',
+        }
+      ]
+  }
+]
+```
+
+### /post
+
+#### GET
+
+returns:
+
+```json
+[
+  {
+    'UUID': 'string',
+    'title': 'string',
+    'caption': 'string',
+    'image': 'string',
+    'comments':
+      [
+        {
+          'UUID': 'string',
+          'author': 'user nickname',
+          'text': 'string',
+        }
+      ]
+  }
+]
+```
+
+#### POST
+
+body:
+
+```json
+[
+  {
+    'title': 'string',
+    'caption': 'string',
+    'image': 'string'
+  }
+]
+```
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'title': 'string',
+  'caption': 'string',
+  'image': 'string'
+}
+```
+
+### /post/{postUUID}
+#### GET
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'title': 'string',
+  'caption': 'string',
+  'image': 'string',
+  'comments':
+    [
+      {
+        'UUID': 'string',
+        'author': 'user nickname',
+        'text': 'string'
+      }
+    ]
+}
+```
+
+#### PUT
+
+body:
+
+```json
+{
+  'UUID': 'string',
+  'title': 'string',
+  'caption': 'string',
+  'image': 'string',
+  'comments':
+    [
+      {
+        'UUID': 'string',
+        'author': 'user nickname',
+        'text': 'string'
+      }
+    ]
+}
+```
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'title': 'string',
+  'caption': 'string',
+  'image': 'string'
+  'comments':
+    [
+      {
+        'UUID': 'string',
+        'author': 'user nickname',
+        'text': 'string'
+      }
+    ]
+}
+```
+
+#### DELETE
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'title': 'string',
+  'caption': 'string',
+  'image': 'string'
+  'comments':
+    [
+      {
+        'UUID': 'string',
+        'author': 'user nickname',
+        'text': 'string'
+      }
+    ]
+}
+```
+
+### /post/{postID}/comment
+
+#### GET
+
+return:
+
+```json
+[
+  {
+    'UUID': 'string',
+    'author': 'user nickname',
+    'text': 'string'
+  }
+]
+```
+
+#### POST
+
+body:
+
+```json
+{
+  'author': 'user nickname',
+  'text': 'string'
+}
+```
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'author': 'user nickname',
+  'text': 'string'
+}
+```
+
+### /post/{postID}/comment/{commentId}
+
+#### GET
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'author': 'user nickname',
+  'text': 'string'
+}
+```
+
+#### PUT
+
+body:
+
+```json
+{
+  'UUID': 'string',
+  'author': 'user nickname',
+  'text': 'string'
+}
+```
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'author': 'user nickname',
+  'text': 'string'
+}
+```
+
+####DELETE
+
+return:
+
+```json
+{
+  'UUID': 'string',
+  'author': 'user nickname',
+  'text': 'string'
+}
+```
 
 ## Maven Goals
 
