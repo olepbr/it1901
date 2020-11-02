@@ -23,4 +23,8 @@ public class Comment {
   public Comment(String author, String text) {
     this.text = text;
   }
+
+  public String toString(){
+    return this.author + "commented:\n" + this.text;
+  }
 }
