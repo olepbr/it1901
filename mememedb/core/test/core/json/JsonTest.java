@@ -12,7 +12,7 @@ public class JsonTest {
   public void testUserSerializer() {
     User user = new User(1, "Ola Nordman", "XxX_SpicyBoi69_XxX", "spice@memes.com");
     Post post = new Post(user.getNickname(), "haha", "files/spice.png");
-    user.addPost(post);
+    user.addPost(post.getId());
 
     try {
       String json = MememeModule.serializeUser(user);

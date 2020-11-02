@@ -3,19 +3,24 @@ package core.datastructures;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-/** Provides a class for representing posts. Images are stored in base64 format for ease of use */
+
+/**
+ * Provides a class for representing posts. Images are stored in base64 format
+ * for ease of use
+ */
 public class Post {
 
   private String uuid;
   private String owner;
   private String caption;
   private String image;
-  private List<Comment> comments = new ArrayList<Comment>();
+  private Map<String, Comment> comments = new HashMap<String, Comment>();
 
   public Post() {}
 
@@ -111,8 +116,8 @@ public class Post {
     this.image = image;
   }
 
-  public List<Comment> getComments() {
-    return comments;
+  public Collection<Comment> getComments() {
+    return comments.values();
   }
 
   /**
@@ -121,7 +126,7 @@ public class Post {
    * @param comment The comment to add.
    */
   public void addComment(Comment comment) {
-    comments.add(comment);
+    comments.put(comment.getId(), comment);
   }
 
   @Override

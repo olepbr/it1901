@@ -3,7 +3,6 @@ package core.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.IOException;
 
@@ -25,7 +24,7 @@ class UserSerializer extends JsonSerializer<User> {
     jsonGen.writeStringField("email", user.getEmail());
     jsonGen.writeStringField("password", user.getPassword());
     jsonGen.writeArrayFieldStart("posts");
-    for (Post post : user.getPosts()) {
+    for (String post : user.getPosts()) {
       jsonGen.writeObject(post);
     }
     jsonGen.writeEndArray();

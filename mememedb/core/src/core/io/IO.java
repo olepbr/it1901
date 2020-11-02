@@ -1,8 +1,6 @@
 package core.io;
 
 import core.datastructures.Database;
-import java.io.File;
-import java.io.IOException;
 
 /** Interface for handling Input/Output. */
 public interface IO {

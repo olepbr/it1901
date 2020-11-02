@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.IOException;
 
@@ -21,8 +20,6 @@ import java.io.IOException;
  * @author Ole Peder Brandtzæg
  */
 class UserDeserializer extends JsonDeserializer<User> {
-
-  private PostDeserializer postDeserializer = new PostDeserializer();
 
   @Override
   public User deserialize(JsonParser parser, DeserializationContext ctxt)
@@ -58,9 +55,8 @@ class UserDeserializer extends JsonDeserializer<User> {
       JsonNode postsNode = objectNode.get("posts");
       if (postsNode instanceof ArrayNode) {
         for (JsonNode elementNode : ((ArrayNode) postsNode)) {
-          Post post = postDeserializer.deserialize(elementNode);
-          if (post != null) {
-            user.addPost(post);
+          if (elementNode instanceof TextNode) {
+            user.addPost(elementNode.asText());
           }
         }
       }

@@ -87,9 +87,9 @@ public class DatabaseTest {
     Post post2 = new Post("jomama", "YO MAMA", "sofat.png");
     Post post3 = new Post("jomama", "YO 1231232MAMAs", "sofat1223.png");
     try {
-      database.savePost(post1, testData.get(0));
-      database.savePost(post2, testData.get(1));
-      database.savePost(post3, testData.get(1));
+      database.savePost(post1);
+      database.savePost(post2);
+      database.savePost(post3);
     } catch (Exception e) {
       e.printStackTrace();
       fail("Unknown error when saving posts");

@@ -1,6 +1,9 @@
 package core.datastructures;
 
+import java.util.UUID;
+
 public class Comment {
+  private String id;
   private String text;
   private String author;
 
@@ -20,8 +23,18 @@ public class Comment {
     this.author = author;
   }
 
+  public String getId(){
+    return id;
+  }
+
+  public void setId(String id){
+    this.id = id;
+  }
+
   public Comment(String author, String text) {
     this.text = text;
+    this.author = author;
+    id = UUID.randomUUID().toString();
   }
 
   public String toString(){
