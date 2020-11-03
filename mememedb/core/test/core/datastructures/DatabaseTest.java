@@ -1,44 +1,48 @@
 package core.datastructures;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 import core.io.IO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 public class DatabaseTest {
 
-  List<User> testData =
-      new ArrayList<User>(
-          Arrays.asList(
-              new User(1, "Bert Johnson", "berjon29", "bert@johnson.com"),
-              new User(2, "Joe Mama", "jomama", "joe@mama.com")));
-  
+  List<User> testData = new ArrayList<User>(Arrays.asList(
+      new User("Bert Johnson", "berjon29", "bert@johnson.com"), new User("Joe Mama", "jomama", "joe@mama.com")));
 
   /**
-   * Returns a mock database, always returning an empty list. 
-   * Used by mocked IO for passing content to database for testing purposes.
+   * Returns a mock database, always returning an empty list. Used by mocked IO
+   * for passing content to database for testing purposes.
    * 
    * @return The mocked Database
    */
-  public Database getEmptyMock(){
+  public Database getEmptyMock() {
     Database mockDb = mock(Database.class);
-    doReturn(new ArrayList<User>()).when(mockDb).getUsers();
+    doReturn(new HashMap<String, User>()).when(mockDb).getUserMap();
     return mockDb;
   }
 
   /**
-   * Returns a mock database, always returning the example testData. 
-   * Used by mocked IO for passing content to database for testing purposes.
+   * Returns a mock database, always returning the example testData. Used by
+   * mocked IO for passing content to database for testing purposes.
    * 
    * @return The mocked Database
    */
-  public Database getFilledMock(){
+  public Database getFilledMock() {
+    Map<String, User> returnmap = new HashMap<String, User>();
+    for (User testUser : testData) {
+      returnmap.put(testUser.getNickname(), testUser);
+    }
     Database mockDb = mock(Database.class);
-    doReturn(testData).when(mockDb).getUsers();
+    doReturn(returnmap).when(mockDb).getUserMap();
     return mockDb;
   }
 
@@ -48,18 +52,15 @@ public class DatabaseTest {
     // test with empty dataset
     doReturn(getEmptyMock()).when(mockIO).getDatabase();
     final Database databaseEmpty = new Database(mockIO);
-    assertEquals(
-        databaseEmpty.getUsers(),
-        new ArrayList<User>(),
-        "Database is not empty with empty construction");
+    assertEquals(databaseEmpty.getUsers().size(), 0, "Database is not empty with empty construction");
 
     // test with already created dataset
     doReturn(getFilledMock()).when(mockIO).getDatabase();
     final Database databaseFull = new Database(mockIO);
-    assertEquals(
-        testData,
-        databaseFull.getUsers(),
-        "Database does not retain data structure when constructing");
+    assertEquals(testData.size(), databaseFull.getUsers().size(), "Database does not retain users when constructing");
+    for (User user : testData) {
+      assertTrue(databaseFull.getUsers().contains(user), "Database does not retain users when constructing");
+    }
   }
 
   @Test
@@ -68,10 +69,14 @@ public class DatabaseTest {
     doReturn(getEmptyMock()).when(mockIO).getDatabase();
     final Database database = new Database(mockIO);
     for (User user : testData) {
-      database.saveUser(user);
+      database.addUser(user);
     }
-    assertEquals(database.getUsers(), testData, "Bug in user addition");
-    verify(mockIO, times(testData.size())).saveDatabase(database);;
+    for (User user : testData) {
+      assertTrue(database.getUsers().contains(user),
+          "Error in user addition");
+    }
+    verify(mockIO, times(testData.size())).saveDatabase(database);
+    ;
   }
 
   @Test
@@ -79,40 +84,23 @@ public class DatabaseTest {
     final IO mockIO = mock(IO.class);
     doReturn(getFilledMock()).when(mockIO).getDatabase();
     Database database = new Database(mockIO);
-    assertEquals(
-        new ArrayList<Post>(),
-        database.getPostList(),
+    assertEquals(0, database.getPosts().size(),
         "Database returns non-empty post list when there are no posts");
     Post post1 = new Post("berjon29", "Hello", "hello.png");
     Post post2 = new Post("jomama", "YO MAMA", "sofat.png");
     Post post3 = new Post("jomama", "YO 1231232MAMAs", "sofat1223.png");
     try {
-      database.savePost(post1);
-      database.savePost(post2);
-      database.savePost(post3);
+      database.addPost(post1);
+      database.addPost(post2);
+      database.addPost(post3);
     } catch (Exception e) {
       e.printStackTrace();
       fail("Unknown error when saving posts");
     }
-    assertEquals(
-        new ArrayList<Post>(Arrays.asList(post1, post2, post3)),
-        database.getPostList(),
-        "Database does not return posts after addition");
-  }
-
-  @Test
-  public void TestIdAssigner() {
-    final IO mockIO = mock(IO.class);
-    doReturn(getEmptyMock()).when(mockIO).getDatabase();
-    Database database = new Database(mockIO);
-    assertEquals(
-        1, database.getNewId(), "Error in id assignment, expected 1, got " + database.getNewId());
-    doReturn(getFilledMock()).when(mockIO).getDatabase();
-    Database database2 = new Database(mockIO);
-    assertEquals(
-        3, database2.getNewId(), "Error in id assignment, expected 3, got " + database.getNewId());
-    assertEquals(
-        3, database2.getNewId(), "Error in id assignment, expected 3, got " + database.getNewId());
+    for(Post post : Arrays.asList(post1, post2, post3)) {
+      assertTrue(database.getPosts().contains(post),
+          "Error in post addition");
+    }
   }
 
   @Test
@@ -120,9 +108,9 @@ public class DatabaseTest {
     final IO mockIO = mock(IO.class);
     doReturn(getFilledMock()).when(mockIO).getDatabase();
     Database database = new Database(mockIO);
-    assertEquals(false, database.usernameExists("notARealUser"), 
+    assertEquals(false, database.usernameExists("notARealUser"),
         "Error in username availability, username should not exist yet");
-    assertEquals(true, database.usernameExists("berjon29"), 
+    assertEquals(true, database.usernameExists("berjon29"),
         "Error in username availability, username should already exist");
   }
 
@@ -132,9 +120,10 @@ public class DatabaseTest {
     testData.get(0).setPassword("asafepassword");
     doReturn(getFilledMock()).when(mockIO).getDatabase();
     Database database = new Database(mockIO);
-    assertEquals(testData.get(0), database.tryLogin("berjon29", "asafepassword"), 
-        "Error in login method, should return User");
-    assertEquals(null, database.tryLogin("berjon29", "awrongpassword"), 
+    System.out.println(database);
+    System.out.println(testData.get(0).hashPassword("asafepassword"));
+    assertEquals(testData.get(0), database.tryLogin(testData.get(0).getNickname(), "asafepassword"), "Error in login method, should return User");
+    assertEquals(null, database.tryLogin(testData.get(0).getNickname(), "awrongpassword"),
         "Error in login method, should fail with incorrect input");
   }
 }

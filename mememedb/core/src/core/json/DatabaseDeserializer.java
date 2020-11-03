@@ -47,7 +47,7 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
         for (JsonNode elementNode : ((ArrayNode) usersNode)) {
           User user = userDeserializer.deserialize(elementNode);
           if (user != null) {
-            database.saveUser(user);
+            database.addUser(user);
           }
         }
       }

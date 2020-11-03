@@ -18,7 +18,6 @@ class UserSerializer extends JsonSerializer<User> {
   public void serialize(User user, JsonGenerator jsonGen, SerializerProvider serializerProvider)
       throws IOException {
     jsonGen.writeStartObject();
-    jsonGen.writeNumberField("id", user.getId());
     jsonGen.writeStringField("name", user.getName());
     jsonGen.writeStringField("nickname", user.getNickname());
     jsonGen.writeStringField("email", user.getEmail());

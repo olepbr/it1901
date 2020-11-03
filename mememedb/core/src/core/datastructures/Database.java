@@ -107,7 +107,7 @@ public class Database {
    */
   public User tryLogin(String username, String password) {
     User user = users.getOrDefault(username, null);
-    if (user != null && user.getPassword() == user.hashPassword(password)) {
+    if (user != null && user.getPassword().equals(user.hashPassword(password))) {
       return user;
     }
     return null;
@@ -122,5 +122,19 @@ public class Database {
   public boolean usernameExists(String username) {
     boolean exists = (users.getOrDefault(username, null) != null);
     return exists;
+  }
+
+  @Override
+  public String toString() {
+    String s = "Users:\n";
+    for(User user : this.getUsers()) {
+      s += user.toString() + "\n";
+    }
+    s += "Posts:\n";
+    for(Post post : this.getPosts()) {
+      s += post.toString() + "\n";
+    }
+    s = s.trim();
+    return s;
   }
 }

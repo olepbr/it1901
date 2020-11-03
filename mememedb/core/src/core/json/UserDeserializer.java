@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import core.datastructures.User;
@@ -32,10 +31,6 @@ class UserDeserializer extends JsonDeserializer<User> {
     if (jsonNode instanceof ObjectNode) {
       ObjectNode objectNode = (ObjectNode) jsonNode;
       User user = new User();
-      JsonNode idNode = objectNode.get("id");
-      if (idNode instanceof IntNode) {
-        user.setId(((IntNode) idNode).asInt());
-      }
       JsonNode nameNode = objectNode.get("name");
       if (nameNode instanceof TextNode) {
         user.setName(((TextNode) nameNode).asText());

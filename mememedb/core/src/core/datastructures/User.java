@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class User {
 
-  private int id;
   private String name;
   private String nickname;
   private String email;
@@ -24,7 +23,6 @@ public class User {
   /**
    * Initializes a User object.
    *
-   * @param id This user's id.
    * @param name This user's name.
    * @param nickname This user's nickname.
    * @param email This user's email.
@@ -33,15 +31,6 @@ public class User {
     this.name = name;
     this.nickname = nickname;
     this.email = email;
-  }
-
-  /* Get/Set ID */
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   /* Get/Set Name */
@@ -107,6 +96,6 @@ public class User {
   @Override
   public String toString() {
     return String.format(
-        "[User name=%s nickname=%s email=%s]", getName(), getNickname(), getEmail());
+        "[User name=%s nickname=%s email=%s password=%s]", getName(), getNickname(), getEmail(), getPassword());
   }
 }

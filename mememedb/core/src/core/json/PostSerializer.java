@@ -18,6 +18,7 @@ class PostSerializer extends JsonSerializer<Post> {
   public void serialize(Post post, JsonGenerator jsonGen, SerializerProvider serializerProvider)
       throws IOException {
     jsonGen.writeStartObject();
+    jsonGen.writeStringField("uuid", post.getUUID());
     jsonGen.writeStringField("owner", post.getOwner());
     jsonGen.writeStringField("caption", post.getText());
     jsonGen.writeStringField("image", post.getImage());

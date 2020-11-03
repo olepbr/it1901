@@ -36,6 +36,10 @@ class PostDeserializer extends JsonDeserializer<Post> {
     if (jsonNode instanceof ObjectNode) {
       ObjectNode objectNode = (ObjectNode) jsonNode;
       Post post = new Post();
+      JsonNode uuidNode = objectNode.get("uuid");
+      if (uuidNode instanceof TextNode) {
+        post.setUUID(((TextNode) uuidNode).asText());
+      }
       JsonNode ownerNode = objectNode.get("owner");
       if (ownerNode instanceof TextNode) {
         post.setOwner(((TextNode) ownerNode).asText());
