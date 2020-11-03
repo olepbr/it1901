@@ -126,7 +126,7 @@ public class Post {
    * @param comment The comment to add.
    */
   public void addComment(Comment comment) {
-    comments.put(comment.getId(), comment);
+    comments.put(comment.getUUID(), comment);
   }
 
   @Override

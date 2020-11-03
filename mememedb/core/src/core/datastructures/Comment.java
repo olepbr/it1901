@@ -3,7 +3,7 @@ package core.datastructures;
 import java.util.UUID;
 
 public class Comment {
-  private String id;
+  private String uuid;
   private String text;
   private String author;
 
@@ -23,21 +23,24 @@ public class Comment {
     this.author = author;
   }
 
-  public String getId(){
-    return id;
+  public String getUUID(){
+    return uuid;
   }
 
-  public void setId(String id){
-    this.id = id;
+  public void setUUID(String uuid){
+    this.uuid = uuid;
   }
 
   public Comment(String author, String text) {
     this.text = text;
     this.author = author;
-    id = UUID.randomUUID().toString();
+    this.uuid = UUID.randomUUID().toString();
   }
 
-  public String toString(){
+  public Comment() {
+}
+
+public String toString(){
     return this.author + "commented:\n" + this.text;
   }
 }

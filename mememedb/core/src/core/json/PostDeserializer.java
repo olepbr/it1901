@@ -6,9 +6,11 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import core.datastructures.Post;
+import core.datastructures.Comment;
 import java.io.IOException;
 
 /**
@@ -18,6 +20,8 @@ import java.io.IOException;
  * @author Ole Peder Brandtzæg
  */
 class PostDeserializer extends JsonDeserializer<Post> {
+
+  private CommentDeserializer commentDeserializer = new CommentDeserializer();
 
   @Override
   public Post deserialize(JsonParser parser, DeserializationContext ctxt)
@@ -51,6 +55,15 @@ class PostDeserializer extends JsonDeserializer<Post> {
       JsonNode imageNode = objectNode.get("image");
       if (imageNode instanceof TextNode) {
         post.setImageData(((TextNode) imageNode).asText());
+      }
+      JsonNode commentsNode = objectNode.get("comments");
+      if (commentsNode instanceof ArrayNode) {
+        for (JsonNode elementNode : ((ArrayNode) commentsNode)) {
+          Comment comment = commentDeserializer.deserialize(elementNode);
+          if (post != null) {
+            post.addComment(comment);
+          }
+        }
       }
       return post;
     }

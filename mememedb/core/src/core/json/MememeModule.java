@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+
+import core.datastructures.Comment;
 import core.datastructures.Database;
 import core.datastructures.Post;
 import core.datastructures.User;
@@ -64,4 +66,18 @@ public class MememeModule extends SimpleModule {
   public static Database deserializeDatabase(Reader reader) throws IOException {
     return (mapper.readValue(reader, Database.class));
   }
+
+  public static String serializeComment(Comment comment) throws JsonProcessingException {
+    return (mapper.writeValueAsString(comment));
+  }
+
+  public static Comment deserializeComment(String comment) throws JsonProcessingException {
+    return (mapper.readValue(comment, Comment.class));
+  }
+
+  public static Comment deserializeComment(Reader reader) throws IOException {
+    return (mapper.readValue(reader, Comment.class));
+  }
+
+
 }
