@@ -63,6 +63,16 @@ public class Database {
   }
 
   /**
+   * Fetches a single user
+   *
+   * @param nickname The nickname of the user
+   * @return The user object of the user with nickname
+   */
+  public User getUser(String nickname) {
+    return users.get(nickname);
+  }
+
+  /**
    * Fetches a collection of all users in the database.
    *
    * @return returns a collection of all users
@@ -127,11 +137,11 @@ public class Database {
   @Override
   public String toString() {
     String s = "Users:\n";
-    for(User user : this.getUsers()) {
+    for (User user : this.getUsers()) {
       s += user.toString() + "\n";
     }
     s += "Posts:\n";
-    for(Post post : this.getPosts()) {
+    for (Post post : this.getPosts()) {
       s += post.toString() + "\n";
     }
     s = s.trim();
