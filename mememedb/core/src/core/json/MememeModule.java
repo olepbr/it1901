@@ -28,9 +28,11 @@ public class MememeModule extends SimpleModule {
     addSerializer(Post.class, new PostSerializer());
     addSerializer(User.class, new UserSerializer());
     addSerializer(Database.class, new DatabaseSerializer());
+    addSerializer(Comment.class, new CommentSerializer());
     addDeserializer(Post.class, new PostDeserializer());
     addDeserializer(User.class, new UserDeserializer());
     addDeserializer(Database.class, new DatabaseDeserializer());
+    addDeserializer(Comment.class, new CommentDeserializer());
     mapper.registerModule(this);
   }
 

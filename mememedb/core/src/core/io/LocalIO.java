@@ -2,6 +2,8 @@ package core.io;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import core.datastructures.Database;
 import core.json.MememeModule;
 import java.io.File;
@@ -20,10 +22,12 @@ public class LocalIO implements IO {
   private File userDir;
   private File userFile;
   private Database database;
+  private ObjectMapper mapper;
 
   /** Constructor. Initializes database object from file or skeleton. */
   public LocalIO() {
-
+    this.mapper = new ObjectMapper();
+    mapper.registerModule(new MememeModule());
     Reader reader = null;
     userDir = Paths.get(System.getProperty("user.home"), "mememedb").toFile();
     String userFileName = "database.json";
@@ -56,7 +60,7 @@ public class LocalIO implements IO {
     // Try reading data from file
     if (reader != null) {
       try {
-        database = MememeModule.deserializeDatabase(reader);
+        database = mapper.readValue(reader, Database.class);
       } catch (JsonParseException e) {
         System.err.println("Error parsing file.");
         e.printStackTrace();
@@ -99,7 +103,7 @@ public class LocalIO implements IO {
     FileWriter writer = null;
     try {
       writer = new FileWriter(userFile, StandardCharsets.UTF_8);
-      writer.write(MememeModule.serializeDatabase(database));
+      writer.write(mapper.writeValueAsString(database));
     } catch (JsonProcessingException e) {
       System.err.println("Error processing data serialization");
       e.printStackTrace();
