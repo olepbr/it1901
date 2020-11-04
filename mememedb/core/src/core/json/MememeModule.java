@@ -63,6 +63,10 @@ public class MememeModule extends SimpleModule {
     return (mapper.writeValueAsString(database));
   }
 
+  public static Database deserializeDatabase(String string) throws JsonProcessingException {
+    return (mapper.readValue(string, Database.class));
+  }
+
   public static Database deserializeDatabase(Reader reader) throws IOException {
     return (mapper.readValue(reader, Database.class));
   }

@@ -3,6 +3,7 @@ package core.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import core.datastructures.Comment;
+import core.datastructures.Database;
 import core.datastructures.Post;
 import core.datastructures.User;
 import org.junit.jupiter.api.Assertions;
@@ -49,6 +50,29 @@ public class JsonTest {
       Comment comment2 = MememeModule.deserializeComment(json);
       Assertions.assertTrue(comment2 instanceof Comment);
       Assertions.assertEquals(comment.toString(), comment2.toString());
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void testDatabaseSerializer() {
+    Database database = new Database();
+    User user1 = new User("Bert johnsos", "berjon67", "ber@john.com");
+    User user2 = new User("Jahn jahnman", "imthejahnman", "jahn@plan.can");
+    database.addUser(user1);
+    database.addUser(user2);
+    Post post1 = new Post("berjon67", "This is an image", "someimagedata");
+    Post post2 = new Post("berjon67", "This is also an image", "someotherimage");
+    database.addPost(post1);
+    database.addPost(post2);
+    post1.addComment(new Comment("imthejahnman", "haha, i like this"));
+    
+    try {
+      String json = MememeModule.serializeDatabase(database);
+      Database database2 = MememeModule.deserializeDatabase(json);
+      Assertions.assertTrue(database2 instanceof Database);
+      Assertions.assertEquals(database.toString(), database2.toString());
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
