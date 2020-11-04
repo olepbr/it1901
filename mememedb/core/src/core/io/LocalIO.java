@@ -2,7 +2,6 @@ package core.io;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.Database;
 import core.json.MememeModule;
 import java.io.File;
@@ -18,22 +17,16 @@ import java.nio.file.Paths;
 /** IO implementation for local file system. */
 public class LocalIO implements IO {
 
-  private ObjectMapper mapper;
   private File userDir;
   private File userFile;
   private Database database;
 
-  /**
-   * Constructor. Initializes database object from file or skeleton.
-   */
+  /** Constructor. Initializes database object from file or skeleton. */
   public LocalIO() {
-    // Create object for json-parsing
-    mapper = new ObjectMapper();
-    mapper.registerModule(new MememeModule());
 
     Reader reader = null;
     userDir = Paths.get(System.getProperty("user.home"), "mememedb").toFile();
-    String userFileName = "user.json";
+    String userFileName = "database.json";
     userFile = new File(userDir.getAbsolutePath() + "/" + userFileName);
     // Try reading data from home folder
     if (userFile.exists() && userFile.isFile()) {
@@ -45,7 +38,7 @@ public class LocalIO implements IO {
       }
     } else {
       // If not, try reading from skeleton in resources
-      URL skeletonUrl = getClass().getResource("user.json");
+      URL skeletonUrl = getClass().getResource("database.json");
       try {
         reader = new InputStreamReader(skeletonUrl.openStream(), StandardCharsets.UTF_8);
       } catch (IOException e) {
@@ -63,7 +56,7 @@ public class LocalIO implements IO {
     // Try reading data from file
     if (reader != null) {
       try {
-        database = mapper.readValue(reader, Database.class);
+        database = MememeModule.deserializeDatabase(reader);
       } catch (JsonParseException e) {
         System.err.println("Error parsing file.");
         e.printStackTrace();
@@ -84,13 +77,12 @@ public class LocalIO implements IO {
     }
 
     // Write data to home folder
-    try {
+    if (database != null) {
       if (!userDir.isDirectory() && userDir.mkdir()) {
-        mapper.writeValue(userFile, database);
+        saveDatabase(database);
+      } else if (userDir.isDirectory()) {
+        saveDatabase(database);
       }
-    } catch (IOException e) {
-      System.err.println("Error writing file");
-      e.printStackTrace();
     }
   }
 
@@ -109,17 +101,17 @@ public class LocalIO implements IO {
       writer = new FileWriter(userFile, StandardCharsets.UTF_8);
       writer.write(MememeModule.serializeDatabase(database));
     } catch (JsonProcessingException e) {
-      System.out.println("Error processing data serialization");
+      System.err.println("Error processing data serialization");
       e.printStackTrace();
     } catch (IOException e) {
-      System.out.println("Error writing to file");
+      System.err.println("Error writing to file");
       e.printStackTrace();
     } finally {
       if (writer != null) {
         try {
           writer.close();
         } catch (IOException e) {
-          System.out.println("Error closing file");
+          System.err.println("Error closing file");
           e.printStackTrace();
         }
       }
