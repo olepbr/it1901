@@ -2,16 +2,16 @@ package mememedb.restapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.datastructures.User;
+import core.datastructures.Post;
 import spark.Request;
 import spark.Response;
 
-/** Contains methods for communicating user data to/from the database. */
-public class UserService {
+/** Contains methods for communicating post data to/from the database. */
+public class PostService {
 
   private ObjectMapper mapper;
 
-  public UserService() {
+  public PostService() {
     mapper = new ObjectMapper();
   }
 
@@ -19,13 +19,13 @@ public class UserService {
 
   // Requests to "/"
   /**
-   * Gets all users from database and returns them as JSON.
+   * Gets all posts from database and returns them as JSON.
    *
    * @param request Spark Request object containing the http request.
    * @param response Spark Response object containing details of the response.
-   * @return A JSON string containing the serialized users.
+   * @return A JSON string containing the serialized posts.
    */
-  public String getAllUsers(Request request, Response response) {
+  public String getAllPosts(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented
     // TODO: Implement
@@ -34,18 +34,18 @@ public class UserService {
   }
 
   /**
-   * Create a user in the database and returns it as JSON.
+   * Create a post in the database and returns it as JSON.
    *
    * @param request Spark Request object containing the http request.
    * @param response Spark Response object containing details of the response.
-   * @return A JSON string containing the srialized user or a JSON string containing an error
+   * @return A JSON string containing the srialized post or a JSON string containing an error
    *     message on failure.
    */
-  public String createUser(Request request, Response response) {
+  public String createPost(Request request, Response response) {
     response.type("application/json");
-    User user;
+    Post post;
     try {
-      user = mapper.readValue(request.body(), User.class);
+      post = mapper.readValue(request.body(), Post.class);
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
       e.printStackTrace();
@@ -53,25 +53,21 @@ public class UserService {
       response.status(500);
       return "{\"error:\", \"Json Processing Error\"}";
     }
-    if (Main.database.usernameExists(user.getNickname())) {
-      // 409: Conflict
-      response.status(409);
-      return "{\"error:\", \"Username allready exists\"}";
-    } else {
-      try {
-        Main.database.addUser(user);
-        return mapper.writeValueAsString(Main.database.getUser(user.getNickname()));
-      } catch (JsonProcessingException e) {
-        System.err.println("Json Processing Error");
-        e.printStackTrace();
-        // 500: Internal Server Error
-        response.status(500);
-        return "{\"error:\", \"Json Processing Error\"}";
-      }
+    try {
+      // TODO: Create post in database
+      // 501: Not Implemented
+      response.status(501);
+      return "";
+    } catch (JsonProcessingException e) {
+      System.err.println("Json Processing Error");
+      e.printStackTrace();
+      // 500: Internal Server Error
+      response.status(500);
+      return "{\"error:\", \"Json Processing Error\"}";
     }
   }
 
-  // Requests to "/:nickname"
+  // Requests to "/:postID"
   /**
    * Get a single user from database and returns it as JSON.
    *
@@ -80,14 +76,14 @@ public class UserService {
    * @return A JSON string containing the srialized user, an empty string if user does not exist or
    *     a JSON string containing an error message on failure.
    */
-  public String getUser(Request request, Response response) {
-    User user = Main.database.getUser(request.params("nickname"));
+  public String getPost(Request request, Response response) {
     response.type("application/json");
-    if (user != null) {
+    Post post = Main.database.getPost(request.params("postID"));
+    if (post != null) {
       try {
         // 200: OK
         response.status(200);
-        return mapper.writeValueAsString(user);
+        return mapper.writeValueAsString(post);
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
         e.printStackTrace();
@@ -103,7 +99,7 @@ public class UserService {
     }
   }
 
-  public String updateUser(Request request, Response response) {
+  public String updatePost(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented
     // TODO: Implement
@@ -111,7 +107,16 @@ public class UserService {
     return "";
   }
 
-  public String deleteUser(Request request, Response response) {
+  public String deletePost(Request request, Response response) {
+    response.type("application/json");
+    // 501: Not Implemented
+    // TODO: Implement
+    response.status(501);
+    return "";
+  }
+
+  // Other Requests
+  public String getAllPostsByUser(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented
     // TODO: Implement
