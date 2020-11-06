@@ -47,6 +47,7 @@ public class Database {
     users.get(post.getOwner()).addPost(post.getUUID());
     posts.put(post.getUUID(), post);
     saveToStorage();
+
   }
 
   /**
@@ -111,6 +112,15 @@ public class Database {
       return user;
     }
     return null;
+  }
+
+  /**
+   * Sets the post for the PostController
+   * @param post
+   */
+
+  public void newPost(Post post){
+    addPost(post);    
   }
 
   /**

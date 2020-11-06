@@ -21,9 +21,9 @@ public class BrowserController {
 
   // Storage interface
   private Database database;
-  private User activeUser;
   private File selectedImage;
   private AppController parent;
+  private User activeUser;
 
   @FXML private VBox content;
   @FXML private Button addContent;
@@ -60,7 +60,7 @@ public class BrowserController {
    * @param user The new user.
    */
   public void setActiveUser(User user) {
-    activeUser = user;
+    this.
     username.setText(user.getNickname());
   }
 
@@ -122,6 +122,10 @@ public class BrowserController {
       updatePosts();
     }
   }
+
+  /**
+   * Amends AppTest
+   */
 
   public void setSelectedImage(File file) {
     this.selectedImage = file;
