@@ -156,15 +156,6 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Sets the post for the PostController
-   * @param post
-   */
-
-  public void newPost(Post post){
-    addPost(post);    
-  }
-
-  /**
    * Checks if the input username already exists in the database.
    *
    * @param username The username to check
@@ -173,23 +164,6 @@ public class LocalDatabase implements DatabaseInterface {
   public boolean usernameExists(String username) {
     boolean exists = (users.getOrDefault(username, null) != null);
     return exists;
-  }
-
-
-  /**
-   * Adds a new comment to post and returns it to fxui
-   * @param author Nickname of user who wrote comment
-   * @param commentText Actual content/input of comment
-   * @return The comment made
-   */
-  public Comment newComment(String author, String commentText){
-    Comment comment = new Comment(author, commentText);
-    this.post.addComment(comment);
-    return comment;
-  }
-
-  public Collection<Comment> getCommentList(){
-    return this.post.getComments();
   }
 
   @Override
