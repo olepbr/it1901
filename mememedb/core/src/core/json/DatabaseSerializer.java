@@ -3,7 +3,7 @@ package core.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import core.datastructures.Database;
+import core.datastructures.LocalDatabase;
 import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.io.IOException;
  *
  * @author Ole Peder Brandtzæg
  */
-class DatabaseSerializer extends JsonSerializer<Database> {
+class DatabaseSerializer extends JsonSerializer<LocalDatabase> {
 
   /**
    * Class for serializing a database into a JSON object. Format: {"users": [ ... ] }
@@ -27,7 +27,7 @@ class DatabaseSerializer extends JsonSerializer<Database> {
    */
   @Override
   public void serialize(
-      Database database, JsonGenerator jsonGen, SerializerProvider serializerProvider)
+      LocalDatabase database, JsonGenerator jsonGen, SerializerProvider serializerProvider)
       throws IOException {
     jsonGen.writeStartObject();
     jsonGen.writeArrayFieldStart("users");

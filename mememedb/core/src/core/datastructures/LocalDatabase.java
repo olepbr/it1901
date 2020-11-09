@@ -1,30 +1,34 @@
 package core.datastructures;
 
 import core.io.IO;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 /** Class that represents all the data in the application. */
-public class Database {
-  /* Maps are used, as the ordering of objects is less important compared
-  to the connection between the name/id and the object itself. */
+public class LocalDatabase implements DatabaseInterface {
+  /*
+   * Maps are used, as the ordering of objects is less important compared to the connection between
+   * the name/id and the object itself.
+   */
   private Map<String, User> users;
   private Map<String, Post> posts;
 
   private IO storage;
 
-  /** Generates a new empty database object. Database contains all Users and Posts of the app. */
-  public Database() {
+  /** Generates a new empty database object. LocalDatabase contains all Users and Posts of the app. */
+  public LocalDatabase() {
     users = new HashMap<String, User>();
     posts = new HashMap<String, Post>();
   }
 
   /**
-   * Generates a new database object, Initialized with data from the given IO Stores database.
-   * changes using the IO.
+   * Generates a new database object, Initialized with data from the given IO Stores database. changes
+   * using the IO.
    */
-  public Database(IO io) {
+  public LocalDatabase(IO io) {
     storage = io;
     users = io.getDatabase().getUserMap();
     posts = io.getDatabase().getPostMap();
@@ -37,29 +41,55 @@ public class Database {
     }
   }
 
-  /**
-   * Creates a new User in the database, unless the user already exists. Automatically updates
+   /**
+   * Creates a new Comment in the database, unless the post already exists. Automatically updates
    * storage.
    *
-   * @param user The User to add.
+   * @param comment The comment to add.
    */
-  public void addPost(Post post) {
-    users.get(post.getOwner()).addPost(post.getUUID());
-    posts.put(post.getUUID(), post);
-    saveToStorage();
+  public void newComment(String text, String owner, String postUUID) {
+    Post post = posts.getOrDefault(postUUID, null);
+    if (post  != null) {
+      post.addComment(new Comment(owner, text));
+      saveToStorage();
+    }
+  }
+
+  /**
+   * Creates a new Post in the database. Automatically updates
+   * storage.
+   *
+   * @param post The Post to add.
+   */
+  public void newPost(String owner, String caption, File image) {
+    try {
+      Post post = new Post(owner, caption, image);
+      posts.put(post.getUUID(), post);
+      saveToStorage();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
    * Creates a new User in the database, unless the user already exists. Automatically updates
    * storage.
    *
-   * @param user The User to save.
+   * @param name The name of the user.
+   * @param nickname The nickname of the user.
+   * @param email The email of the user.
+   * @param password The password of the user.
+   * @throws IllegalStateException In the case of the nickname already existing in the database.
    */
-  public void addUser(User user) {
-    if (!users.keySet().contains(user.getNickname())) {
-      users.put(user.getNickname(), user);
+  public void newUser(String name, String nickname, String email, String password) {
+    if (usernameExists(nickname)) {
+      throw new IllegalStateException("Username already exists in database!");
     }
-    saveToStorage();
+    else {
+      User user = new User(name, nickname, email, User.hashPassword(password));
+      users.put(nickname, user);
+      saveToStorage();
+    }
   }
 
   /**
@@ -119,7 +149,7 @@ public class Database {
    */
   public User tryLogin(String username, String password) {
     User user = users.getOrDefault(username, null);
-    if (user != null && user.getPassword().equals(user.hashPassword(password))) {
+    if (user != null && user.getPassword().equals(User.hashPassword(password))) {
       return user;
     }
     return null;

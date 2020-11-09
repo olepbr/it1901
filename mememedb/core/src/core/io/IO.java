@@ -1,6 +1,6 @@
 package core.io;
 
-import core.datastructures.Database;
+import core.datastructures.LocalDatabase;
 
 /** Interface for handling Input/Output. */
 public interface IO {
@@ -10,12 +10,12 @@ public interface IO {
    *
    * @return A database containing currently stored users.
    */
-  public Database getDatabase();
+  public LocalDatabase getDatabase();
 
   /**
    * Writes the given database to file.
    *
    * @param database The database to save;
    */
-  public void saveDatabase(Database database);
+  public void saveDatabase(LocalDatabase database);
 }

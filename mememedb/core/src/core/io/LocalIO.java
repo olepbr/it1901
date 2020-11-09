@@ -3,8 +3,7 @@ package core.io;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import core.datastructures.Database;
+import core.datastructures.LocalDatabase;
 import core.json.MememeModule;
 import java.io.File;
 import java.io.FileReader;
@@ -21,7 +20,7 @@ public class LocalIO implements IO {
 
   private File userDir;
   private File userFile;
-  private Database database;
+  private LocalDatabase database;
   private ObjectMapper mapper;
 
   /** Constructor. Initializes database object from file or skeleton. */
@@ -60,7 +59,7 @@ public class LocalIO implements IO {
     // Try reading data from file
     if (reader != null) {
       try {
-        database = mapper.readValue(reader, Database.class);
+        database = mapper.readValue(reader, LocalDatabase.class);
       } catch (JsonParseException e) {
         System.err.println("Error parsing file.");
         e.printStackTrace();
@@ -77,7 +76,7 @@ public class LocalIO implements IO {
       }
     } else {
       // Or just create an empty database
-      database = new Database();
+      database = new LocalDatabase();
     }
 
     // Write data to home folder
@@ -90,7 +89,7 @@ public class LocalIO implements IO {
     }
   }
 
-  public Database getDatabase() {
+  public LocalDatabase getDatabase() {
     return database;
   }
 
@@ -99,7 +98,7 @@ public class LocalIO implements IO {
    *
    * @param database Database object with data.
    */
-  public void saveDatabase(Database database) {
+  public void saveDatabase(LocalDatabase database) {
     FileWriter writer = null;
     try {
       writer = new FileWriter(userFile, StandardCharsets.UTF_8);
