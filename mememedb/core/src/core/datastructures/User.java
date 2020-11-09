@@ -27,11 +27,11 @@ public class User {
    * @param nickname This user's nickname.
    * @param email This user's email.
    */
-  public User(String name, String nickname, String email, String hashedPassword) {
+  public User(String name, String nickname, String email, String password) {
     this.name = name;
     this.nickname = nickname;
     this.email = email;
-    this.hashedPassword = hashedPassword;
+    setPassword(password);
   }
 
   /* Get/Set Name */

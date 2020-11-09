@@ -86,7 +86,7 @@ public class LocalDatabase implements DatabaseInterface {
       throw new IllegalStateException("Username already exists in database!");
     }
     else {
-      User user = new User(name, nickname, email, User.hashPassword(password));
+      User user = new User(name, nickname, email, password);
       users.put(nickname, user);
       saveToStorage();
     }
@@ -165,6 +165,26 @@ public class LocalDatabase implements DatabaseInterface {
     boolean exists = (users.getOrDefault(username, null) != null);
     return exists;
   }
+
+  /* Pre-constructed object addition methods used in testing and json-deserializing*/
+
+  /**
+   * Directly adds the given Post object to the Database.
+   */
+  public void addPost(Post post){
+    posts.put(post.getUUID(), post);
+    users.get(post.getOwner()).addPost(post.getUUID());
+    saveToStorage();
+  }
+
+  /**
+   * Directly adds the given User to the Database.
+   */
+  public void addUser(User user){
+    users.put(user.getNickname(), user);
+    saveToStorage();
+  }
+
 
   @Override
   public String toString() {

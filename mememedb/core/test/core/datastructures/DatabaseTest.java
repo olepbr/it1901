@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class DatabaseTest {
 
   List<User> testData = new ArrayList<User>(Arrays.asList(
-      new User("Bert Johnson", "berjon29", "bert@johnson.com"), new User("Joe Mama", "jomama", "joe@mama.com")));
+      new User("Bert Johnson", "berjon29", "bert@johnson.com", "asafepassword"), new User("Joe Mama", "jomama", "joe@mama.com", "anotherpassword")));
 
   /**
    * Returns a mock database, always returning an empty list. Used by mocked IO
@@ -117,11 +117,10 @@ public class DatabaseTest {
   @Test
   public void TestLogin() {
     final IO mockIO = mock(IO.class);
-    testData.get(0).setPassword("asafepassword");
     doReturn(getFilledMock()).when(mockIO).getDatabase();
     LocalDatabase database = new LocalDatabase(mockIO);
     System.out.println(database);
-    System.out.println(testData.get(0).hashPassword("asafepassword"));
+    System.out.println(User.hashPassword("asafepassword"));
     assertEquals(testData.get(0), database.tryLogin(testData.get(0).getNickname(), "asafepassword"), "Error in login method, should return User");
     assertEquals(null, database.tryLogin(testData.get(0).getNickname(), "awrongpassword"),
         "Error in login method, should fail with incorrect input");
