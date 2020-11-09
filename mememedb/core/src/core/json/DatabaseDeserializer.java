@@ -9,13 +9,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import core.datastructures.Database;
-import core.datastructures.User;
 import core.datastructures.Post;
+import core.datastructures.User;
 import java.io.IOException;
 
 /**
- * Class for deserializing JSON into Database objects.
- * Format: { "users": [ ... ] }
+ * Class for deserializing JSON into Database objects. Format: { "users": [ ... ] }
  *
  * @author Ole Peder Brandtzæg
  */
@@ -28,10 +27,10 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
    * Class for deserializing JSON into a Database object.
    *
    * @param parser JsonParser object used for parsing the JSON (provided by Jackson).
-   * @param ctxt DeseralizationContext object used for
-   *        aiding the JSON parsing (provided by Jackson).
-   * @return The Database object resulting from the deserialization
-   *        or null if the JSON doesn't have the correct format.
+   * @param ctxt DeseralizationContext object used for aiding the JSON parsing (provided by
+   *     Jackson).
+   * @return The Database object resulting from the deserialization or null if the JSON doesn't have
+   *     the correct format.
    * @throws IOException If a more general I/O error occurs.
    * @throws JsonProcessingException If an error occurs when processing the JSON.
    */
@@ -59,7 +58,7 @@ class DatabaseDeserializer extends JsonDeserializer<Database> {
             database.addPost(post);
           }
         }
-      return database;
+        return database;
       }
     }
     return null;

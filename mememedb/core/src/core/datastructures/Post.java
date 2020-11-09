@@ -53,12 +53,6 @@ public class Post {
     this.uuid = (UUID.randomUUID().toString());
   }
 
-  public void updatePost(Post post) {
-    this.owner = post.owner;
-    this.caption = post.caption;
-    this.image = post.image;
-  }
-
   /* Get/Set ID */
   public String getUUID() {
     return uuid;
@@ -131,7 +125,12 @@ public class Post {
 
   @Override
   public String toString() {
-    return String.format(
+    String s = String.format(
         "[Post id=%s owner=%s caption=%s image=%s]", getUUID(), getOwner(), getText(), getImage());
+    s += "\nComments:";
+    for(Comment comment : this.getComments()) {
+      s += "\n" + comment.toString();
+    }
+    return s;
   }
 }

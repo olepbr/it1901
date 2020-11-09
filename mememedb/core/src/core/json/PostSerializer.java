@@ -3,14 +3,12 @@ package core.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
 import core.datastructures.Comment;
 import core.datastructures.Post;
 import java.io.IOException;
 
 /**
- * Class for serializing Post objects.
- * Format: { "owner": "...", "caption": "...", "image": "..." }
+ * Class for serializing Post objects. Format: { "owner": "...", "caption": "...", "image": "..." }
  *
  * @author Ole Peder Brandtzæg
  */

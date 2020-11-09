@@ -34,6 +34,7 @@ class DatabaseSerializer extends JsonSerializer<Database> {
     for (User user : database.getUsers()) {
       jsonGen.writeObject(user);
     }
+    jsonGen.writeEndArray();
     jsonGen.writeArrayFieldStart("posts");
     for (Post post : database.getPosts()) {
       jsonGen.writeObject(post);

@@ -1,14 +1,27 @@
 package core.json;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import core.datastructures.Comment;
+import core.datastructures.Database;
 import core.datastructures.Post;
 import core.datastructures.User;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class JsonTest {
+
+  static ObjectMapper mapper = new ObjectMapper();
+
+  @BeforeAll
+  static public void setUp() {
+      mapper.registerModule(new MememeModule());
+  }
+
 
   @Test
   public void testUserSerializer() {
@@ -17,12 +30,14 @@ public class JsonTest {
     user.addPost(post.getUUID());
 
     try {
-      String json = MememeModule.serializeUser(user);
-      User user2 = MememeModule.deserializeUser(json);
+      String json = mapper.writeValueAsString(user);
+      System.out.println(json);
+      User user2 = mapper.readValue(json, User.class);
       Assertions.assertTrue(user2 instanceof User);
       Assertions.assertEquals(user.toString(), user2.toString());
     } catch (JsonProcessingException e) {
       e.printStackTrace();
+      fail("Error in json processing");
     }
   }
 
@@ -31,12 +46,14 @@ public class JsonTest {
     Post post = new Post("XxX_SpicyBoi69[]_XxX", "()Spicy meme{}", "files/spice.png");
 
     try {
-      String json = MememeModule.serializePost(post);
-      Post post2 = MememeModule.deserializePost(json);
+      String json = mapper.writeValueAsString(post);
+      System.out.println(json);
+      Post post2 = mapper.readValue(json, Post.class);
       Assertions.assertTrue(post2 instanceof Post);
       Assertions.assertEquals(post.toString(), post2.toString());
     } catch (JsonProcessingException e) {
       e.printStackTrace();
+      fail("Error in json processing");
     }
   }
 
@@ -45,12 +62,39 @@ public class JsonTest {
     Comment comment = new Comment("xXx_gertrude_xXx", "haha, i like this!");
 
     try {
-      String json = MememeModule.serializeComment(comment);
-      Comment comment2 = MememeModule.deserializeComment(json);
+      String json = mapper.writeValueAsString(comment);
+      System.out.println(json);
+      Comment comment2 = mapper.readValue(json, Comment.class);
       Assertions.assertTrue(comment2 instanceof Comment);
       Assertions.assertEquals(comment.toString(), comment2.toString());
     } catch (JsonProcessingException e) {
       e.printStackTrace();
+      fail("Error in json processing");
+    }
+  }
+
+  @Test
+  public void testDatabaseSerializer() {
+    Database database = new Database();
+    User user1 = new User("Bert johnsos", "berjon67", "ber@john.com");
+    User user2 = new User("Jahn jahnman", "imthejahnman", "jahn@plan.can");
+    database.addUser(user1);
+    database.addUser(user2);
+    Post post1 = new Post("berjon67", "This is an image", "someimagedata");
+    Post post2 = new Post("berjon67", "This is also an image", "someotherimage");
+    database.addPost(post1);
+    database.addPost(post2);
+    post1.addComment(new Comment("imthejahnman", "haha, i like this"));
+    
+    try {
+      String json = mapper.writeValueAsString(database);
+      System.out.println(json);
+      Database database2 = mapper.readValue(json, Database.class);
+      Assertions.assertTrue(database2 instanceof Database);
+      Assertions.assertEquals(database.toString(), database2.toString());
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+      fail("Error in json processing");
     }
   }
 }

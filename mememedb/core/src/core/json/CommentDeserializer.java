@@ -12,7 +12,7 @@ import core.datastructures.Comment;
 import java.io.IOException;
 
 /**
- * Class for deserializing Post objects.
+ * Class for deserializing Comment objects.
  * Format: { "uuid": "...", "author": "...", "text": "..." }
  *
  * @author Jostein Bakkevig
@@ -27,10 +27,10 @@ class CommentDeserializer extends JsonDeserializer<Comment> {
   }
 
   /**
-   * Reads a JsonNode and converts it to a Post object.
+   * Reads a JsonNode and converts it to a Comment object.
    *
    * @param jsonNode The node to be read.
-   * @return A new Post object containing the information from the JsonNode.
+   * @return A new Comment object containing the information from the JsonNode.
    */
   public Comment deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode) {

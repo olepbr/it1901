@@ -7,7 +7,7 @@ import core.datastructures.Comment;
 import java.io.IOException;
 
 /**
- * Class for serializing Post objects.
+ * Class for serializing Comment objects.
  * Format: { "uuid": "...", "author": "...", "text": "..." }
  *
  * @author Jostein Bakkevig
