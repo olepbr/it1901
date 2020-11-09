@@ -11,8 +11,6 @@ public class Database {
   to the connection between the name/id and the object itself. */
   private Map<String, User> users;
   private Map<String, Post> posts;
-  private User user;
-  private Post post;
 
   private IO storage;
 
@@ -72,6 +70,8 @@ public class Database {
   public Collection<User> getUsers() {
     return users.values();
   }
+
+
 
   /**
    * Fetches the mapping between users and usernames
@@ -135,14 +135,13 @@ public class Database {
     return exists;
   }
 
-  public void setUserPassword(String password){
-    this.user.setPassword(password);
-  }
 
-  public User getUser() {
-    return user;
-  }
-
+  /**
+   * Adds a new comment to post and returns it to fxui
+   * @param author Nickname of user who wrote comment
+   * @param commentText Actual content/input of comment
+   * @return The comment made
+   */
   public Comment newComment(String author, String commentText){
     Comment comment = new Comment(author, commentText);
     this.post.addComment(comment);

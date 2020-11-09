@@ -94,9 +94,8 @@ public class LoginController {
     } else if (password.length() < 8) {
       passwordWarning.setText("Password must contain at least 8 characters");
     } else {
-      database.addUser(new User(name, username, email));
-      database.setUserPassword(password);
-      parent.handleLogin(database.getUser());
+      User user = database.newdUser(name, username, email, password));
+      parent.handleLogin(user);
     }
   }
 }

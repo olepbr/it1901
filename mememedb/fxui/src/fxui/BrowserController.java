@@ -114,7 +114,7 @@ public class BrowserController {
       a.show();
     } else {
       try {
-        database.newPost(new Post(activeUser.getNickname(), caption, image));
+        database.newPost(activeUser.getNickname(), caption, image));
       } catch (IOException e) {
         System.out.println("could not save post");
         e.printStackTrace();
