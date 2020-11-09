@@ -28,7 +28,6 @@ import javafx.scene.image.ImageView;
 public class PostViewController {
 
   private Post post;
-  private ObservableList<String> comments = FXCollections.observableArrayList();
   private User author;
   private Database database;
 
@@ -45,13 +44,13 @@ public class PostViewController {
   * The user adds a comment via a TextField. Controller sets the comment via database. 
   * Comments are shown in a ListView 
   */
-  private void addComment(){
+  @FXML
+  public void addComment(){
     String commentText = commentInput.getText();
     if(!commentText.equals(null)){
-      Comment c = database.setComment(author.getNickname(), commentText);
-      String comment = c.toString();
-      comments.add(comment);
-      commentListView.setItems(comments);
+      Comment c = database.newComment(author.getNickname(), commentText);
+      ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getCommentList().toString());
+      commentListView.setItems(observableCommentList);
       posterLabel.setText(author.getNickname());
       commentInput.setText(null);
     } else {

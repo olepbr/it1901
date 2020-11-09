@@ -11,6 +11,8 @@ public class Database {
   to the connection between the name/id and the object itself. */
   private Map<String, User> users;
   private Map<String, Post> posts;
+  private User user;
+  private Post post;
 
   private IO storage;
 
@@ -47,7 +49,6 @@ public class Database {
     users.get(post.getOwner()).addPost(post.getUUID());
     posts.put(post.getUUID(), post);
     saveToStorage();
-
   }
 
   /**
@@ -132,6 +133,24 @@ public class Database {
   public boolean usernameExists(String username) {
     boolean exists = (users.getOrDefault(username, null) != null);
     return exists;
+  }
+
+  public void setUserPassword(String password){
+    this.user.setPassword(password);
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public Comment newComment(String author, String commentText){
+    Comment comment = new Comment(author, commentText);
+    this.post.addComment(comment);
+    return comment;
+  }
+
+  public Collection<Comment> getCommentList(){
+    return this.post.getComments();
   }
 
   @Override

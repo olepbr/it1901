@@ -5,6 +5,7 @@ import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,7 +73,7 @@ public class BrowserController {
     imgSelectorLabel.setText("Choose an image");
     // get collection of posts from I/O
     try {
-      List<Post> postList = database.getPostList();
+      Collection<Post> postList = database.getPosts();
       // create nodes for each post
       for (Post post : postList) {
         HBox subContent = new HBox();
@@ -113,8 +114,7 @@ public class BrowserController {
       a.show();
     } else {
       try {
-        Post post = new Post(activeUser.getNickname(), caption, image);
-        database.savePost(post, activeUser);
+        database.newPost(new Post(activeUser.getNickname(), caption, image));
       } catch (IOException e) {
         System.out.println("could not save post");
         e.printStackTrace();
