@@ -24,35 +24,36 @@ public class RestDatabase implements DatabaseInterface {
     this.mapper = new ObjectMapper().registerModule(new MememeModule());
   }
 
-  private void requestSender(String path, Object o, String type) {
+  private HttpResponse<String> requestHandler(String path, Object o, String type) {
     try {
+      HttpRequest request;
       if (type.equalsIgnoreCase("POST")) {
-        HttpRequest request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
             .header("Accept", "application/json")
             .POST(BodyPublishers.ofString(mapper.writeValueAsString(o)))
             .build();
-        final HttpResponse<String> response =
-            HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
       } else if (type.equalsIgnoreCase("PUT")) {
-        HttpRequest request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
             .header("Accept", "application/json")
             .PUT(BodyPublishers.ofString(mapper.writeValueAsString(o)))
             .build();
-        final HttpResponse<String> response =
-            HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
       } else if (type.equalsIgnoreCase("DELETE")) {
-        HttpRequest request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
-            .header("Accept", "application/json").DELETE().build();
-        final HttpResponse<String> response =
-            HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+            .header("Accept", "application/json")
+            .DELETE()
+            .build();
+      } else if (type.equalsIgnoreCase("GET")) {
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+            .header("Accept", "application/json")
+            .GET()
+            .build();
       } else {
         throw new IllegalArgumentException("Invalid request type");
       }
+      return HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
     } catch (URISyntaxException e) {
       e.printStackTrace();
+      return null;
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
@@ -60,13 +61,13 @@ public class RestDatabase implements DatabaseInterface {
 
   @Override
   public void newComment(String text, String owner, String postUuid) {
-    requestSender("/post/" + postUuid + "/comment", new Comment(owner, text), "POST");
+    requestHandler("/post/" + postUuid + "/comment", new Comment(owner, text), "POST");
   }
 
   @Override
   public void newPost(String owner, String caption, File image) {
     try {
-      requestSender("/post", new Post(owner, caption, image), "POST");
+      requestHandler("/post", new Post(owner, caption, image), "POST");
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -74,7 +75,7 @@ public class RestDatabase implements DatabaseInterface {
 
   @Override
   public void newUser(String name, String nickname, String email, String password) {
-    requestSender("/user", new User(name, nickname, email, password), "POST");
+    requestHandler("/user", new User(name, nickname, email, password), "POST");
   }
 
   @Override
