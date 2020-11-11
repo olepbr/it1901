@@ -1,9 +1,7 @@
-package mememedb.restapi;
+package restapi;
 
-// Spark
 import static spark.Spark.*;
 
-// Mememe Core
 import core.datastructures.Database;
 import core.io.LocalIO;
 
@@ -11,7 +9,7 @@ import core.io.LocalIO;
 public class Main {
 
   private static LocalIO io;
-  static Database database;
+  protected static Database database;
 
   // Set up database
   static {
@@ -20,9 +18,9 @@ public class Main {
   }
 
   // Defeat instantiation
-  protected Main() {}
+  // protected Main() {}
 
-  public static void main(String[] args) {
+  public static void main() {
     // Configure server
     port(8080);
 

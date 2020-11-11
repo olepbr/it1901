@@ -1,4 +1,4 @@
-package mememedb.restapi;
+package restapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,6 +60,8 @@ public class UserService {
     } else {
       try {
         Main.database.addUser(user);
+        // 200: OK
+        response.status(200);
         return mapper.writeValueAsString(Main.database.getUser(user.getNickname()));
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
@@ -103,6 +105,13 @@ public class UserService {
     }
   }
 
+  /**
+   * [TODO:description]
+   *
+   * @param request [TODO:description]
+   * @param response [TODO:description]
+   * @return [TODO:description]
+   */
   public String updateUser(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented
@@ -111,6 +120,13 @@ public class UserService {
     return "";
   }
 
+  /**
+   * [TODO:description]
+   *
+   * @param request [TODO:description]
+   * @param response [TODO:description]
+   * @return [TODO:description]
+   */
   public String deleteUser(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented

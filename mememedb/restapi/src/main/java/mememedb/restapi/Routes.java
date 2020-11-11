@@ -1,4 +1,4 @@
-package mememedb.restapi;
+package restapi;
 
 import static spark.Spark.*;
 

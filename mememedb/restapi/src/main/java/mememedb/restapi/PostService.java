@@ -1,4 +1,4 @@
-package mememedb.restapi;
+package restapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,18 +53,22 @@ public class PostService {
       response.status(500);
       return "{\"error:\", \"Json Processing Error\"}";
     }
-    try {
-      // TODO: Create post in database
-      // 501: Not Implemented
-      response.status(501);
-      return "";
-    } catch (JsonProcessingException e) {
-      System.err.println("Json Processing Error");
-      e.printStackTrace();
-      // 500: Internal Server Error
-      response.status(500);
-      return "{\"error:\", \"Json Processing Error\"}";
-    }
+    // try {
+    //   // TODO: Create post in database
+    //   // 501: Not Implemented
+    //   response.status(501);
+    //   return "";
+    // } catch (JsonProcessingException e) {
+    //   System.err.println("Json Processing Error");
+    //   e.printStackTrace();
+    //   // 500: Internal Server Error
+    //   response.status(500);
+    //   return "{\"error:\", \"Json Processing Error\"}";
+    // }
+    // 501: Not Implemented
+    // TODO: Implement
+    response.status(501);
+    return "";
   }
 
   // Requests to "/:postID"
@@ -78,25 +82,29 @@ public class PostService {
    */
   public String getPost(Request request, Response response) {
     response.type("application/json");
-    Post post = Main.database.getPost(request.params("postID"));
-    if (post != null) {
-      try {
-        // 200: OK
-        response.status(200);
-        return mapper.writeValueAsString(post);
-      } catch (JsonProcessingException e) {
-        System.err.println("Json Processing Error");
-        e.printStackTrace();
-        // 500: Internal Server Error
-        response.status(500);
-        return "{\"error:\", \"Json Processing Error\"}";
-      }
-    } else {
-      // 404: Not found
-      response.status(404);
-      // Return empty string
-      return "";
-    }
+    // Post post = Main.database.getPost(request.params("postID"));
+    // if (post != null) {
+    //   try {
+    //     // 200: OK
+    //     response.status(200);
+    //     return mapper.writeValueAsString(post);
+    //   } catch (JsonProcessingException e) {
+    //     System.err.println("Json Processing Error");
+    //     e.printStackTrace();
+    //     // 500: Internal Server Error
+    //     response.status(500);
+    //     return "{\"error:\", \"Json Processing Error\"}";
+    //   }
+    // } else {
+    //   // 404: Not found
+    //   response.status(404);
+    //   // Return empty string
+    //   return "";
+    // }
+    // 501: Not Implemented
+    // TODO: Implement
+    response.status(501);
+    return "";
   }
 
   public String updatePost(Request request, Response response) {
