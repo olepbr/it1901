@@ -35,4 +35,25 @@ public class PostController {
     postText.setText(this.post.getText());
     postPoster.setText("Made by " + this.post.getOwner());
   }
+
+    /**
+   * Displays a new window when image is clicked. Opens PostView.fxml window.
+   */
+
+  public void handleEnterPostView(MouseEvent event){
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader();
+      fxmlLoader.setLocation(getClass().getResource("PostView.fxml"));
+      Scene scene = new Scene(fxmlLoader.load());
+      Stage stage = new Stage();
+      stage.setTitle("Jostein Bakkevigs fantastiske vindu");
+      stage.setScene(scene);
+      stage.show();
+      event.consume();
+    } catch (IOException e){
+      System.out.println("Could not load new windon");
+      e.printStackTrace();
+    }
+  }
+
 }
