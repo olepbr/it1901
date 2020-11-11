@@ -3,7 +3,7 @@
 
 MEMEMEDB is a meme sharing application.
 With this application users may view, share, and post memes.
-A meme consists of a picture and a caption. 
+A meme consists of a picture and a caption.
 Example memes can be found in the project directory in the folder **memes**.
 By default, the application has a default user, the credentials of which are:
 username: **xXx_gertrude_xXx**, password: **strawberryjam**.
@@ -184,361 +184,267 @@ Database "users" --> "*" User
 ```
 
 ## User Stories
+
 * I want to be able to post a picture to the app, and see it appear on the main page
 * I want to be able to create and log in with my account
 
 ## Storage method
-This app uses an implicit storage method, where the user is not directly informed of how or where data is stored. 
+
+This app uses an implicit storage method, where the user is not directly informed of how or where data is stored.
 Implicit storage is used as it allows multiple users to interact with a shared database, which is an integral part of our idea, even though only local storage is supported at the moment.
 
 ## REST API
 
-### /user
+Message and error responses have the following structure:
 
-#### GET
+```json
+{
+  "message": "string",
+  "error": "string"
+}
+```
 
-returns:
+### `GET /user`
+
+Retrieves a list of all the users in the database.
+
+Responds with the following json structure:
 
 ```json
 [
   {
-    'nickname': 'string',
-    'name': 'string',
-    'email': 'string',
-    'posts':
-      ['UUID', 'UUID', ..., 'UUID'],
-    'hashedPassword': 'string'
+    "nickname": "string",
+    "name": "string",
+    "email": "string",
+    "posts":
+      ["UUID", "UUID", ..., "UUID"],
+    "hashedPassword": "string"
   }
 ]
 ```
 
-#### POST
+### `POST /user`
 
-body:
+Creates a new user in the database.
 
-```json
-{
-  'nickname': 'string',
-  'name': 'string',
-  'email': 'string',
-  'hashedPassword':  'string'
-}
-```
-return:
+If the username already exists, an error is returned.
+
+Expects a body with the following structure:
 
 ```json
 {
-  'nickname': 'string',
-  'name': 'string',
-  'email': 'string',
-  'posts':
-    ['UUID', 'UUID', ..., 'UUID'],
-  'hashedPassword': 'string'
+  "nickname": "string",
+  "name": "string",
+  "email": "string",
+  "hashedPassword":  "string"
 }
 ```
 
-### /user/{nickname}
+### `GET /user/:nickname`
 
-#### GET
+Retrieves the user with the nickname `nickname`.
 
-return:
+If the user does not exists, a 404 response is returned with a message
+explaining why.
+
+Responds with the following structure:
 
 ```json
 {
-  'nickname': 'string',
-  'name': 'string',
-  'email': 'string',
-  'posts':
-    ['UUID', 'UUID', ..., 'UUID'],
-  'hashedPassword': 'string'
+  "nickname": "string",
+  "name": "string",
+  "email": "string",
+  "posts":
+    ["UUID", "UUID", ..., "UUID"],
+  "hashedPassword": "string"
 }
 ```
 
-#### PUT
+### `PUT /user/:nickname`
 
-body:
+Updates a user.
+
+Responds with a message and/or an error.
+
+Expects a body with the following structure:
 
 ```json
 {
-  'nickname': 'string',
-  'name': 'string',
-  'email': 'string',
-  'posts':
-    ['UUID', 'UUID', ..., 'UUID'],
-  'hashedPassword': 'string'
+  "nickname": "string",
+  "name": "string",
+  "email": "string",
+  "hashedPassword": "string"
 }
 ```
 
-return:
+### `DELETE /user/:nickname`
 
-```json
-{
-  'nickname': 'string',
-  'name': 'string',
-  'email': 'string',
-  'posts':
-    ['UUID', 'UUID', ..., 'UUID'],
-  'hashedPassword': 'string'
-}
-```
+Deletes a user.
 
-#### DELETE
+Responds with a message and/or an error.
 
-return:
+### `GET /user/{nickname}/post`
 
-```json
-{
-  'nickname': 'string',
-  'name': 'string',
-  'email': 'string',
-  'posts':
-    ['UUID', 'UUID', ..., 'UUID'],
-  'hashedPassword': 'string'
-}
-```
+Retrieves all posts made by the given user.
 
-### /user/{nickname}/post
+If the user does not exists, a 404 response is returned with a message
+explaining why.
 
-#### GET
-
-return:
+Responds with the following structure:
 
 ```json
 [
   {
-    'UUID': 'string',
-    'title': 'string',
-    'caption': 'string',
-    'image': 'string',
-    'comments':
+    "UUID": "string",
+    "title": "string",
+    "caption": "string",
+    "image": "string",
+    "comments":
       [
         {
-          'UUID': 'string',
-          'author': 'user nickname',
-          'text': 'string',
+          "UUID": "string",
+          "author": "user nickname",
+          "text": "string"
         }
       ]
   }
 ]
 ```
 
-### /post
+### `GET /post`
 
-#### GET
+Retrieves all posts.
 
-returns:
+Responds with the following structure:
 
 ```json
 [
   {
-    'UUID': 'string',
-    'title': 'string',
-    'caption': 'string',
-    'image': 'string',
-    'comments':
+    "UUID": "string",
+    "title": "string",
+    "caption": "string",
+    "image": "string",
+    "comments":
       [
         {
-          'UUID': 'string',
-          'author': 'user nickname',
-          'text': 'string',
+          "UUID": "string",
+          "author": "user nickname",
+          "text": "string"
         }
       ]
   }
 ]
 ```
 
-#### POST
+### `POST /post`
 
-body:
+Creates a new post in the database.
 
-```json
-[
-  {
-    'title': 'string',
-    'caption': 'string',
-    'image': 'string'
-  }
-]
-```
+Responds with a message and/or an error.
 
-return:
-
-```json
-{
-  'UUID': 'string',
-  'title': 'string',
-  'caption': 'string',
-  'image': 'string'
-}
-```
-
-### /post/{postUUID}
-#### GET
-
-return:
-
-```json
-{
-  'UUID': 'string',
-  'title': 'string',
-  'caption': 'string',
-  'image': 'string',
-  'comments':
-    [
-      {
-        'UUID': 'string',
-        'author': 'user nickname',
-        'text': 'string'
-      }
-    ]
-}
-```
-
-#### PUT
-
-body:
-
-```json
-{
-  'UUID': 'string',
-  'title': 'string',
-  'caption': 'string',
-  'image': 'string',
-  'comments':
-    [
-      {
-        'UUID': 'string',
-        'author': 'user nickname',
-        'text': 'string'
-      }
-    ]
-}
-```
-
-return:
-
-```json
-{
-  'UUID': 'string',
-  'title': 'string',
-  'caption': 'string',
-  'image': 'string'
-  'comments':
-    [
-      {
-        'UUID': 'string',
-        'author': 'user nickname',
-        'text': 'string'
-      }
-    ]
-}
-```
-
-#### DELETE
-
-return:
-
-```json
-{
-  'UUID': 'string',
-  'title': 'string',
-  'caption': 'string',
-  'image': 'string'
-  'comments':
-    [
-      {
-        'UUID': 'string',
-        'author': 'user nickname',
-        'text': 'string'
-      }
-    ]
-}
-```
-
-### /post/{postID}/comment
-
-#### GET
-
-return:
+Expects a body with the following structure:
 
 ```json
 [
   {
-    'UUID': 'string',
-    'author': 'user nickname',
-    'text': 'string'
+    "title": "string",
+    "caption": "string",
+    "image": "string"
   }
 ]
 ```
 
-#### POST
+### `GET /post/:postUUID`
+
+Response:
+
+```json
+{
+  "UUID": "string",
+  "title": "string",
+  "caption": "string",
+  "image": "string",
+  "comments":
+    [
+      {
+        "UUID": "string",
+        "author": "user nickname",
+        "text": "string"
+      }
+    ]
+}
+```
+
+### `PUT /post/:postUUID
+
+Updates post.
+
+Responds with message and/or error.
 
 body:
 
 ```json
 {
-  'author': 'user nickname',
-  'text': 'string'
+  "UUID": "string",
+  "title": "string",
+  "caption": "string",
+  "image": "string"
 }
 ```
 
-return:
+### `DELETE /post/:postUUID
+
+Returns message and/or error.
+
+### `GET /post/:postUUID/comment`
+
+If postUUID does not exist 404.
+
+Returns:
+
+```json
+[
+  {
+    "UUID": "string",
+    "author": "user nickname",
+    "text": "string"
+  }
+]
+```
+
+### `POST /post/:postUUID/coment
+
+Responds with message and/or error.
+
+404 if postUUID does not exist.
+
+Body:
 
 ```json
 {
-  'UUID': 'string',
-  'author': 'user nickname',
-  'text': 'string'
+  "author": "user nickname",
+  "text": "string"
 }
 ```
 
-### /post/{postID}/comment/{commentId}
+### `GET /post/:postUUID/comment/:commentUUID`
 
-#### GET
 
-return:
-
-```json
-{
-  'UUID': 'string',
-  'author': 'user nickname',
-  'text': 'string'
-}
-```
-
-#### PUT
+### `PUT /post/:postUUID/comment/:commentUUID`
 
 body:
 
 ```json
 {
-  'UUID': 'string',
-  'author': 'user nickname',
-  'text': 'string'
+  "UUID": "string",
+  "author": "user nickname",
+  "text": "string"
 }
 ```
 
-return:
+### `DELETE /post/:postUUID/comment/:commentUUID`
 
-```json
-{
-  'UUID': 'string',
-  'author': 'user nickname',
-  'text': 'string'
-}
-```
-
-#### DELETE
-
-return:
-
-```json
-{
-  'UUID': 'string',
-  'author': 'user nickname',
-  'text': 'string'
-}
-```
+Deletes comment.
 
 ## Maven Goals
 
