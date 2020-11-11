@@ -10,23 +10,26 @@ import java.util.Map;
 /** Class that represents all the data in the application. */
 public class LocalDatabase implements DatabaseInterface {
   /*
-   * Maps are used, as the ordering of objects is less important compared to the connection between
-   * the name/id and the object itself.
+   * Maps are used, as the ordering of objects is less important compared to the
+   * connection between the name/id and the object itself.
    */
   private Map<String, User> users;
   private Map<String, Post> posts;
 
   private IO storage;
 
-  /** Generates a new empty database object. LocalDatabase contains all Users and Posts of the app. */
+  /**
+   * Generates a new empty database object. LocalDatabase contains all Users and
+   * Posts of the app.
+   */
   public LocalDatabase() {
     users = new HashMap<String, User>();
     posts = new HashMap<String, Post>();
   }
 
   /**
-   * Generates a new database object, Initialized with data from the given IO Stores database. changes
-   * using the IO.
+   * Generates a new database object, Initialized with data from the given IO
+   * Stores database. changes using the IO.
    */
   public LocalDatabase(IO io) {
     storage = io;
@@ -41,23 +44,22 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
-   /**
-   * Creates a new Comment in the database, unless the post already exists. Automatically updates
-   * storage.
+  /**
+   * Creates a new Comment in the database, unless the post already exists.
+   * Automatically updates storage.
    *
    * @param comment The comment to add.
    */
   public void newComment(String text, String owner, String postUUID) {
     Post post = posts.getOrDefault(postUUID, null);
-    if (post  != null) {
+    if (post != null) {
       post.addComment(new Comment(owner, text));
       saveToStorage();
     }
   }
 
   /**
-   * Creates a new Post in the database. Automatically updates
-   * storage.
+   * Creates a new Post in the database. Automatically updates storage.
    *
    * @param post The Post to add.
    */
@@ -72,20 +74,20 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Creates a new User in the database, unless the user already exists. Automatically updates
-   * storage.
+   * Creates a new User in the database, unless the user already exists.
+   * Automatically updates storage.
    *
-   * @param name The name of the user.
+   * @param name     The name of the user.
    * @param nickname The nickname of the user.
-   * @param email The email of the user.
+   * @param email    The email of the user.
    * @param password The password of the user.
-   * @throws IllegalStateException In the case of the nickname already existing in the database.
+   * @throws IllegalStateException In the case of the nickname already existing in
+   *                               the database.
    */
   public void newUser(String name, String nickname, String email, String password) {
     if (usernameExists(nickname)) {
       throw new IllegalStateException("Username already exists in database!");
-    }
-    else {
+    } else {
       User user = new User(name, nickname, email, password);
       users.put(nickname, user);
       saveToStorage();
@@ -110,8 +112,6 @@ public class LocalDatabase implements DatabaseInterface {
   public Collection<User> getUsers() {
     return users.values();
   }
-
-
 
   /**
    * Fetches the mapping between users and usernames
@@ -166,12 +166,15 @@ public class LocalDatabase implements DatabaseInterface {
     return exists;
   }
 
-  /* Pre-constructed object addition methods used in testing and json-deserializing*/
+  /*
+   * Pre-constructed object addition methods used in testing and
+   * json-deserializing
+   */
 
   /**
    * Directly adds the given Post object to the Database.
    */
-  public void addPost(Post post){
+  public void addPost(Post post) {
     posts.put(post.getUUID(), post);
     users.get(post.getOwner()).addPost(post.getUUID());
     saveToStorage();
@@ -180,23 +183,41 @@ public class LocalDatabase implements DatabaseInterface {
   /**
    * Directly adds the given User to the Database.
    */
-  public void addUser(User user){
+  public void addUser(User user) {
     users.put(user.getNickname(), user);
     saveToStorage();
   }
 
-
   @Override
   public String toString() {
-    String s = "Users:\n";
+    StringBuilder s = new StringBuilder("Users:\n");
     for (User user : this.getUsers()) {
-      s += user.toString() + "\n";
+      s.append(user.toString() + "\n");
     }
-    s += "Posts:\n";
+    s.append("Posts:\n");
     for (Post post : this.getPosts()) {
-      s += post.toString() + "\n";
+      s.append(post.toString() + "\n");
     }
-    s = s.trim();
-    return s;
+    return s.toString().trim();
+  }
+
+  @Override
+  public Comment getComment(String commentUUID, String postUUID) {
+    for(Comment comment : posts.get(postUUID).getComments()){
+      if(comment.getUUID().equals(commentUUID)){
+        return comment;
+      }
+    }
+    return null;
+  }
+
+  @Override
+  public Post getPost(String postUUID) {
+    return posts.getOrDefault(postUUID, null);
+  }
+
+  @Override
+  public Collection<Comment> getComments(String postUUID) {
+    return posts.getOrDefault(postUUID, null).getComments();
   }
 }

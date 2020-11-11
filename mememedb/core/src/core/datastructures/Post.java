@@ -125,12 +125,12 @@ public class Post {
 
   @Override
   public String toString() {
-    String s = String.format(
-        "[Post id=%s owner=%s caption=%s image=%s]", getUUID(), getOwner(), getText(), getImage());
-    s += "\nComments:";
+    StringBuilder s = new StringBuilder(String.format(
+        "[Post id=%s owner=%s caption=%s image=%s]", getUUID(), getOwner(), getText(), getImage()));
+    s.append("\nComments:");
     for(Comment comment : this.getComments()) {
-      s += "\n" + comment.toString();
+      s.append("\n" + comment.toString());
     }
-    return s;
+    return s.toString();
   }
 }

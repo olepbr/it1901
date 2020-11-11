@@ -48,8 +48,8 @@ public class PostViewController {
   public void addComment(){
     String commentText = commentInput.getText();
     if(!commentText.equals(null)){
-      Comment c = database.newComment(author.getNickname(), commentText, post.getUUID());
-      ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getCommentList().toString());
+      database.newComment(author.getNickname(), commentText, post.getUUID());
+      ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getComments(post.getUUID()).toString());
       commentListView.setItems(observableCommentList);
       posterLabel.setText(author.getNickname());
       commentInput.setText(null);
