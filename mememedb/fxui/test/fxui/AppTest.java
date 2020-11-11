@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.scene.image.ImageView;
 
 
@@ -104,9 +105,12 @@ public class AppTest extends ApplicationTest {
     /* Test comment */
     final ImageView postImage  = (ImageView) parent.lookup("#postImage");
     clickOn(postImage);
-    final TextField commentInput = (TextField) parent.lookup("#commentInput");
-    final Button commentButton = (Button) parent.lookup("#commentButton");
+    Parent parent2 = Window.getWindows().get(1).getScene().getRoot();
+    final TextField commentInput = (TextField) parent2.lookup("#commentInput");
+    final Button commentButton = (Button) parent2.lookup("#commentButton");
     clickOn(commentInput).write("Haha this is such a cool animal right??");
     clickOn(commentButton);
+    
   }
+  
 }

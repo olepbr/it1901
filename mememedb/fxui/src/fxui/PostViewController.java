@@ -28,7 +28,7 @@ import javafx.scene.image.ImageView;
 public class PostViewController {
 
   private Post post;
-  private User author;
+  private User activeUser;
   private DatabaseInterface database;
 
   @FXML private Label caption;
@@ -44,14 +44,22 @@ public class PostViewController {
   * The user adds a comment via a TextField. Controller sets the comment via database. 
   * Comments are shown in a ListView 
   */
+  public void setActiveUser(User activeUser){
+    this.activeUser = activeUser;
+  }
+
+  public void setDatabase(DatabaseInterface database) {
+    this.database = database;
+  }
+
   @FXML
   public void addComment(){
     String commentText = commentInput.getText();
+    System.out.println(activeUser.getNickname());
     if(!commentText.equals(null)){
-      database.newComment(author.getNickname(), commentText, post.getUUID());
+      database.newComment(commentText, activeUser.getNickname(), post.getUUID());
       ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getComments(post.getUUID()).toString());
       commentListView.setItems(observableCommentList);
-      posterLabel.setText(author.getNickname());
       commentInput.setText(null);
     } else {
       errorLabel.setText("Cannot post an empty comment");
@@ -75,8 +83,8 @@ public class PostViewController {
       System.out.println("Could not decode image");
       e.printStackTrace();
     }
-    caption.setText(this.post.getText());
-    posterLabel.setText("Made by " + this.post.getOwner());
+    caption.setText(post.getText());
+    posterLabel.setText("Made by " + post.getOwner());
   }
 }
  

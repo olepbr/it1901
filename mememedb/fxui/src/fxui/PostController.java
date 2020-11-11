@@ -1,22 +1,33 @@
 package fxui;
 
+import core.datastructures.DatabaseInterface;
 import core.datastructures.Post;
+import core.datastructures.User;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
 import javax.imageio.ImageIO;
 
 public class PostController {
 
-  private Post post;
+  @FXML private ImageView postImage;
+  @FXML private Label postText;
+  @FXML private Label postPoster;
 
-  @FXML ImageView postImage;
-  @FXML Label postText;
-  @FXML Label postPoster;
+  private PostViewController postViewController;
+  private Post post;
+  private User activeUser;
+  private DatabaseInterface database;
 
   /**
    * Sets and displays the post this controller should correspond to.
@@ -32,26 +43,39 @@ public class PostController {
       System.out.println("Could not decode image");
       e.printStackTrace();
     }
-    postText.setText(this.post.getText());
-    postPoster.setText("Made by " + this.post.getOwner());
+    postText.setText(post.getText());
+    postPoster.setText("Made by " + post.getOwner());
+    this.post = post;
+  }
+
+  public void setActiveUser(User activeUser){
+    this.activeUser = activeUser;
+  }
+
+  public void setDatabase(DatabaseInterface database){
+    this.database = database;
   }
 
     /**
    * Displays a new window when image is clicked. Opens PostView.fxml window.
    */
-
+  @FXML
   public void handleEnterPostView(MouseEvent event){
     try {
       FXMLLoader fxmlLoader = new FXMLLoader();
-      fxmlLoader.setLocation(getClass().getResource("PostView.fxml"));
+      fxmlLoader.setLocation(getClass().getClassLoader().getResource("PostView.fxml"));
       Scene scene = new Scene(fxmlLoader.load());
       Stage stage = new Stage();
-      stage.setTitle("Jostein Bakkevigs fantastiske vindu");
+      PostViewController postViewController = ((PostViewController) fxmlLoader.getController());
+      postViewController.setDatabase(database);
+      postViewController.setPost(post);
+      postViewController.setActiveUser(activeUser);
+      stage.setTitle("Jostein UwU");
       stage.setScene(scene);
       stage.show();
       event.consume();
     } catch (IOException e){
-      System.out.println("Could not load new windon");
+      System.out.println("Could not load new window");
       e.printStackTrace();
     }
   }

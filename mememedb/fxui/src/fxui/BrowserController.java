@@ -61,9 +61,9 @@ public class BrowserController {
    * @param user The new user.
    */
   public void setActiveUser(User user) {
-    this.
+    this.activeUser = user;
     username.setText(user.getNickname());
-  }
+    }
 
   /** Removes old posts from browser, fetches and displays updated list of posts. */
   public void updatePosts() {
@@ -84,7 +84,10 @@ public class BrowserController {
         content.getChildren().add(subContent);
         try {
           subContentLoader.load();
-          ((PostController) subContentLoader.getController()).setPost(post);
+          PostController postController = ((PostController) subContentLoader.getController());
+          postController.setPost(post);
+          postController.setActiveUser(activeUser);
+          postController.setDatabase(database);
         } catch (IOException e) {
           e.printStackTrace();
           System.out.println("Error loading post");
@@ -121,6 +124,10 @@ public class BrowserController {
       }
       updatePosts();
     }
+  }
+
+  public User getActiveUser(){
+    return activeUser;
   }
 
   /**
