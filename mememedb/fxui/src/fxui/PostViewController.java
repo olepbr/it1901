@@ -40,10 +40,7 @@ public class PostViewController {
   @FXML private Label posterLabel;
   
  
- /** 
-  * The user adds a comment via a TextField. Controller sets the comment via database. 
-  * Comments are shown in a ListView 
-  */
+
   public void setActiveUser(User activeUser){
     this.activeUser = activeUser;
   }
@@ -51,19 +48,27 @@ public class PostViewController {
   public void setDatabase(DatabaseInterface database) {
     this.database = database;
   }
-
+  
+  /** 
+  * The user adds a comment via a TextField. Controller sets the comment via database. 
+  * Comments are shown in a ListView 
+  */
   @FXML
   public void addComment(){
     String commentText = commentInput.getText();
     System.out.println(activeUser.getNickname());
     if(!commentText.equals(null)){
       database.newComment(commentText, activeUser.getNickname(), post.getUUID());
-      ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getComments(post.getUUID()).toString());
-      commentListView.setItems(observableCommentList);
-      commentInput.setText(null);
+      fetchComments();
     } else {
       errorLabel.setText("Cannot post an empty comment");
     }
+  }
+
+  public void fetchComments(){
+    ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getComments(post.getUUID()).toString());
+    commentListView.setItems(observableCommentList);
+    commentInput.setText(null);
   }
 
 
@@ -85,6 +90,7 @@ public class PostViewController {
     }
     caption.setText(post.getText());
     posterLabel.setText("Made by " + post.getOwner());
+    fetchComments();
   }
 }
  
