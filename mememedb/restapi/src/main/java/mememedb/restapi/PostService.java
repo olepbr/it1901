@@ -82,29 +82,24 @@ public class PostService {
    */
   public String getPost(Request request, Response response) {
     response.type("application/json");
-    // Post post = Main.database.getPost(request.params("postID"));
-    // if (post != null) {
-    //   try {
-    //     // 200: OK
-    //     response.status(200);
-    //     return mapper.writeValueAsString(post);
-    //   } catch (JsonProcessingException e) {
-    //     System.err.println("Json Processing Error");
-    //     e.printStackTrace();
-    //     // 500: Internal Server Error
-    //     response.status(500);
-    //     return "{\"error:\", \"Json Processing Error\"}";
-    //   }
-    // } else {
-    //   // 404: Not found
-    //   response.status(404);
-    //   // Return empty string
-    //   return "";
-    // }
-    // 501: Not Implemented
-    // TODO: Implement
-    response.status(501);
-    return "";
+    Post post = Main.database.getPost(request.params("postID"));
+    if (post != null) {
+      try {
+        // 200: OK
+        response.status(200);
+        return mapper.writeValueAsString(post);
+      } catch (JsonProcessingException e) {
+        System.err.println("Json Processing Error");
+        e.printStackTrace();
+        // 500: Internal Server Error
+        response.status(500);
+        return "{\"error:\", \"Json Processing Error\"}";
+      }
+    } else {
+      // 404: Not found
+      response.status(404);
+      return "{\"error:\", \"Resource not found\"}";
+    }
   }
 
   public String updatePost(Request request, Response response) {
