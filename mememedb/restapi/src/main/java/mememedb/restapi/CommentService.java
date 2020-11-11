@@ -18,6 +18,13 @@ public class CommentService {
   // HTTP Status Codes: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 
   // Requests to "/"
+  /**
+   * [TODO:description]
+   *
+   * @param request [TODO:description]
+   * @param response [TODO:description]
+   * @return [TODO:description]
+   */
   public String getAllComments(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented
@@ -26,6 +33,13 @@ public class CommentService {
     return "";
   }
 
+  /**
+   * [TODO:description]
+   *
+   * @param request [TODO:description]
+   * @param response [TODO:description]
+   * @return [TODO:description]
+   */
   public String createComment(Request request, Response response) {
     response.type("application/json");
     Comment comment;
@@ -44,6 +58,13 @@ public class CommentService {
   }
 
   // Requests to "/:commentID"
+  /**
+   * [TODO:description]
+   *
+   * @param request [TODO:description]
+   * @param response [TODO:description]
+   * @return [TODO:description]
+   */
   public String getComment(Request request, Response response) {
     response.type("application/json");
     // Post post = Main.database.getPost(request.params("postID"));
@@ -84,6 +105,13 @@ public class CommentService {
     return "";
   }
 
+  /**
+   * [TODO:description]
+   *
+   * @param request [TODO:description]
+   * @param response [TODO:description]
+   * @return [TODO:description]
+   */
   public String updateComment(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented
@@ -92,6 +120,13 @@ public class CommentService {
     return "";
   }
 
+  /**
+   * [TODO:description]
+   *
+   * @param request [TODO:description]
+   * @param response [TODO:description]
+   * @return [TODO:description]
+   */
   public String deleteComment(Request request, Response response) {
     response.type("application/json");
     // 501: Not Implemented

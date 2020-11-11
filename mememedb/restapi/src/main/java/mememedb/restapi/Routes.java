@@ -1,6 +1,10 @@
 package restapi;
 
-import static spark.Spark.*;
+import static spark.Spark.delete;
+import static spark.Spark.get;
+import static spark.Spark.path;
+import static spark.Spark.post;
+import static spark.Spark.put;
 
 /** Decides what service to call based on URI. */
 public class Routes {
@@ -15,6 +19,7 @@ public class Routes {
     commentService = new CommentService();
   }
 
+  /** [TODO:description] */
   public static void configureRoutes() {
     path(
         "/",
