@@ -1,6 +1,5 @@
 package fxui;
 
-import core.datastructures.Database;
 import core.datastructures.Post;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import javax.imageio.ImageIO;
 
 public class PostController {
 
-  private Database database;
   private Post post;
 
   @FXML ImageView postImage;
@@ -26,7 +24,6 @@ public class PostController {
    * @param post The post to display.
    */
   public void setPost(Post post) {
-    database.newPost(post);
     try {
       byte[] imageData = Base64.getDecoder().decode(post.getImage());
       postImage.setImage(SwingFXUtils.toFXImage(

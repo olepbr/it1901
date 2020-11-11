@@ -1,6 +1,6 @@
 package fxui;
 
-import core.datastructures.Database;
+import core.datastructures.DatabaseInterface;
 import core.datastructures.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,7 +17,7 @@ import org.apache.commons.validator.routines.EmailValidator;
  */
 public class LoginController {
 
-  private Database database;
+  private DatabaseInterface database;
 
   private AppController parent;
 
@@ -45,7 +45,7 @@ public class LoginController {
     this.parent = parent;
   }
 
-  public void setDatabase(Database database) {
+  public void setDatabase(DatabaseInterface database) {
     this.database = database;
   }
 
@@ -94,7 +94,8 @@ public class LoginController {
     } else if (password.length() < 8) {
       passwordWarning.setText("Password must contain at least 8 characters");
     } else {
-      User user = database.newdUser(name, username, email, password));
+      database.newUser(name, username, email, password);
+      User user = database.tryLogin(username, password);
       parent.handleLogin(user);
     }
   }

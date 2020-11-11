@@ -7,7 +7,7 @@ import java.util.Base64;
 import javax.imageio.ImageIO;
 
 import core.datastructures.Comment;
-import core.datastructures.Database;
+import core.datastructures.DatabaseInterface;
 import core.datastructures.Post;
 import core.datastructures.User;
 import javafx.collections.FXCollections;
@@ -29,7 +29,7 @@ public class PostViewController {
 
   private Post post;
   private User author;
-  private Database database;
+  private DatabaseInterface database;
 
   @FXML private Label caption;
   @FXML private ImageView imageView;
@@ -48,7 +48,7 @@ public class PostViewController {
   public void addComment(){
     String commentText = commentInput.getText();
     if(!commentText.equals(null)){
-      Comment c = database.newComment(author.getNickname(), commentText);
+      Comment c = database.newComment(author.getNickname(), commentText, post.getUUID());
       ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getCommentList().toString());
       commentListView.setItems(observableCommentList);
       posterLabel.setText(author.getNickname());

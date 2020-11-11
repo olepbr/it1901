@@ -1,7 +1,6 @@
 package fxui;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -15,27 +14,17 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.scene.image.ImageView;
 
 
-import org.junit.Rule;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.base.WindowMatchers;
 
-import core.datastructures.Database;
-import core.io.IO;
+import core.datastructures.LocalDatabase;
 
 public class AppTest extends ApplicationTest {
 
-  private Database emptyDatabase = new Database();
+  private LocalDatabase emptyDatabase = new LocalDatabase();
 
   private Parent parent;
   private AppController controller;

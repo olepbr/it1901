@@ -1,6 +1,6 @@
 package fxui;
 
-import core.datastructures.Database;
+import core.datastructures.DatabaseInterface;
 import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.File;
@@ -21,7 +21,7 @@ import javafx.stage.FileChooser;
 public class BrowserController {
 
   // Storage interface
-  private Database database;
+  private DatabaseInterface database;
   private File selectedImage;
   private AppController parent;
   private User activeUser;
@@ -42,7 +42,7 @@ public class BrowserController {
    *
    * @param database The Database to use.
    */
-  public void setDatabase(Database database) {
+  public void setDatabase(DatabaseInterface database) {
     this.database = database;
   }
 
@@ -114,7 +114,7 @@ public class BrowserController {
       a.show();
     } else {
       try {
-        database.newPost(activeUser.getNickname(), caption, image));
+        database.newPost(activeUser.getNickname(), caption, image);
       } catch (IOException e) {
         System.out.println("could not save post");
         e.printStackTrace();
