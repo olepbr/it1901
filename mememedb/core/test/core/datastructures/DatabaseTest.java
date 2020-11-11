@@ -104,6 +104,22 @@ public class DatabaseTest {
   }
 
   @Test
+  public void TestNewComment() {
+    final IO mockIO = mock(IO.class);
+    doReturn(getFilledMock()).when(mockIO).getDatabase();
+    LocalDatabase database = new LocalDatabase(mockIO);
+    Post post = new Post("berjon29", "A funi image", "imagedata");
+    database.addPost(post);
+    database.newComment("haha, funi", "berjon29", post.getUUID());
+    Comment comment = new Comment("berjon29", "haha, funi");
+    for(Comment commment : database.getPost(post.getUUID()).getComments()){
+      assertEquals(commment.getAuthor(), comment.getAuthor());
+      assertEquals(commment.getText(), comment.getText());
+    }
+
+  }
+
+  @Test
   public void TestUsernameExists() {
     final IO mockIO = mock(IO.class);
     doReturn(getFilledMock()).when(mockIO).getDatabase();
