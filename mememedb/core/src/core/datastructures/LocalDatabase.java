@@ -29,7 +29,7 @@ public class LocalDatabase implements DatabaseInterface {
 
   /**
    * Generates a new database object, Initialized with data from the given IO
-   * Stores database. changes using the IO.
+   * Stores database changes using the IO.
    */
   public LocalDatabase(IO io) {
     storage = io;
@@ -45,10 +45,12 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Creates a new Comment in the database, unless the post already exists.
+   * Creates a new Comment in the database, using the supplied information.
    * Automatically updates storage.
    *
-   * @param comment The comment to add.
+   * @param text The text belonging to the comment.
+   * @param owner The username of the user that made the comment.
+   * @param postUUID The UUID of the post that the comment belongs to.
    */
   public void newComment(String text, String owner, String postUUID) {
     Post post = posts.getOrDefault(postUUID, null);
@@ -59,9 +61,11 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Creates a new Post in the database. Automatically updates storage.
+   * Creates a new Post in the database from the given arguments. Automatically updates storage.
    *
-   * @param post The Post to add.
+   * @param owner The user that made the post
+   * @param caption The caption belonging to the post
+   * @param image A file referencing the image belonging to the post
    */
   public void newPost(String owner, String caption, File image) {
     try {
@@ -95,10 +99,10 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Fetches a single user
+   * Fetches a single user.
    *
-   * @param nickname The nickname of the user
-   * @return The user object of the user with nickname
+   * @param nickname The nickname of the user.
+   * @return The user object corresponding to the user with the given nickname.
    */
   public User getUser(String nickname) {
     return users.get(nickname);
@@ -114,7 +118,7 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Fetches the mapping between users and usernames
+   * Fetches the mapping between users and usernames.
    *
    * @return A map mapping users to their usernames
    */
@@ -132,7 +136,7 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Fetches the mapping between posts and Ids
+   * Fetches the mapping between posts and Ids.
    *
    * @return A map mapping posts to their Ids
    */
@@ -168,7 +172,7 @@ public class LocalDatabase implements DatabaseInterface {
 
   /*
    * Pre-constructed object addition methods used in testing and
-   * json-deserializing
+   * json-deserializing, not part of the DatabaseInterface.
    */
 
   /**
@@ -203,8 +207,8 @@ public class LocalDatabase implements DatabaseInterface {
 
   @Override
   public Comment getComment(String commentUUID, String postUUID) {
-    for(Comment comment : posts.get(postUUID).getComments()){
-      if(comment.getUUID().equals(commentUUID)){
+    for (Comment comment : posts.get(postUUID).getComments()) {
+      if (comment.getUUID().equals(commentUUID)) {
         return comment;
       }
     }
