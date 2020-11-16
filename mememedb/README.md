@@ -88,6 +88,7 @@ package fxui <<Frame>> {
     class PostController
     class BrowserController
     class LoginController
+    class PostViewController
 }
 
 package core.io <<Frame>> {
@@ -95,20 +96,33 @@ package core.io <<Frame>> {
     class LocalIO
 }
 
+package restapi <<Frame>> {
+}
+
+
 package core.json <<Frame>> {
     class MememeModule
     class PostSerializer
     class PostDeserializer
     class UserSerializer
     class UserDeserializer
-    class UserListSerializer
+    class CommentSerializer
+    class CommentDeserializer
+    class DatabaseSerializer
+    class DatabaseDeserializer
 }
 
 package core.datastructures <<Frame>> {
     class User
     class Post
-    class Database
+    class Comment
+    class DatabaseFactory
+    interface DatabaseInterface
+    class LocalDatabase
+    class RestDatabase
 }
+RestDatabase -> restapi
+LocalDatabase -[hidden]right-> RestDatabase
 
 class App {
     + start(Stage) void
@@ -117,7 +131,7 @@ class App {
 App --> AppController
 
 class AppController {
-    - database: Database
+    - database: DatabaseInterface
     - activeUser: User
     + handleLogin(): void
     + handleLogout(): void
@@ -126,7 +140,6 @@ class AppController {
 BrowserController --> PostController
 
 class PostController {
-    - post: Post
 }
 
 AppController --> BrowserController
@@ -145,11 +158,15 @@ class LoginController {
     + createUser(): void
 }
 
+PostController -> PostViewController
+
+class PostViewController {
+    + addComment(): void
+}
+
 interface IO {
-    + getDatabase(): Database
+    + getDatabase(): LocalDatabase
     + saveDatabase(Post): void
-    + saveImage(File): void
-    + getImage(String): File
 }
 
 class LocalIO implements IO
@@ -166,41 +183,67 @@ MememeModule --> PostSerializer
 MememeModule --> PostDeserializer
 MememeModule --> UserSerializer
 MememeModule --> UserDeserializer
-MememeModule --> UserListSerializer
+MememeModule --> DatabaseSerializer
+MememeModule --> DatabaseDeserializer
+MememeModule --> CommentSerializer
+MememeModule --> CommentDeserializer
 
 AppController "activeUser"--> User
-AppController "database"--> Database
-PostController --> Post
+AppController -> DatabaseFactory
+PostController "post" --> Post
 
 class User {
     - id: int
     - name: String
     - nickname: String
     - email: String
-    - posts: List<Post>
-    + addPost(Post): Void
+    - posts: List<String>
+    + addPost(String): void
 }
 
 class Post {
+    - uuid: String
     - caption: String
     - image: String
     - owner: String
+    + addComment(Comment): void
 }
 
-class Database {
-    - users: List<User>
-    - storage: IO
+class Comment {
+    - uuid: String
+    - text: String
+    - author: String
+}
+
+interface DatabaseInterface{
+    + newPost(String, String, File): void
+    + newUser(String, String, String, String): void
+    + newComment(String, String, String)
+    + getUser(String): User
+    + getPosts(): Collection<Post>
+    + getPost(String): Post
+    + getComments(String): Collection<Comment>
+    + tryLogin(String, String): User
+    + usernameExists(String): boolean
+}
+
+class LocalDatabase implements DatabaseInterface
+class RestDatabase implements DatabaseInterface
+DatabaseFactory -> DatabaseInterface
+
+
+class LocalDatabase {
     + saveToStorage(): void
-    + savePost(Post, File, User): void
-    + saveUser(User): void
-    + getPostList(): List<Post>
-    + getUsers(): List<User>
-    
 }
 
-User "1" <--> "*" Post : Owner
-Database "storage" --> IO
-Database "users" --> "*" User
+class DatabaseFactory {
+    + getDatabase(String): DatabaseInterface
+}
+
+Post "comments" <--> "*" Comment
+LocalDatabase "storage" --> IO
+LocalDatabase "users" --> "*" User
+LocalDatabase "posts" --> "*" Post
 ```
 
 ## User Stories
