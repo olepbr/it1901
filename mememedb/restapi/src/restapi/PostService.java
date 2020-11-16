@@ -58,19 +58,16 @@ public class PostService {
   public String createPost(Request request, Response response) {
     response.type("application/json");
     Post post;
-    // try {
-    //   post = mapper.readValue(request.body(), Post.class);
-    // } catch (JsonProcessingException e) {
-    //   System.err.println("Json Processing Error");
-    //   e.printStackTrace();
-    //   // 500: Internal Server Error
-    //   response.status(500);
-    //   return "{\"error:\", \"Json Processing Error\"}";
-    // }
-    // Method newPost(String, String, String) does not exist yet.
-    // Main.database.newPost(post.getOwner(), post.getText(), post.getImage());
-    // 501: Not implemented
-    response.status(HTTP_NOT_IMPLEMENTED);
+    try {
+      post = mapper.readValue(request.body(), Post.class);
+    } catch (JsonProcessingException e) {
+      System.err.println("Json Processing Error");
+      e.printStackTrace();
+      response.status(HTTP_INTERNAL_ERROR);
+      return "{\"error:\", \"Json Processing Error\"}";
+    }
+    Main.database.newPost(post.getOwner(), post.getText(), post.getImage());
+    response.status(HTTP_OK);
     return "";
   }
 
@@ -140,9 +137,8 @@ public class PostService {
    */
   public String getAllPostsByUser(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     // TODO: Implement
-    response.status(501);
     return "";
   }
 }
