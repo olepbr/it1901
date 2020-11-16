@@ -96,7 +96,7 @@ public class User {
 
   @Override
   public String toString() {
-    return String.format(
-        "[User name=%s nickname=%s email=%s password=%s]", getName(), getNickname(), getEmail(), getPassword());
+    return String.format("[User name=%s nickname=%s email=%s password=%s]",
+        getName(), getNickname(), getEmail(), getPassword());
   }
 }

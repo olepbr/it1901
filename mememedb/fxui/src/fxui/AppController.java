@@ -47,10 +47,11 @@ public class AppController {
     window.getChildren().add(browser);
     try {
       subContentLoader.load();
-      ((BrowserController) subContentLoader.getController()).setActiveUser(activeUser);
-      ((BrowserController) subContentLoader.getController()).setDatabase(database);
-      ((BrowserController) subContentLoader.getController()).setParent(this);
-      ((BrowserController) subContentLoader.getController()).updatePosts();
+      BrowserController browserController = ((BrowserController) subContentLoader.getController());
+      browserController.setActiveUser(activeUser);
+      browserController.setDatabase(database);
+      browserController.setParent(this);
+      browserController.updatePosts();
       child = subContentLoader.getController();
     } catch (IOException e) {
       e.printStackTrace();
@@ -75,8 +76,9 @@ public class AppController {
     window.getChildren().add(login);
     try {
       subContentLoader.load();
-      ((LoginController) subContentLoader.getController()).setDatabase(database);
-      ((LoginController) subContentLoader.getController()).setParent(this);
+      LoginController loginController = ((LoginController) subContentLoader.getController());
+      loginController.setDatabase(database);
+      loginController.setParent(this);
       child = subContentLoader.getController();
     } catch (IOException e) {
       e.printStackTrace();

@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxui.PostViewController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxui.PostViewController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="postByLabel" layoutX="414.0" layoutY="5.0" prefHeight="17.0" prefWidth="67.0" />
+            <Label fx:id="posterLabel" layoutX="414.0" layoutY="5.0" prefHeight="17.0" prefWidth="67.0" />
             <Label fx:id="caption" layoutX="419.0" layoutY="47.0" prefHeight="17.0" prefWidth="5.0">
                <font>
                   <Font name="System Italic" size="13.0" />
@@ -34,4 +34,4 @@
          </children>
     </AnchorPane>
   </children>
-</fx:root>
+</AnchorPane>

@@ -23,7 +23,10 @@ public class LocalIO implements IO {
   private LocalDatabase database;
   private ObjectMapper mapper;
 
-  /** Constructor. Initializes database object from file or skeleton. */
+  /** Constructor. Attempts to intialize a database based on files in the 
+   * Home folder. If no such files exist yet, they are populated using a basic 
+   * template database. If all else fails, initializes with an empty database.
+   */
   public LocalIO() {
     this.mapper = new ObjectMapper();
     mapper.registerModule(new MememeModule());
@@ -89,6 +92,11 @@ public class LocalIO implements IO {
     }
   }
 
+  /**
+   * Returns the database made during construction.
+   *
+   * @return The constructed database.
+   */
   public LocalDatabase getDatabase() {
     return database;
   }

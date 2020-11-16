@@ -3,7 +3,7 @@
 
 MEMEMEDB is a meme sharing application.
 With this application users may view, share, and post memes.
-A meme consists of a picture and a caption. 
+A meme consists of a picture and a caption.
 Example memes can be found in the project directory in the folder **memes**.
 By default, the application has a default user, the credentials of which are:
 username: **xXx_gertrude_xXx**, password: **strawberryjam**.
@@ -27,6 +27,10 @@ component core {
 	package core.datastructures
 }
 
+component restapi {
+    package restapi.main
+}
+
 component jackson {
 }
 
@@ -36,27 +40,43 @@ component guava{
 component org.apache.commons.validator{
 }
 
+component spark{
+}
+
+restapi ..> jackson
+restapi ..> spark
+restapi ..> core.datastructures
+restapi .left.> core.io
+restapi ..> core.json
+
 core.json ..> jackson
-core.datastructures ..> core.io
-core.io ..> core.datastructures
+core.datastructures .down.> core.io
+core.datastructures ..> restapi.main
+core.io .up.> core.datastructures
 core.io ..> core.json
-core.datastructures ..> guava
+core.datastructures .left.> guava
+
+
 
 component fxui {
 	package fxui.fxui
 }
 
 fxui ..> core.datastructures
-fxui ..> core.io
-fxui ..> org.apache.commons.validator
+fxui .left.> org.apache.commons.validator
 
 component javafx {
 	component fxml {
 	}
+	component controls{
+	}
+	component swing{
+	}
+	component graphics{
+	}
 }
 
 fxui ..> javafx
-fxui ..> fxml
 ```
 
 The following class diagram shows the basic outline of the internal class structure:
@@ -184,13 +204,267 @@ Database "users" --> "*" User
 ```
 
 ## User Stories
+
 * I want to be able to post a picture to the app, and see it appear on the main page
 * I want to be able to create and log in with my account
 
 ## Storage method
-This app uses an implicit storage method, where the user is not directly informed of how or where data is stored. 
+
+This app uses an implicit storage method, where the user is not directly informed of how or where data is stored.
 Implicit storage is used as it allows multiple users to interact with a shared database, which is an integral part of our idea, even though only local storage is supported at the moment.
 
+## REST API
+
+Message and error responses have the following structure:
+
+```json
+{
+  "message": "string",
+  "error": "string"
+}
+```
+
+### `GET /user`
+
+Retrieves a list of all the users in the database.
+
+Responds with the following json structure:
+
+```json
+[
+  {
+    "nickname": "string",
+    "name": "string",
+    "email": "string",
+    "posts":
+      ["UUID", "UUID", ..., "UUID"],
+    "hashedPassword": "string"
+  }
+]
+```
+
+### `POST /user`
+
+Creates a new user in the database.
+
+If the username already exists, an error is returned.
+
+Expects a body with the following structure:
+
+```json
+{
+  "nickname": "string",
+  "name": "string",
+  "email": "string",
+  "hashedPassword":  "string"
+}
+```
+
+### `GET /user/:nickname`
+
+Retrieves the user with the nickname `nickname`.
+
+If the user does not exists, a 404 response is returned with a message
+explaining why.
+
+Responds with the following structure:
+
+```json
+{
+  "nickname": "string",
+  "name": "string",
+  "email": "string",
+  "posts":
+    ["UUID", "UUID", ..., "UUID"],
+  "hashedPassword": "string"
+}
+```
+
+### `PUT /user/:nickname`
+
+Updates a user.
+
+Responds with a message and/or an error.
+
+Expects a body with the following structure:
+
+```json
+{
+  "nickname": "string",
+  "name": "string",
+  "email": "string",
+  "hashedPassword": "string"
+}
+```
+
+### `DELETE /user/:nickname`
+
+Deletes a user.
+
+Responds with a message and/or an error.
+
+### `GET /user/{nickname}/post`
+
+Retrieves all posts made by the given user.
+
+If the user does not exists, a 404 response is returned with a message
+explaining why.
+
+Responds with the following structure:
+
+```json
+[
+  {
+    "UUID": "string",
+    "title": "string",
+    "caption": "string",
+    "image": "string",
+    "comments":
+      [
+        {
+          "UUID": "string",
+          "author": "user nickname",
+          "text": "string"
+        }
+      ]
+  }
+]
+```
+
+### `GET /post`
+
+Retrieves all posts.
+
+Responds with the following structure:
+
+```json
+[
+  {
+    "UUID": "string",
+    "title": "string",
+    "caption": "string",
+    "image": "string",
+    "comments":
+      [
+        {
+          "UUID": "string",
+          "author": "user nickname",
+          "text": "string"
+        }
+      ]
+  }
+]
+```
+
+### `POST /post`
+
+Creates a new post in the database.
+
+Responds with a message and/or an error.
+
+Expects a body with the following structure:
+
+```json
+[
+  {
+    "title": "string",
+    "caption": "string",
+    "image": "string"
+  }
+]
+```
+
+### `GET /post/:postUUID`
+
+Response:
+
+```json
+{
+  "UUID": "string",
+  "title": "string",
+  "caption": "string",
+  "image": "string",
+  "comments":
+    [
+      {
+        "UUID": "string",
+        "author": "user nickname",
+        "text": "string"
+      }
+    ]
+}
+```
+
+### `PUT /post/:postUUID
+
+Updates post.
+
+Responds with message and/or error.
+
+body:
+
+```json
+{
+  "UUID": "string",
+  "title": "string",
+  "caption": "string",
+  "image": "string"
+}
+```
+
+### `DELETE /post/:postUUID
+
+Returns message and/or error.
+
+### `GET /post/:postUUID/comment`
+
+If postUUID does not exist 404.
+
+Returns:
+
+```json
+[
+  {
+    "UUID": "string",
+    "author": "user nickname",
+    "text": "string"
+  }
+]
+```
+
+### `POST /post/:postUUID/coment
+
+Responds with message and/or error.
+
+404 if postUUID does not exist.
+
+Body:
+
+```json
+{
+  "author": "user nickname",
+  "text": "string"
+}
+```
+
+### `GET /post/:postUUID/comment/:commentUUID`
+
+
+### `PUT /post/:postUUID/comment/:commentUUID`
+
+body:
+
+```json
+{
+  "UUID": "string",
+  "author": "user nickname",
+  "text": "string"
+}
+```
+
+### `DELETE /post/:postUUID/comment/:commentUUID`
+
+Deletes comment.
 
 ## Maven Goals
 

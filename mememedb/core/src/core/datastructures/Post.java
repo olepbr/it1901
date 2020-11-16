@@ -43,8 +43,8 @@ public class Post {
    *
    * @param owner The owner of the post.
    * @param caption The post's caption.
-   * @param image The image of the post.
-   * @throws IOException If a problem occurs when reading the image File
+   * @param image A file referencing the image of the post.
+   * @throws IOException If a problem occurs when reading the image from file
    */
   public Post(String owner, String caption, File image) throws IOException {
     this.setOwner(owner);
@@ -110,6 +110,11 @@ public class Post {
     this.image = image;
   }
 
+  /**
+   * Returns a collection containing all comments belonging to the given post.
+   *
+   * @return A collection of the comments
+   */
   public Collection<Comment> getComments() {
     return comments.values();
   }
@@ -128,7 +133,7 @@ public class Post {
     StringBuilder s = new StringBuilder(String.format(
         "[Post id=%s owner=%s caption=%s image=%s]", getUUID(), getOwner(), getText(), getImage()));
     s.append("\nComments:");
-    for(Comment comment : this.getComments()) {
+    for (Comment comment : this.getComments()) {
       s.append("\n" + comment.toString());
     }
     return s.toString();

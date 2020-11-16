@@ -13,7 +13,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-public class DatabaseTest {
+public class LocalDatabaseTest {
 
   List<User> testData = new ArrayList<User>(Arrays.asList(
       new User("Bert Johnson", "berjon29", "bert@johnson.com", "asafepassword"), new User("Joe Mama", "jomama", "joe@mama.com", "anotherpassword")));
@@ -64,7 +64,7 @@ public class DatabaseTest {
   }
 
   @Test
-  public void TestNewUser() {
+  public void TestAddUser() {
     final IO mockIO = mock(IO.class);
     doReturn(getEmptyMock()).when(mockIO).getDatabase();
     final LocalDatabase database = new LocalDatabase(mockIO);
@@ -101,6 +101,38 @@ public class DatabaseTest {
       assertTrue(database.getPosts().contains(post),
           "Error in post addition");
     }
+  }
+
+  @Test
+  public void TestNewComment() {
+    final IO mockIO = mock(IO.class);
+    doReturn(getFilledMock()).when(mockIO).getDatabase();
+    LocalDatabase database = new LocalDatabase(mockIO);
+    Post post = new Post("berjon29", "A funi image", "imagedata");
+    database.addPost(post);
+    database.newComment("haha, funi", "berjon29", post.getUUID());
+    Comment comment = new Comment("berjon29", "haha, funi");
+    for(Comment commment : database.getPost(post.getUUID()).getComments()){
+      assertEquals(commment.getAuthor(), comment.getAuthor());
+      assertEquals(commment.getText(), comment.getText());
+    }
+  }
+
+  @Test
+  public void TestNewUser() {
+    final IO mockIO = mock(IO.class);
+    doReturn(getFilledMock()).when(mockIO).getDatabase();
+    LocalDatabase database = new LocalDatabase(mockIO);
+    String name = "Bart Simpson";
+    String nickname = "dabsamp";
+    String email = "bart@thesimpsons.com";
+    String password = "eatmyshorts";
+    database.newUser(name, nickname, email, password);
+    User user = database.getUser(nickname);
+    assertEquals(name, user.getName());
+    assertEquals(nickname, user.getNickname());
+    assertEquals(email, user.getEmail());
+    assertEquals(User.hashPassword(password), user.getPassword());
   }
 
   @Test

@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
-import core.datastructures.Post;
 import core.datastructures.Comment;
+import core.datastructures.Post;
 import java.io.IOException;
 
 /**
