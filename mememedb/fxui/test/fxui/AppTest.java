@@ -19,14 +19,21 @@ import javafx.scene.image.ImageView;
 
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.matcher.base.WindowMatchers;
+
+import core.datastructures.LocalDatabase;
+import core.io.IO;
 
 import core.datastructures.LocalDatabase;
 
 public class AppTest extends ApplicationTest {
 
   private LocalDatabase emptyDatabase = new LocalDatabase();
-
   private Parent parent;
   private AppController controller;
   private LoginController loginController;
