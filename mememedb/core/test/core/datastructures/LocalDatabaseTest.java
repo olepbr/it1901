@@ -13,19 +13,19 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-public class DatabaseTest {
+public class LocalDatabaseTest {
 
   List<User> testData = new ArrayList<User>(Arrays.asList(
-      new User("Bert Johnson", "berjon29", "bert@johnson.com"), new User("Joe Mama", "jomama", "joe@mama.com")));
+      new User("Bert Johnson", "berjon29", "bert@johnson.com", "asafepassword"), new User("Joe Mama", "jomama", "joe@mama.com", "anotherpassword")));
 
   /**
    * Returns a mock database, always returning an empty list. Used by mocked IO
    * for passing content to database for testing purposes.
    * 
-   * @return The mocked Database
+   * @return The mocked LocalDatabase
    */
-  public Database getEmptyMock() {
-    Database mockDb = mock(Database.class);
+  public LocalDatabase getEmptyMock() {
+    LocalDatabase mockDb = mock(LocalDatabase.class);
     doReturn(new HashMap<String, User>()).when(mockDb).getUserMap();
     return mockDb;
   }
@@ -34,14 +34,14 @@ public class DatabaseTest {
    * Returns a mock database, always returning the example testData. Used by
    * mocked IO for passing content to database for testing purposes.
    * 
-   * @return The mocked Database
+   * @return The mocked LocalDatabase
    */
-  public Database getFilledMock() {
+  public LocalDatabase getFilledMock() {
     Map<String, User> returnmap = new HashMap<String, User>();
     for (User testUser : testData) {
       returnmap.put(testUser.getNickname(), testUser);
     }
-    Database mockDb = mock(Database.class);
+    LocalDatabase mockDb = mock(LocalDatabase.class);
     doReturn(returnmap).when(mockDb).getUserMap();
     return mockDb;
   }
@@ -51,23 +51,23 @@ public class DatabaseTest {
     final IO mockIO = mock(IO.class);
     // test with empty dataset
     doReturn(getEmptyMock()).when(mockIO).getDatabase();
-    final Database databaseEmpty = new Database(mockIO);
-    assertEquals(databaseEmpty.getUsers().size(), 0, "Database is not empty with empty construction");
+    final LocalDatabase databaseEmpty = new LocalDatabase(mockIO);
+    assertEquals(databaseEmpty.getUsers().size(), 0, "LocalDatabase is not empty with empty construction");
 
     // test with already created dataset
     doReturn(getFilledMock()).when(mockIO).getDatabase();
-    final Database databaseFull = new Database(mockIO);
-    assertEquals(testData.size(), databaseFull.getUsers().size(), "Database does not retain users when constructing");
+    final LocalDatabase databaseFull = new LocalDatabase(mockIO);
+    assertEquals(testData.size(), databaseFull.getUsers().size(), "LocalDatabase does not retain users when constructing");
     for (User user : testData) {
-      assertTrue(databaseFull.getUsers().contains(user), "Database does not retain users when constructing");
+      assertTrue(databaseFull.getUsers().contains(user), "LocalDatabase does not retain users when constructing");
     }
   }
 
   @Test
-  public void TestNewUser() {
+  public void TestAddUser() {
     final IO mockIO = mock(IO.class);
     doReturn(getEmptyMock()).when(mockIO).getDatabase();
-    final Database database = new Database(mockIO);
+    final LocalDatabase database = new LocalDatabase(mockIO);
     for (User user : testData) {
       database.addUser(user);
     }
@@ -83,9 +83,9 @@ public class DatabaseTest {
   public void TestPost() {
     final IO mockIO = mock(IO.class);
     doReturn(getFilledMock()).when(mockIO).getDatabase();
-    Database database = new Database(mockIO);
+    LocalDatabase database = new LocalDatabase(mockIO);
     assertEquals(0, database.getPosts().size(),
-        "Database returns non-empty post list when there are no posts");
+        "LocalDatabase returns non-empty post list when there are no posts");
     Post post1 = new Post("berjon29", "Hello", "hello.png");
     Post post2 = new Post("jomama", "YO MAMA", "sofat.png");
     Post post3 = new Post("jomama", "YO 1231232MAMAs", "sofat1223.png");
@@ -104,10 +104,42 @@ public class DatabaseTest {
   }
 
   @Test
+  public void TestNewComment() {
+    final IO mockIO = mock(IO.class);
+    doReturn(getFilledMock()).when(mockIO).getDatabase();
+    LocalDatabase database = new LocalDatabase(mockIO);
+    Post post = new Post("berjon29", "A funi image", "imagedata");
+    database.addPost(post);
+    database.newComment("haha, funi", "berjon29", post.getUUID());
+    Comment comment = new Comment("berjon29", "haha, funi");
+    for(Comment commment : database.getPost(post.getUUID()).getComments()){
+      assertEquals(commment.getAuthor(), comment.getAuthor());
+      assertEquals(commment.getText(), comment.getText());
+    }
+  }
+
+  @Test
+  public void TestNewUser() {
+    final IO mockIO = mock(IO.class);
+    doReturn(getFilledMock()).when(mockIO).getDatabase();
+    LocalDatabase database = new LocalDatabase(mockIO);
+    String name = "Bart Simpson";
+    String nickname = "dabsamp";
+    String email = "bart@thesimpsons.com";
+    String password = "eatmyshorts";
+    database.newUser(name, nickname, email, password);
+    User user = database.getUser(nickname);
+    assertEquals(name, user.getName());
+    assertEquals(nickname, user.getNickname());
+    assertEquals(email, user.getEmail());
+    assertEquals(User.hashPassword(password), user.getPassword());
+  }
+
+  @Test
   public void TestUsernameExists() {
     final IO mockIO = mock(IO.class);
     doReturn(getFilledMock()).when(mockIO).getDatabase();
-    Database database = new Database(mockIO);
+    LocalDatabase database = new LocalDatabase(mockIO);
     assertEquals(false, database.usernameExists("notARealUser"),
         "Error in username availability, username should not exist yet");
     assertEquals(true, database.usernameExists("berjon29"),
@@ -117,11 +149,10 @@ public class DatabaseTest {
   @Test
   public void TestLogin() {
     final IO mockIO = mock(IO.class);
-    testData.get(0).setPassword("asafepassword");
     doReturn(getFilledMock()).when(mockIO).getDatabase();
-    Database database = new Database(mockIO);
+    LocalDatabase database = new LocalDatabase(mockIO);
     System.out.println(database);
-    System.out.println(testData.get(0).hashPassword("asafepassword"));
+    System.out.println(User.hashPassword("asafepassword"));
     assertEquals(testData.get(0), database.tryLogin(testData.get(0).getNickname(), "asafepassword"), "Error in login method, should return User");
     assertEquals(null, database.tryLogin(testData.get(0).getNickname(), "awrongpassword"),
         "Error in login method, should fail with incorrect input");

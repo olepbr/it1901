@@ -1,7 +1,6 @@
 package fxui;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -16,24 +15,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.scene.image.ImageView;
 
-import org.junit.Rule;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.base.WindowMatchers;
 
-import core.datastructures.Database;
-import core.io.IO;
+import core.datastructures.LocalDatabase;
 
 public class AppTest extends ApplicationTest {
 
-  private Database emptyDatabase = new Database();
+  private LocalDatabase emptyDatabase = new LocalDatabase();
 
   private Parent parent;
   private AppController controller;
@@ -113,9 +105,12 @@ public class AppTest extends ApplicationTest {
     /* Test comment */
     final ImageView postImage  = (ImageView) parent.lookup("#postImage");
     clickOn(postImage);
-    final TextField commentInput = (TextField) parent.lookup("#commentInput");
-    final Button commentButton = (Button) parent.lookup("#commentButton");
+    Parent parent2 = Window.getWindows().get(1).getScene().getRoot();
+    final TextField commentInput = (TextField) parent2.lookup("#commentInput");
+    final Button commentButton = (Button) parent2.lookup("#commentButton");
     clickOn(commentInput).write("Haha this is such a cool animal right??");
     clickOn(commentButton);
+    
   }
+  
 }

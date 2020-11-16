@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import core.datastructures.Comment;
-import core.datastructures.Database;
+import core.datastructures.LocalDatabase;
 import core.datastructures.Post;
 import core.datastructures.User;
 import org.junit.jupiter.api.Assertions;
@@ -25,7 +25,7 @@ public class JsonTest {
 
   @Test
   public void testUserSerializer() {
-    User user = new User("Ola Nordman", "XxX_SpicyBoi69_XxX", "spice@memes.com");
+    User user = new User("Ola Nordman", "XxX_SpicyBoi69_XxX", "spice@memes.com", "apassword");
     Post post = new Post(user.getNickname(), "haha", "files/spice.png");
     user.addPost(post.getUUID());
 
@@ -75,9 +75,9 @@ public class JsonTest {
 
   @Test
   public void testDatabaseSerializer() {
-    Database database = new Database();
-    User user1 = new User("Bert johnsos", "berjon67", "ber@john.com");
-    User user2 = new User("Jahn jahnman", "imthejahnman", "jahn@plan.can");
+    LocalDatabase database = new LocalDatabase();
+    User user1 = new User("Bert johnsos", "berjon67", "ber@john.com", "somepassword");
+    User user2 = new User("Jahn jahnman", "imthejahnman", "jahn@plan.can", "skibbedibibop");
     database.addUser(user1);
     database.addUser(user2);
     Post post1 = new Post("berjon67", "This is an image", "someimagedata");
@@ -89,8 +89,8 @@ public class JsonTest {
     try {
       String json = mapper.writeValueAsString(database);
       System.out.println(json);
-      Database database2 = mapper.readValue(json, Database.class);
-      Assertions.assertTrue(database2 instanceof Database);
+      LocalDatabase database2 = mapper.readValue(json, LocalDatabase.class);
+      Assertions.assertTrue(database2 instanceof LocalDatabase);
       Assertions.assertEquals(database.toString(), database2.toString());
     } catch (JsonProcessingException e) {
       e.printStackTrace();

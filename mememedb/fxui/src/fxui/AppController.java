@@ -1,6 +1,7 @@
 package fxui;
 
-import core.datastructures.Database;
+import core.datastructures.DatabaseFactory;
+import core.datastructures.DatabaseInterface;
 import core.datastructures.User;
 import core.io.IO;
 import core.io.LocalIO;
@@ -12,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 public class AppController {
 
   // Storage interface
-  private Database database;
+  private DatabaseInterface database;
   private User activeUser;
   private Object child;
 
@@ -21,8 +22,7 @@ public class AppController {
   /** Initializes the application, and loads the starter login interface. */
   @FXML
   public void initialize() {
-    IO io = new LocalIO();
-    database = new Database(io);
+    database = new DatabaseFactory().getDatabase("local");
     // Set up Browser window, and add it to the scene
     handleLogOut();
   }
@@ -47,10 +47,11 @@ public class AppController {
     window.getChildren().add(browser);
     try {
       subContentLoader.load();
-      ((BrowserController) subContentLoader.getController()).setActiveUser(activeUser);
-      ((BrowserController) subContentLoader.getController()).setDatabase(database);
-      ((BrowserController) subContentLoader.getController()).setParent(this);
-      ((BrowserController) subContentLoader.getController()).updatePosts();
+      BrowserController browserController = ((BrowserController) subContentLoader.getController());
+      browserController.setActiveUser(activeUser);
+      browserController.setDatabase(database);
+      browserController.setParent(this);
+      browserController.updatePosts();
       child = subContentLoader.getController();
     } catch (IOException e) {
       e.printStackTrace();
@@ -59,7 +60,7 @@ public class AppController {
   }
 
   /** Help method for the AppTest */
-  public void setDatabase(Database database){
+  public void setDatabase(DatabaseInterface database){
     this.database = database;
   }
 
@@ -75,8 +76,9 @@ public class AppController {
     window.getChildren().add(login);
     try {
       subContentLoader.load();
-      ((LoginController) subContentLoader.getController()).setDatabase(database);
-      ((LoginController) subContentLoader.getController()).setParent(this);
+      LoginController loginController = ((LoginController) subContentLoader.getController());
+      loginController.setDatabase(database);
+      loginController.setParent(this);
       child = subContentLoader.getController();
     } catch (IOException e) {
       e.printStackTrace();

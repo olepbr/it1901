@@ -1,10 +1,11 @@
 package fxui;
 
-import core.datastructures.Database;
+import core.datastructures.DatabaseInterface;
 import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +21,10 @@ import javafx.stage.FileChooser;
 public class BrowserController {
 
   // Storage interface
-  private Database database;
-  private User activeUser;
+  private DatabaseInterface database;
   private File selectedImage;
   private AppController parent;
+  private User activeUser;
 
   @FXML private VBox content;
   @FXML private Button addContent;
@@ -41,7 +42,7 @@ public class BrowserController {
    *
    * @param database The Database to use.
    */
-  public void setDatabase(Database database) {
+  public void setDatabase(DatabaseInterface database) {
     this.database = database;
   }
 
@@ -60,9 +61,9 @@ public class BrowserController {
    * @param user The new user.
    */
   public void setActiveUser(User user) {
-    activeUser = user;
+    this.activeUser = user;
     username.setText(user.getNickname());
-  }
+    }
 
   /** Removes old posts from browser, fetches and displays updated list of posts. */
   public void updatePosts() {
@@ -72,7 +73,7 @@ public class BrowserController {
     imgSelectorLabel.setText("Choose an image");
     // get collection of posts from I/O
     try {
-      List<Post> postList = database.getPostList();
+      Collection<Post> postList = database.getPosts();
       // create nodes for each post
       for (Post post : postList) {
         HBox subContent = new HBox();
@@ -83,7 +84,10 @@ public class BrowserController {
         content.getChildren().add(subContent);
         try {
           subContentLoader.load();
-          ((PostController) subContentLoader.getController()).setPost(post);
+          PostController postController = ((PostController) subContentLoader.getController());
+          postController.setPost(post);
+          postController.setActiveUser(activeUser);
+          postController.setDatabase(database);
         } catch (IOException e) {
           e.printStackTrace();
           System.out.println("Error loading post");
@@ -113,8 +117,7 @@ public class BrowserController {
       a.show();
     } else {
       try {
-        Post post = new Post(activeUser.getNickname(), caption, image);
-        database.savePost(post, activeUser);
+        database.newPost(activeUser.getNickname(), caption, image);
       } catch (IOException e) {
         System.out.println("could not save post");
         e.printStackTrace();
@@ -122,6 +125,14 @@ public class BrowserController {
       updatePosts();
     }
   }
+
+  public User getActiveUser(){
+    return activeUser;
+  }
+
+  /**
+   * Amends AppTest
+   */
 
   public void setSelectedImage(File file) {
     this.selectedImage = file;

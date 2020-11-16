@@ -7,7 +7,7 @@ import java.util.Base64;
 import javax.imageio.ImageIO;
 
 import core.datastructures.Comment;
-import core.datastructures.Database;
+import core.datastructures.DatabaseInterface;
 import core.datastructures.Post;
 import core.datastructures.User;
 import javafx.collections.FXCollections;
@@ -28,9 +28,8 @@ import javafx.scene.image.ImageView;
 public class PostViewController {
 
   private Post post;
-  private ObservableList<String> comments = FXCollections.observableArrayList();
-  private User author;
-  private Database database;
+  private User activeUser;
+  private DatabaseInterface database;
 
   @FXML private Label caption;
   @FXML private ImageView imageView;
@@ -45,14 +44,22 @@ public class PostViewController {
   * The user adds a comment via a TextField. Controller sets the comment via database. 
   * Comments are shown in a ListView 
   */
-  private void addComment(){
+  public void setActiveUser(User activeUser){
+    this.activeUser = activeUser;
+  }
+
+  public void setDatabase(DatabaseInterface database) {
+    this.database = database;
+  }
+
+  @FXML
+  public void addComment(){
     String commentText = commentInput.getText();
+    System.out.println(activeUser.getNickname());
     if(!commentText.equals(null)){
-      Comment c = database.setComment(author.getNickname(), commentText);
-      String comment = c.toString();
-      comments.add(comment);
-      commentListView.setItems(comments);
-      posterLabel.setText(author.getNickname());
+      database.newComment(commentText, activeUser.getNickname(), post.getUUID());
+      ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getComments(post.getUUID()).toString());
+      commentListView.setItems(observableCommentList);
       commentInput.setText(null);
     } else {
       errorLabel.setText("Cannot post an empty comment");
@@ -76,8 +83,8 @@ public class PostViewController {
       System.out.println("Could not decode image");
       e.printStackTrace();
     }
-    caption.setText(this.post.getText());
-    posterLabel.setText("Made by " + this.post.getOwner());
+    caption.setText(post.getText());
+    posterLabel.setText("Made by " + post.getOwner());
   }
 }
  

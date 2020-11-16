@@ -15,8 +15,8 @@ import java.io.IOException;
 class CommentSerializer extends JsonSerializer<Comment> {
 
   @Override
-  public void serialize(Comment comment, JsonGenerator jsonGen, SerializerProvider serializerProvider)
-      throws IOException {
+  public void serialize(Comment comment, JsonGenerator jsonGen,
+      SerializerProvider serializerProvider) throws IOException {
     jsonGen.writeStartObject();
     jsonGen.writeStringField("uuid", comment.getUUID());
     jsonGen.writeStringField("author", comment.getAuthor());

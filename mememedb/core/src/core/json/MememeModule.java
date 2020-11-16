@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import core.datastructures.Comment;
-import core.datastructures.Database;
+import core.datastructures.LocalDatabase;
 import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.File;
@@ -27,11 +27,11 @@ public class MememeModule extends SimpleModule {
     super(NAME, Version.unknownVersion());
     addSerializer(Post.class, new PostSerializer());
     addSerializer(User.class, new UserSerializer());
-    addSerializer(Database.class, new DatabaseSerializer());
+    addSerializer(LocalDatabase.class, new DatabaseSerializer());
     addSerializer(Comment.class, new CommentSerializer());
     addDeserializer(Post.class, new PostDeserializer());
     addDeserializer(User.class, new UserDeserializer());
-    addDeserializer(Database.class, new DatabaseDeserializer());
+    addDeserializer(LocalDatabase.class, new DatabaseDeserializer());
     addDeserializer(Comment.class, new CommentDeserializer());
     mapper.registerModule(this);
   }
@@ -60,16 +60,16 @@ public class MememeModule extends SimpleModule {
     return (mapper.readValue(post, Post.class));
   }
 
-  public static String serializeDatabase(Database database) throws JsonProcessingException {
+  public static String serializeDatabase(LocalDatabase database) throws JsonProcessingException {
     return (mapper.writeValueAsString(database));
   }
 
-  public static Database deserializeDatabase(String string) throws JsonProcessingException {
-    return (mapper.readValue(string, Database.class));
+  public static LocalDatabase deserializeDatabase(String string) throws JsonProcessingException {
+    return (mapper.readValue(string, LocalDatabase.class));
   }
 
-  public static Database deserializeDatabase(Reader reader) throws IOException {
-    return (mapper.readValue(reader, Database.class));
+  public static LocalDatabase deserializeDatabase(Reader reader) throws IOException {
+    return (mapper.readValue(reader, LocalDatabase.class));
   }
 
   public static String serializeComment(Comment comment) throws JsonProcessingException {

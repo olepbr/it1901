@@ -27,10 +27,11 @@ public class User {
    * @param nickname This user's nickname.
    * @param email This user's email.
    */
-  public User(String name, String nickname, String email) {
+  public User(String name, String nickname, String email, String password) {
     this.name = name;
     this.nickname = nickname;
     this.email = email;
+    setPassword(password);
   }
 
   /* Get/Set Name */
@@ -75,7 +76,7 @@ public class User {
    * @param password The password to check
    * @return The hashed password as String
    */
-  public String hashPassword(String password) {
+  public static String hashPassword(String password) {
     String hashedPassword =
         Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
     return hashedPassword;
@@ -95,7 +96,7 @@ public class User {
 
   @Override
   public String toString() {
-    return String.format(
-        "[User name=%s nickname=%s email=%s password=%s]", getName(), getNickname(), getEmail(), getPassword());
+    return String.format("[User name=%s nickname=%s email=%s password=%s]",
+        getName(), getNickname(), getEmail(), getPassword());
   }
 }
