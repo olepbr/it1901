@@ -1,8 +1,15 @@
 package restapi;
 
+import static java.net.HttpURLConnection.HTTP_CONFLICT;
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
+import static java.net.HttpURLConnection.HTTP_NOT_IMPLEMENTED;
+import static java.net.HttpURLConnection.HTTP_OK;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.User;
+import java.util.Collection;
 import spark.Request;
 import spark.Response;
 
@@ -27,10 +34,16 @@ public class UserService {
    */
   public String getAllUsers(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
-    // TODO: Implement
-    response.status(501);
-    return "";
+    Collection<User> users = Main.database.getUsers();
+    try {
+      response.status(HTTP_OK);
+      return mapper.writeValueAsString(users);
+    } catch (JsonProcessingException e) {
+      System.err.println("Json Processing Error");
+      e.printStackTrace();
+      response.status(HTTP_INTERNAL_ERROR);
+      return "{\"error:\", \"Json Processing Error\"}";
+    }
   }
 
   /**
@@ -49,25 +62,21 @@ public class UserService {
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
       e.printStackTrace();
-      // 500: Internal Server Error
-      response.status(500);
+      response.status(HTTP_INTERNAL_ERROR);
       return "{\"error:\", \"Json Processing Error\"}";
     }
     if (Main.database.usernameExists(user.getNickname())) {
-      // 409: Conflict
-      response.status(409);
+      response.status(HTTP_CONFLICT);
       return "{\"error:\", \"Username allready exists\"}";
     } else {
       try {
         Main.database.addUser(user);
-        // 200: OK
-        response.status(200);
+        response.status(HTTP_OK);
         return mapper.writeValueAsString(Main.database.getUser(user.getNickname()));
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
         e.printStackTrace();
-        // 500: Internal Server Error
-        response.status(500);
+        response.status(HTTP_INTERNAL_ERROR);
         return "{\"error:\", \"Json Processing Error\"}";
       }
     }
@@ -83,24 +92,20 @@ public class UserService {
    *     a JSON string containing an error message on failure.
    */
   public String getUser(Request request, Response response) {
-    User user = Main.database.getUser(request.params("nickname"));
     response.type("application/json");
+    User user = Main.database.getUser(request.params("nickname"));
     if (user != null) {
       try {
-        // 200: OK
-        response.status(200);
+        response.status(HTTP_OK);
         return mapper.writeValueAsString(user);
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
         e.printStackTrace();
-        // 500: Internal Server Error
-        response.status(500);
+        response.status(HTTP_INTERNAL_ERROR);
         return "{\"error:\", \"Json Processing Error\"}";
       }
     } else {
-      // 404: Not found
-      response.status(404);
-      // Return empty string
+      response.status(HTTP_NOT_FOUND);
       return "";
     }
   }
@@ -114,9 +119,8 @@ public class UserService {
    */
   public String updateUser(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     // TODO: Implement
-    response.status(501);
     return "";
   }
 
@@ -129,9 +133,8 @@ public class UserService {
    */
   public String deleteUser(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     // TODO: Implement
-    response.status(501);
     return "";
   }
 }

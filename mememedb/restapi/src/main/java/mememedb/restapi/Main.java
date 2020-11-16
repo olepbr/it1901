@@ -4,19 +4,19 @@ import static spark.Spark.awaitInitialization;
 import static spark.Spark.port;
 import static spark.Spark.stop;
 
-import core.datastructures.Database;
+import core.datastructures.LocalDatabase;
 import core.io.LocalIO;
 
 /** Main class for rest api server. */
 public class Main {
 
   private static LocalIO io;
-  protected static Database database;
+  protected static final LocalDatabase database;
 
   // Set up database
   static {
     io = new LocalIO();
-    database = new Database(io);
+    database = new LocalDatabase(io);
   }
 
   // Defeat instantiation

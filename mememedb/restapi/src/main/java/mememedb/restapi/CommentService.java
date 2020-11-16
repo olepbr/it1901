@@ -1,8 +1,15 @@
 package restapi;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
+import static java.net.HttpURLConnection.HTTP_NOT_IMPLEMENTED;
+import static java.net.HttpURLConnection.HTTP_OK;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.Comment;
+import core.datastructures.Post;
+import java.util.Collection;
 import spark.Request;
 import spark.Response;
 
@@ -27,10 +34,16 @@ public class CommentService {
    */
   public String getAllComments(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
-    // TODO: Implement
-    response.status(501);
-    return "";
+    Collection<Comment> comments = Main.database.getComments(request.params("postID"));
+    try {
+      response.status(HTTP_OK);
+      return mapper.writeValueAsString(comments);
+    } catch (JsonProcessingException e) {
+      System.err.println("Json Processing Error");
+      e.printStackTrace();
+      response.status(HTTP_INTERNAL_ERROR);
+      return "{\"error:\", \"Json Processing Error\"}";
+    }
   }
 
   /**
@@ -45,14 +58,13 @@ public class CommentService {
     Comment comment;
     try {
       comment = mapper.readValue(request.body(), Comment.class);
-      // 501: Not Implemented
-      response.status(501);
-      return "";
+      Main.database.newComment(comment.getText(), comment.getAuthor(), request.params("postID"));
+      response.status(HTTP_OK);
+      return "{\"message:\", \"Comment creation successful\"}";
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
       e.printStackTrace();
-      // 500: Internal Server Error
-      response.status(500);
+      response.status(HTTP_INTERNAL_ERROR);
       return "{\"error:\", \"Json Processing Error\"}";
     }
   }
@@ -67,42 +79,23 @@ public class CommentService {
    */
   public String getComment(Request request, Response response) {
     response.type("application/json");
-    // Post post = Main.database.getPost(request.params("postID"));
-    // Comment comment = post.getComment(request.params("commentID"));
-    // if (post != null) {
-    //   try {
-    //     // 200: OK
-    //     response.status(200);
-    //     return mapper.writeValueAsString(comment);
-    //   } catch (JsonProcessingException e) {
-    //     System.err.println("Json Processing Error");
-    //     e.printStackTrace();
-    //     // 500: Internal Server Error
-    //     response.status(500);
-    //     return "{\"error:\", \"Json Processing Error\"}";
-    //   }
-    // } else {
-    //   // 404: Not found
-    //   response.status(404);
-    //   // Return empty string
-    //   return "";
-    // }
-    // try {
-    //   // TODO: Create comment in database
-    //   // 501: Not Implemented
-    //   response.status(501);
-    //   return "";
-    // } catch (JsonProcessingException e) {
-    //   System.err.println("Json Processing Error");
-    //   e.printStackTrace();
-    //   // 500: Internal Server Error
-    //   response.status(500);
-    //   return "{\"error:\", \"Json Processing Error\"}";
-    // }
-
-    // 501: Not Implemented
-    response.status(501);
-    return "";
+    Post post = Main.database.getPost(request.params("postID"));
+    Comment comment =
+        Main.database.getComment(request.params("postID"), request.params("commentID"));
+    if (post != null) {
+      try {
+        response.status(HTTP_OK);
+        return mapper.writeValueAsString(comment);
+      } catch (JsonProcessingException e) {
+        System.err.println("Json Processing Error");
+        e.printStackTrace();
+        response.status(HTTP_INTERNAL_ERROR);
+        return "{\"error:\", \"Json Processing Error\"}";
+      }
+    } else {
+      response.status(HTTP_NOT_FOUND);
+      return "";
+    }
   }
 
   /**
@@ -114,10 +107,9 @@ public class CommentService {
    */
   public String updateComment(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     // TODO: Implement
-    response.status(501);
-    return "";
+    return "{\"error\": \"This method is not implemented\"}";
   }
 
   /**
@@ -129,9 +121,8 @@ public class CommentService {
    */
   public String deleteComment(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     // TODO: Implement
-    response.status(501);
-    return "";
+    return "{\"error\": \"This method is not implemented\"}";
   }
 }

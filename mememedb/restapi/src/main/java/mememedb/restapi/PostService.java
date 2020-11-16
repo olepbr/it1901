@@ -1,8 +1,14 @@
 package restapi;
 
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
+import static java.net.HttpURLConnection.HTTP_NOT_IMPLEMENTED;
+import static java.net.HttpURLConnection.HTTP_OK;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.Post;
+import java.util.Collection;
 import spark.Request;
 import spark.Response;
 
@@ -27,10 +33,18 @@ public class PostService {
    */
   public String getAllPosts(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
-    // TODO: Implement
-    response.status(501);
-    return "";
+    Collection<Post> posts = Main.database.getPosts();
+    try {
+      // 200: OK
+      response.status(HTTP_OK);
+      return mapper.writeValueAsString(posts);
+    } catch (JsonProcessingException e) {
+      System.err.println("Json Processing Error");
+      e.printStackTrace();
+      // 500: Internal Server Error
+      response.status(HTTP_INTERNAL_ERROR);
+      return "{\"error:\", \"Json Processing Error\"}";
+    }
   }
 
   /**
@@ -44,20 +58,8 @@ public class PostService {
   public String createPost(Request request, Response response) {
     response.type("application/json");
     Post post;
-    try {
-      post = mapper.readValue(request.body(), Post.class);
-    } catch (JsonProcessingException e) {
-      System.err.println("Json Processing Error");
-      e.printStackTrace();
-      // 500: Internal Server Error
-      response.status(500);
-      return "{\"error:\", \"Json Processing Error\"}";
-    }
     // try {
-    //   // TODO: Create post in database
-    //   // 501: Not Implemented
-    //   response.status(501);
-    //   return "";
+    //   post = mapper.readValue(request.body(), Post.class);
     // } catch (JsonProcessingException e) {
     //   System.err.println("Json Processing Error");
     //   e.printStackTrace();
@@ -65,9 +67,10 @@ public class PostService {
     //   response.status(500);
     //   return "{\"error:\", \"Json Processing Error\"}";
     // }
-    // 501: Not Implemented
-    // TODO: Implement
-    response.status(501);
+    // Method newPost(String, String, String) does not exist yet.
+    // Main.database.newPost(post.getOwner(), post.getText(), post.getImage());
+    // 501: Not implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     return "";
   }
 
@@ -82,29 +85,21 @@ public class PostService {
    */
   public String getPost(Request request, Response response) {
     response.type("application/json");
-    // Post post = Main.database.getPost(request.params("postID"));
-    // if (post != null) {
-    //   try {
-    //     // 200: OK
-    //     response.status(200);
-    //     return mapper.writeValueAsString(post);
-    //   } catch (JsonProcessingException e) {
-    //     System.err.println("Json Processing Error");
-    //     e.printStackTrace();
-    //     // 500: Internal Server Error
-    //     response.status(500);
-    //     return "{\"error:\", \"Json Processing Error\"}";
-    //   }
-    // } else {
-    //   // 404: Not found
-    //   response.status(404);
-    //   // Return empty string
-    //   return "";
-    // }
-    // 501: Not Implemented
-    // TODO: Implement
-    response.status(501);
-    return "";
+    Post post = Main.database.getPost(request.params("postID"));
+    if (post != null) {
+      try {
+        response.status(HTTP_OK);
+        return mapper.writeValueAsString(post);
+      } catch (JsonProcessingException e) {
+        System.err.println("Json Processing Error");
+        e.printStackTrace();
+        response.status(HTTP_INTERNAL_ERROR);
+        return "{\"error:\", \"Json Processing Error\"}";
+      }
+    } else {
+      response.status(HTTP_NOT_FOUND);
+      return "";
+    }
   }
 
   /**
@@ -116,9 +111,8 @@ public class PostService {
    */
   public String updatePost(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     // TODO: Implement
-    response.status(501);
     return "";
   }
 
@@ -131,9 +125,8 @@ public class PostService {
    */
   public String deletePost(Request request, Response response) {
     response.type("application/json");
-    // 501: Not Implemented
+    response.status(HTTP_NOT_IMPLEMENTED);
     // TODO: Implement
-    response.status(501);
     return "";
   }
 

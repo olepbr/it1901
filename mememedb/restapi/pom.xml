@@ -54,12 +54,6 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>20.0</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -71,15 +65,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 
-              <!-- Running code -->
-              <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                  <mainClass>mememedb.restapi.Main</mainClass>
-                </configuration>
-              </plugin>
+            <!-- Running code -->
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>3.0.0</version>
+              <configuration>
+                <mainClass>restapi.Main</mainClass>
+              </configuration>
+            </plugin>
 
             <!-- Running tests -->
             <plugin>
