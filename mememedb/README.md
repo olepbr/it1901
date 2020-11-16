@@ -27,6 +27,10 @@ component core {
 	package core.datastructures
 }
 
+component restapi {
+    package restapi.main
+}
+
 component jackson {
 }
 
@@ -36,27 +40,43 @@ component guava{
 component org.apache.commons.validator{
 }
 
+component spark{
+}
+
+restapi ..> jackson
+restapi ..> spark
+restapi ..> core.datastructures
+restapi .left.> core.io
+restapi ..> core.json
+
 core.json ..> jackson
-core.datastructures ..> core.io
-core.io ..> core.datastructures
+core.datastructures .down.> core.io
+core.datastructures ..> restapi.main
+core.io .up.> core.datastructures
 core.io ..> core.json
-core.datastructures ..> guava
+core.datastructures .left.> guava
+
+
 
 component fxui {
 	package fxui.fxui
 }
 
 fxui ..> core.datastructures
-fxui ..> core.io
-fxui ..> org.apache.commons.validator
+fxui .left.> org.apache.commons.validator
 
 component javafx {
 	component fxml {
 	}
+	component controls{
+	}
+	component swing{
+	}
+	component graphics{
+	}
 }
 
 fxui ..> javafx
-fxui ..> fxml
 ```
 
 The following class diagram shows the basic outline of the internal class structure:
