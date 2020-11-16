@@ -82,7 +82,7 @@ public class LocalDatabase implements DatabaseInterface {
    *
    * @param owner The user that made the post
    * @param caption The caption belonging to the post
-   * @param image A file referencing the image belonging to the post
+   * @param imageData The base64 data containing the imgae of the post
    */
   public void newPost(String owner, String caption, String imageData) {
     Post post = new Post(owner, caption, imageData);
