@@ -9,6 +9,8 @@ public interface DatabaseInterface {
   void newComment(String text, String owner, String postUUID);
 
   void newPost(String owner, String caption, File image) throws IOException;
+
+  void newPost(String owner, String caption, String imageData);
   
   void newUser(String name, String nickname, String email, String password);
 

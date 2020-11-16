@@ -78,6 +78,21 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
+   * Creates a new Post in the database from the given arguments. Automatically updates storage.
+   *
+   * @param owner The user that made the post
+   * @param caption The caption belonging to the post
+   * @param imageData The base64 data containing the imgae of the post
+   */
+  public void newPost(String owner, String caption, String imageData) {
+    Post post = new Post(owner, caption, imageData);
+    posts.put(post.getUUID(), post);
+    saveToStorage();
+  }
+
+
+
+  /**
    * Creates a new User in the database, unless the user already exists.
    * Automatically updates storage.
    *
