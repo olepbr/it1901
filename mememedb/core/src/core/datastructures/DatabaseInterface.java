@@ -11,7 +11,7 @@ public interface DatabaseInterface {
   void newPost(String owner, String caption, File image) throws IOException;
 
   void newPost(String owner, String caption, String imageData);
-  
+
   void newUser(String name, String nickname, String email, String password);
 
   Comment getComment(String commentUUID, String postUUID);
@@ -21,17 +21,16 @@ public interface DatabaseInterface {
   User getUser(String nickname);
 
   Collection<User> getUsers();
-  
+
   Map<String, User> getUserMap();
-  
+
   Collection<Post> getPosts();
-  
+
   Map<String, Post> getPostMap();
 
   Collection<Comment> getComments(String postUUID);
 
   User tryLogin(String username, String password);
-  
+
   boolean usernameExists(String username);
-  
 }
