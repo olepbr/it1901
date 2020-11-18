@@ -34,7 +34,7 @@ public class CommentService {
    */
   public String getAllComments(Request request, Response response) {
     response.type("application/json");
-    Collection<Comment> comments = Main.database.getComments(request.params("postID"));
+    Collection<Comment> comments = Server.database.getComments(request.params("postID"));
     try {
       response.status(HTTP_OK);
       return mapper.writeValueAsString(comments);
@@ -58,7 +58,7 @@ public class CommentService {
     Comment comment;
     try {
       comment = mapper.readValue(request.body(), Comment.class);
-      Main.database.newComment(comment.getText(), comment.getAuthor(), request.params("postID"));
+      Server.database.newComment(comment.getText(), comment.getAuthor(), request.params("postID"));
       response.status(HTTP_OK);
       return "{\"message:\", \"Comment creation successful\"}";
     } catch (JsonProcessingException e) {
@@ -71,17 +71,17 @@ public class CommentService {
 
   // Requests to "/:commentID"
   /**
-   * [TODO:description]
+   * Gets all comments for a given post.
    *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
+   * @param request Spark Request object containing the http request.
+   * @param response Spark Response object containing details of the response.
+   * @return A JSON string containing the serialized comments or an error message.
    */
   public String getComment(Request request, Response response) {
     response.type("application/json");
-    Post post = Main.database.getPost(request.params("postID"));
+    Post post = Server.database.getPost(request.params("postID"));
     Comment comment =
-        Main.database.getComment(request.params("postID"), request.params("commentID"));
+        Server.database.getComment(request.params("postID"), request.params("commentID"));
     if (post != null) {
       try {
         response.status(HTTP_OK);

@@ -1,5 +1,6 @@
 package restapi;
 
+import static java.net.HttpURLConnection.HTTP_CONFLICT;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import java.io.BufferedReader;
@@ -16,7 +17,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class MainTest {
+public class ServerTest {
+
+  private static String baseURL = "http://localhost:8080";
 
   private static String responseToString(HttpURLConnection connection) throws IOException {
     InputStream input = connection.getInputStream();
@@ -56,19 +59,21 @@ public class MainTest {
     return request(method, url, null);
   }
 
+  // Start the server before all tests.
   @BeforeAll
   public static void setup() {
-    Main.setup();
+    Server.setup();
   }
 
+  // Stop the server after the tests.
   @AfterAll
   public static void shutdown() {
-    Main.shutdown();
+    Server.shutdown();
   }
 
   @Test
   public void basicTest() throws IOException {
-    URL url = new URL("http://localhost:8080/");
+    URL url = new URL(baseURL + "/");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
@@ -76,18 +81,34 @@ public class MainTest {
 
   @Test
   public void createUserTest() throws IOException {
-    URL url = new URL("http://localhost:8080/user");
+    URL url = new URL(baseURL + "/user");
     String userString =
         "{\"nickname\":\"EdgyBoi\", \"name\":\"Ola Nordmann\", \"email\":\"ola@nordmann.no\", \"hashedPassword\":\"lisdvilrhngvliuv\"}";
     HttpURLConnection connection = request("POST", url, userString);
-    Assertions.assertNotNull(connection.getResponseCode());
+    int responseCode = connection.getResponseCode();
+    Assertions.assertTrue(responseCode == HTTP_OK || responseCode == HTTP_CONFLICT);
   }
 
   @Test
   public void getUserTest() throws IOException {
-    URL url = new URL("http://localhost:8080/user/EdgyBoi");
+    URL url = new URL(baseURL + "/user/EdgyBoi");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
+  }
+
+  @Test
+  public void getAllUsersTest() throws IOException {
+    URL url = new URL(baseURL + "/user");
+    HttpURLConnection connection = request("GET", url);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_OK);
+  }
+
+  @Test
+  public void createPost() throws IOException {
+    URL url = new URL(baseURL + "/post");
+    String body = "";
+    HttpURLConnection connection = request("POST", url, body);
   }
 }

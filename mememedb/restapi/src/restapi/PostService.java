@@ -33,15 +33,13 @@ public class PostService {
    */
   public String getAllPosts(Request request, Response response) {
     response.type("application/json");
-    Collection<Post> posts = Main.database.getPosts();
+    Collection<Post> posts = Server.database.getPosts();
     try {
-      // 200: OK
       response.status(HTTP_OK);
       return mapper.writeValueAsString(posts);
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
       e.printStackTrace();
-      // 500: Internal Server Error
       response.status(HTTP_INTERNAL_ERROR);
       return "{\"error:\", \"Json Processing Error\"}";
     }
@@ -66,7 +64,7 @@ public class PostService {
       response.status(HTTP_INTERNAL_ERROR);
       return "{\"error:\", \"Json Processing Error\"}";
     }
-    Main.database.newPost(post.getOwner(), post.getText(), post.getImage());
+    Server.database.newPost(post.getOwner(), post.getText(), post.getImage());
     response.status(HTTP_OK);
     return "";
   }
@@ -82,7 +80,7 @@ public class PostService {
    */
   public String getPost(Request request, Response response) {
     response.type("application/json");
-    Post post = Main.database.getPost(request.params("postID"));
+    Post post = Server.database.getPost(request.params("postID"));
     if (post != null) {
       try {
         response.status(HTTP_OK);
@@ -127,18 +125,4 @@ public class PostService {
     return "";
   }
 
-  // Other Requests
-  /**
-   * [TODO:description]
-   *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
-   */
-  public String getAllPostsByUser(Request request, Response response) {
-    response.type("application/json");
-    response.status(HTTP_NOT_IMPLEMENTED);
-    // TODO: Implement
-    return "";
-  }
 }

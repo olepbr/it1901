@@ -13,13 +13,14 @@ public class Routes {
   private static PostService postService;
   private static CommentService commentService;
 
+  // Construct the individual controllers.
   static {
     userService = new UserService();
     postService = new PostService();
     commentService = new CommentService();
   }
 
-  /** [TODO:description] */
+  /** Sets ut routes. They decide which method to use based on what URI was requested. */
   public static void configureRoutes() {
     path(
         "/",
@@ -34,9 +35,6 @@ public class Routes {
           get("/:nickname", (request, response) -> userService.getUser(request, response));
           put("/:nickname", (request, response) -> userService.updateUser(request, response));
           delete("/:nickname", (request, response) -> userService.deleteUser(request, response));
-          get(
-              "/:nickname/post",
-              (request, response) -> postService.getAllPostsByUser(request, response));
         });
     path(
         "/post",

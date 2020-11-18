@@ -8,7 +8,7 @@ import core.datastructures.LocalDatabase;
 import core.io.LocalIO;
 
 /** Main class for rest api server. */
-public class Main {
+public class Server {
 
   private static LocalIO io;
   protected static final LocalDatabase database;
@@ -20,7 +20,7 @@ public class Main {
   }
 
   // Defeat instantiation
-  protected Main() {}
+  protected Server() {}
 
   protected static void setup() {
     // Configure server
@@ -37,7 +37,6 @@ public class Main {
     stop();
   }
 
-  /** [TODO:description] */
   public static void main(String[] args) {
     setup();
   }

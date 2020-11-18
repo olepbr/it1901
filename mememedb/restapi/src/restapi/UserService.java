@@ -34,7 +34,7 @@ public class UserService {
    */
   public String getAllUsers(Request request, Response response) {
     response.type("application/json");
-    Collection<User> users = Main.database.getUsers();
+    Collection<User> users = Server.database.getUsers();
     try {
       response.status(HTTP_OK);
       return mapper.writeValueAsString(users);
@@ -65,14 +65,14 @@ public class UserService {
       response.status(HTTP_INTERNAL_ERROR);
       return "{\"error:\", \"Json Processing Error\"}";
     }
-    if (Main.database.usernameExists(user.getNickname())) {
+    if (Server.database.usernameExists(user.getNickname())) {
       response.status(HTTP_CONFLICT);
       return "{\"error:\", \"Username allready exists\"}";
     } else {
       try {
-        Main.database.addUser(user);
+        Server.database.addUser(user);
         response.status(HTTP_OK);
-        return mapper.writeValueAsString(Main.database.getUser(user.getNickname()));
+        return mapper.writeValueAsString(Server.database.getUser(user.getNickname()));
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
         e.printStackTrace();
@@ -93,7 +93,7 @@ public class UserService {
    */
   public String getUser(Request request, Response response) {
     response.type("application/json");
-    User user = Main.database.getUser(request.params("nickname"));
+    User user = Server.database.getUser(request.params("nickname"));
     if (user != null) {
       try {
         response.status(HTTP_OK);
