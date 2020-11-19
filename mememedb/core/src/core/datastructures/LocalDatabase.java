@@ -197,7 +197,7 @@ public class LocalDatabase implements DatabaseInterface {
    * Directly adds the given Post object to the Database.
    */
   public void addPost(Post post) {
-    if (!posts.containsKey(post.getUUID())){
+    if (!posts.containsKey(post.getUUID())) {
       posts.put(post.getUUID(), post);
     }
     if (!users.get(post.getOwner()).getPosts().contains(post.getUUID())) {
@@ -244,11 +244,13 @@ public class LocalDatabase implements DatabaseInterface {
 
   /** 
    * Fetches comments in a posts and sorts them. 
-   * @param postUUID 
+   *
+   * @param postUUID the UUID of the post to fetch comments from
    */
   @Override
   public List<Comment> getComments(String postUUID) {
-    List<Comment> comments = new ArrayList<Comment>(posts.getOrDefault(postUUID, null).getComments());
+    List<Comment> comments = new ArrayList<Comment>(
+        posts.getOrDefault(postUUID, null).getComments());
     Collections.sort(comments);
     return comments;
   }

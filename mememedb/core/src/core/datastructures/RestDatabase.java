@@ -78,6 +78,7 @@ public class RestDatabase implements DatabaseInterface {
   /**
    * Checks if the status code of the supplied response is outside of the interval [200-300),
    * i.e. whether the response results in some kind of error.
+   *
    * @param response The response to check.
    * @return True if no error is detected, false otherwise.
    */

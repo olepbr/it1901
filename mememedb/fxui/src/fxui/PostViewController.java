@@ -1,26 +1,21 @@
 package fxui;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Base64;
-
-import javax.imageio.ImageIO;
-
-import core.datastructures.Comment;
 import core.datastructures.DatabaseInterface;
 import core.datastructures.Post;
 import core.datastructures.User;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Base64;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javax.imageio.ImageIO;
 
 /**
  * Controller class for PostView.fxml. Controller opens a new window which views
@@ -61,9 +56,9 @@ public class PostViewController {
   * Comments are shown in a ListView 
   */
   @FXML
-  public void addComment(){
+  public void addComment() {
     String commentText = commentInput.getText();
-    if(!(commentText == null)){
+    if (!(commentText == null)) {
       database.newComment(commentText, activeUser.getNickname(), post.getUUID());
       fetchComments();
     } else {
@@ -73,11 +68,12 @@ public class PostViewController {
   }
 
   /**
-   * Fetches comments from database and adds them to a database
+   * Fetches comments from database and adds them to a database.
    */
 
-  public void fetchComments(){
-    ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getComments(post.getUUID()).toString().replace("[", "").replace("]", ""));
+  public void fetchComments() {
+    ObservableList<String> observableCommentList = FXCollections.observableArrayList(
+        database.getComments(post.getUUID()).toString().replace("[", "").replace("]", ""));
     commentListView.setItems(observableCommentList);
     commentInput.setText(null);
   }

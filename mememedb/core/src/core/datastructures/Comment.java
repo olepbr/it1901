@@ -4,7 +4,8 @@ package core.datastructures;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/** Class that represents a comment for a given post in the app. Implements comparable to be able to sort comments according to date */
+/** Class that represents a comment for a given post in the app.
+ *  Implements comparable to be able to sort comments according to date */
 public class Comment implements Comparable<Comment> {
 
   private String uuid;
@@ -28,7 +29,7 @@ public class Comment implements Comparable<Comment> {
     this.author = author;
   }
 
-  public void setDate(String date){
+  public void setDate(String date) {
     this.date = date;
   }
 
@@ -46,7 +47,7 @@ public class Comment implements Comparable<Comment> {
 
   /**
    * Generates a new Comment from the given paramaters, id is assigned
-   * automatically using java's UUID class
+   * automatically using java's UUID class.
    *
    * @param author the username of the author of the comment
    * @param text   the text in the comment
@@ -59,13 +60,13 @@ public class Comment implements Comparable<Comment> {
   }
 
   /**
-   * Generates an empty comment for use in construction
+   * Generates an empty comment for use in construction.
    */
   public Comment() {
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return "\n" + this.author + " commented:\n" + this.text;
   }
   
@@ -75,13 +76,13 @@ public class Comment implements Comparable<Comment> {
    */
   @Override
   public int compareTo(Comment other) {
-    if(this.equals(other)){
+    if (this.equals(other)) {
       return 0;
     }
     LocalDateTime time1 = LocalDateTime.parse(this.getDate());
     LocalDateTime time2 = LocalDateTime.parse(other.getDate());
     int foo = time1.compareTo(time2);
-    if(foo == 0){
+    if (foo == 0) {
       return this.getUUID().compareTo(other.getUUID());
     }
     return foo;

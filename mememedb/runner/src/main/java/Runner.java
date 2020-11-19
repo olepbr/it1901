@@ -5,7 +5,7 @@ import restapi.Server;
 /**
  * Runner class for the project, allows for single-command execution of 
  * both localDatabase and RestDatabase versions of the app.
- * 
+ *
  * @author Jostein bakkevig
  */
 public class Runner {
