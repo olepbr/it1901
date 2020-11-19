@@ -25,6 +25,18 @@ public class AppController {
     handleLogOut();
   }
 
+  /**
+   * Sets the database to use in the app by passing the argument to a DatabaseFactory.
+   *
+   * @param databaseType The type of database, e.g. "rest" for a RestDatabase
+   */
+  public void setDatabase(String databaseType) {
+    database = new DatabaseFactory().getDatabase(databaseType);
+    if (child instanceof LoginController) {
+      ((LoginController) child).setDatabase(database);
+    }
+  }
+
   public Object getChild() {
     return child;
   }
@@ -64,6 +76,9 @@ public class AppController {
    */
   public void setDatabase(DatabaseInterface database) {
     this.database = database;
+    if (child instanceof LoginController) {
+      ((LoginController) child).setDatabase(database);
+    }
   }
 
   /** Clears active User, and returns to login ui. */
