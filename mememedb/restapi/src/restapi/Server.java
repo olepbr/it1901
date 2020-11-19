@@ -10,19 +10,23 @@ import core.io.LocalIO;
 /** Main class for rest api server. */
 public class Server {
 
-  private static LocalIO io;
-  protected static final LocalDatabase database;
-
-  // Set up database
-  static {
-    io = new LocalIO();
-    database = new LocalDatabase(io);
-  }
+  protected static LocalDatabase database;
 
   // Defeat instantiation
   protected Server() {}
 
-  protected static void setup() {
+  // This method exists to inject a fake database in testing
+  protected static void setDatabase(LocalDatabase newDatabase) {
+    database = newDatabase;
+  }
+
+  // Set up database
+  protected static void setupDatabase() {
+    LocalIO io = new LocalIO();
+    setDatabase(new LocalDatabase(io));
+  }
+
+  protected static void setupServer() {
     // Configure server
     port(8080);
 
@@ -33,11 +37,12 @@ public class Server {
     awaitInitialization();
   }
 
-  protected static void shutdown() {
+  protected static void shutdownServer() {
     stop();
   }
 
   public static void main(String[] args) {
-    setup();
+    setupDatabase();
+    setupServer();
   }
 }

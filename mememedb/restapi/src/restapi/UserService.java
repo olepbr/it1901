@@ -3,12 +3,12 @@ package restapi;
 import static java.net.HttpURLConnection.HTTP_CONFLICT;
 import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
-import static java.net.HttpURLConnection.HTTP_NOT_IMPLEMENTED;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.User;
+import core.json.MememeModule;
 import java.util.Collection;
 import spark.Request;
 import spark.Response;
@@ -20,6 +20,7 @@ public class UserService {
 
   public UserService() {
     mapper = new ObjectMapper();
+    mapper.registerModule(new MememeModule());
   }
 
   // HTTP Status Codes: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -61,7 +62,6 @@ public class UserService {
       user = mapper.readValue(request.body(), User.class);
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
-      e.printStackTrace();
       response.status(HTTP_INTERNAL_ERROR);
       return "{\"error:\", \"Json Processing Error\"}";
     }
@@ -70,7 +70,8 @@ public class UserService {
       return "{\"error:\", \"Username allready exists\"}";
     } else {
       try {
-        Server.database.addUser(user);
+        Server.database.newUser(
+            user.getName(), user.getNickname(), user.getEmail(), user.getPassword());
         response.status(HTTP_OK);
         return mapper.writeValueAsString(Server.database.getUser(user.getNickname()));
       } catch (JsonProcessingException e) {
@@ -100,7 +101,6 @@ public class UserService {
         return mapper.writeValueAsString(user);
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
-        e.printStackTrace();
         response.status(HTTP_INTERNAL_ERROR);
         return "{\"error:\", \"Json Processing Error\"}";
       }
@@ -117,12 +117,12 @@ public class UserService {
    * @param response [TODO:description]
    * @return [TODO:description]
    */
-  public String updateUser(Request request, Response response) {
-    response.type("application/json");
-    response.status(HTTP_NOT_IMPLEMENTED);
-    // TODO: Implement
-    return "";
-  }
+  // public String updateUser(Request request, Response response) {
+  //   response.type("application/json");
+  //   response.status(HTTP_NOT_IMPLEMENTED);
+  //   // TODO: Implement
+  //   return "";
+  // }
 
   /**
    * [TODO:description]
@@ -131,10 +131,10 @@ public class UserService {
    * @param response [TODO:description]
    * @return [TODO:description]
    */
-  public String deleteUser(Request request, Response response) {
-    response.type("application/json");
-    response.status(HTTP_NOT_IMPLEMENTED);
-    // TODO: Implement
-    return "";
-  }
+  // public String deleteUser(Request request, Response response) {
+  //   response.type("application/json");
+  //   response.status(HTTP_NOT_IMPLEMENTED);
+  //   // TODO: Implement
+  //   return "";
+  // }
 }

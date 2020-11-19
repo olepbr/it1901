@@ -2,12 +2,12 @@ package restapi;
 
 import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
-import static java.net.HttpURLConnection.HTTP_NOT_IMPLEMENTED;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.Post;
+import core.json.MememeModule;
 import java.util.Collection;
 import spark.Request;
 import spark.Response;
@@ -19,6 +19,7 @@ public class PostService {
 
   public PostService() {
     mapper = new ObjectMapper();
+    mapper.registerModule(new MememeModule());
   }
 
   // HTTP Status Codes: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
@@ -60,7 +61,6 @@ public class PostService {
       post = mapper.readValue(request.body(), Post.class);
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
-      e.printStackTrace();
       response.status(HTTP_INTERNAL_ERROR);
       return "{\"error:\", \"Json Processing Error\"}";
     }
@@ -104,12 +104,12 @@ public class PostService {
    * @param response [TODO:description]
    * @return [TODO:description]
    */
-  public String updatePost(Request request, Response response) {
-    response.type("application/json");
-    response.status(HTTP_NOT_IMPLEMENTED);
-    // TODO: Implement
-    return "";
-  }
+  // public String updatePost(Request request, Response response) {
+  //   response.type("application/json");
+  //   response.status(HTTP_NOT_IMPLEMENTED);
+  //   // TODO: Implement
+  //   return "";
+  // }
 
   /**
    * [TODO:description]
@@ -118,11 +118,10 @@ public class PostService {
    * @param response [TODO:description]
    * @return [TODO:description]
    */
-  public String deletePost(Request request, Response response) {
-    response.type("application/json");
-    response.status(HTTP_NOT_IMPLEMENTED);
-    // TODO: Implement
-    return "";
-  }
-
+  // public String deletePost(Request request, Response response) {
+  //   response.type("application/json");
+  //   response.status(HTTP_NOT_IMPLEMENTED);
+  //   // TODO: Implement
+  //   return "";
+  // }
 }
