@@ -84,6 +84,14 @@ Message and error responses have the following structure:
 }
 ```
 
+### `GET /`
+
+Returns welcome message.
+
+```
+Welcome to mememedb!
+```
+
 ### `GET /user`
 
 Retrieves a list of all the users in the database.
@@ -116,7 +124,7 @@ Expects a body with the following structure:
   "nickname": "string",
   "name": "string",
   "email": "string",
-  "hashedPassword":  "string"
+  "hashedPassword": "string"
 }
 ```
 
@@ -173,17 +181,16 @@ Responds with the following structure:
 [
   {
     "UUID": "string",
-    "title": "string",
+    "owner": "string",
     "caption": "string",
     "image": "string",
-    "comments":
-      [
-        {
-          "UUID": "string",
-          "author": "user nickname",
-          "text": "string"
-        }
-      ]
+    "comments": [
+      {
+        "UUID": "string",
+        "author": "user nickname",
+        "text": "string"
+      }
+    ]
   }
 ]
 ```
@@ -197,37 +204,39 @@ Responds with a message and/or an error.
 Expects a body with the following structure:
 
 ```json
-[
-  {
-    "title": "string",
-    "caption": "string",
-    "image": "string"
-  }
-]
+{
+  "owner": "string",
+  "caption": "string",
+  "image": "string"
+}
 ```
 
 ### `GET /post/:postUUID`
 
-Response:
+Retrieves a specific post.
+
+Responds with status code 404 and a message and/or an error if the post does not
+exists.
+
+On success, responds with the following structure:
 
 ```json
 {
   "UUID": "string",
-  "title": "string",
+  "owner": "string",
   "caption": "string",
   "image": "string",
-  "comments":
-    [
-      {
-        "UUID": "string",
-        "author": "user nickname",
-        "text": "string"
-      }
-    ]
+  "comments": [
+    {
+      "UUID": "string",
+      "author": "user nickname",
+      "text": "string"
+    }
+  ]
 }
 ```
 
-### `PUT /post/:postUUID
+### `PUT /post/:postUUID`
 
 Updates post.
 
@@ -244,13 +253,13 @@ body:
 }
 ```
 
-### `DELETE /post/:postUUID
+### `DELETE /post/:postUUID`
 
 Returns message and/or error.
 
 ### `GET /post/:postUUID/comment`
 
-If postUUID does not exist 404.
+If postUUID does not exist 404 and error message.
 
 Returns:
 
@@ -264,7 +273,7 @@ Returns:
 ]
 ```
 
-### `POST /post/:postUUID/coment
+### `POST /post/:postUUID/coment`
 
 Responds with message and/or error.
 
@@ -280,7 +289,6 @@ Body:
 ```
 
 ### `GET /post/:postUUID/comment/:commentUUID`
-
 
 ### `PUT /post/:postUUID/comment/:commentUUID`
 

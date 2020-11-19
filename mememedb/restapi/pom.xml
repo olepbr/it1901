@@ -71,7 +71,7 @@
               <artifactId>exec-maven-plugin</artifactId>
               <version>3.0.0</version>
               <configuration>
-                <mainClass>restapi.Main</mainClass>
+                <mainClass>restapi.Server</mainClass>
               </configuration>
             </plugin>
 

@@ -63,23 +63,15 @@ public class UserService {
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
       response.status(HTTP_INTERNAL_ERROR);
-      return "{\"error:\", \"Json Processing Error\"}";
+      return "{\"message\": \"\", \"error\": \"Json Processing Error\"}";
     }
     if (Server.database.usernameExists(user.getNickname())) {
       response.status(HTTP_CONFLICT);
-      return "{\"error:\", \"Username allready exists\"}";
+      return "{\"message\": \"\", \"error\": \"Username allready exists\"}";
     } else {
-      try {
-        Server.database.newUser(
-            user.getName(), user.getNickname(), user.getEmail(), user.getPassword());
-        response.status(HTTP_OK);
-        return mapper.writeValueAsString(Server.database.getUser(user.getNickname()));
-      } catch (JsonProcessingException e) {
-        System.err.println("Json Processing Error");
-        e.printStackTrace();
-        response.status(HTTP_INTERNAL_ERROR);
-        return "{\"error:\", \"Json Processing Error\"}";
-      }
+      Server.database.addUser(user);
+      response.status(HTTP_OK);
+      return "{\"message\": \"User created successfully\", \"error\": \"\"}";
     }
   }
 

@@ -42,7 +42,7 @@ public class PostService {
       System.err.println("Json Processing Error");
       e.printStackTrace();
       response.status(HTTP_INTERNAL_ERROR);
-      return "{\"error:\", \"Json Processing Error\"}";
+      return "{\"message\": \"\", \"error\": \"Json Processing Error\"}";
     }
   }
 
@@ -62,11 +62,16 @@ public class PostService {
     } catch (JsonProcessingException e) {
       System.err.println("Json Processing Error");
       response.status(HTTP_INTERNAL_ERROR);
-      return "{\"error:\", \"Json Processing Error\"}";
+      return "{\"error\":, \"Json Processing Error\"}";
     }
-    Server.database.newPost(post.getOwner(), post.getText(), post.getImage());
-    response.status(HTTP_OK);
-    return "";
+    if (Server.database.usernameExists(post.getOwner())) {
+      Server.database.newPost(post.getOwner(), post.getText(), post.getImage());
+      response.status(HTTP_OK);
+      return "{\"message\": \"Post created successfully\"}";
+    } else {
+      response.status(HTTP_NOT_FOUND);
+      return "{\"message\": \"\", \"error\": \"User does not exist\"}";
+    }
   }
 
   // Requests to "/:postID"
@@ -89,7 +94,7 @@ public class PostService {
         System.err.println("Json Processing Error");
         e.printStackTrace();
         response.status(HTTP_INTERNAL_ERROR);
-        return "{\"error:\", \"Json Processing Error\"}";
+        return "{\"error\":, \"Json Processing Error\"}";
       }
     } else {
       response.status(HTTP_NOT_FOUND);

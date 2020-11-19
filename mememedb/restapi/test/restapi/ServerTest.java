@@ -92,6 +92,7 @@ public class ServerTest {
     Server.shutdownServer();
   }
 
+  /* Test server root */
   // Test if the server responds
   @Test
   public void serverRunsTest() throws IOException {
@@ -104,6 +105,7 @@ public class ServerTest {
     Assertions.assertEquals(responseCode, HTTP_OK);
   }
 
+  /* Test user */
   // Test if the server accepts a new user
   @Test
   public void createUserTest() throws IOException {
@@ -173,9 +175,6 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
-    // FIXME: Password is not stored correctly
-    // Assertions.assertEquals(mapper.readValue(responseToString(connection), User.class),
-    // testUser);
   }
 
   // Test if the server can retreive all users
@@ -191,16 +190,17 @@ public class ServerTest {
     Assertions.assertEquals(responseCode, HTTP_OK);
   }
 
+  /* Test post */
+  /* GET */
   // Test if the server accepts a new post
   @Test
   public void createPostTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
     Server.setDatabase(fakeDatabase);
 
     URL url = new URL(baseURL + "/post");
-    // FIXME
-    // text != caption
-    String body = "{\"owner\": \"EdgyBoi\", \"text\": \"Funny Picture\", \"image\": \"ASDF\"}";
+    String body = "{\"owner\": \"EdgyBoi\", \"caption\": \"Funny Picture\", \"image\": \"ASDF\"}";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
@@ -244,8 +244,7 @@ public class ServerTest {
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
     // FIXME: text != caption
-    // Assertions.assertEquals(mapper.readValue(responseToString(connection), Post.class),
-    // testPost);
+    Assertions.assertEquals(mapper.readValue(responseToString(connection), Post.class), testPost);
   }
 
   // Test if the server responds correctly to request for non-existing post
@@ -260,6 +259,10 @@ public class ServerTest {
     Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
   }
 
+  /* POST */
+
+  /* Test comment */
+  /* GET */
   // Test if the server can retreive a comment
   @Test
   public void getCommentTest() throws IOException {
@@ -301,47 +304,6 @@ public class ServerTest {
     Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
   }
 
-  // Test if the server accepts new comment
-  @Test
-  public void createCommentTest() throws IOException {
-    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.getPost(testPost.getUUID())).thenReturn(testPost);
-    Server.setDatabase(fakeDatabase);
-
-    URL url = new URL(baseURL + "/post/" + testPost.getUUID() + "/comment");
-    String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
-    HttpURLConnection connection = request("POST", url, body);
-    int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
-  }
-
-  // Test if the server responds correctly to request on non-existing post
-  @Test
-  public void createCommentNonExistingPostTest() throws IOException {
-    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    Server.setDatabase(fakeDatabase);
-
-    URL url = new URL(baseURL + "/post/somenonsense/comment");
-    String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
-    HttpURLConnection connection = request("POST", url, body);
-    int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
-  }
-
-  // Test if the server rejects garbage input
-  @Test
-  public void createBadCommentTest() throws IOException {
-    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.getPost(testPost.getUUID())).thenReturn(testPost);
-    Server.setDatabase(fakeDatabase);
-
-    URL url = new URL(baseURL + "/post/" + testPost.getUUID() + "/comment");
-    String body = "{ bad json";
-    HttpURLConnection connection = request("POST", url, body);
-    int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_INTERNAL_ERROR);
-  }
-
   // Test if the server can retreive all comments for a post
   @Test
   public void getAllCommentsTest() throws IOException {
@@ -367,5 +329,64 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+  }
+
+  /* POST */
+  // Test if the server accepts new comment
+  @Test
+  public void createCommentTest() throws IOException {
+    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
+    when(fakeDatabase.getPost(testPost.getUUID())).thenReturn(testPost);
+    Server.setDatabase(fakeDatabase);
+
+    URL url = new URL(baseURL + "/post/" + testPost.getUUID() + "/comment");
+    String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
+    HttpURLConnection connection = request("POST", url, body);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_OK);
+  }
+
+  // Test if the server responds correctly to request on non-existing post
+  @Test
+  public void createCommentNonExistingPostTest() throws IOException {
+    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
+    Server.setDatabase(fakeDatabase);
+
+    URL url = new URL(baseURL + "/post/somenonsense/comment");
+    String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
+    HttpURLConnection connection = request("POST", url, body);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+  }
+
+  // Test if the server responds correctly to request from non-existing user
+  @Test
+  public void createCommentNonExistingUserTest() throws IOException {
+    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(false);
+    when(fakeDatabase.getPost(testPost.getUUID())).thenReturn(testPost);
+    Server.setDatabase(fakeDatabase);
+
+    URL url = new URL(baseURL + "/post/" + testPost.getUUID() + "/comment");
+    String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
+    HttpURLConnection connection = request("POST", url, body);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+  }
+
+  // Test if the server rejects garbage input
+  @Test
+  public void createBadCommentTest() throws IOException {
+    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    when(fakeDatabase.getPost(testPost.getUUID())).thenReturn(testPost);
+    Server.setDatabase(fakeDatabase);
+
+    URL url = new URL(baseURL + "/post/" + testPost.getUUID() + "/comment");
+    String body = "{ bad json";
+    HttpURLConnection connection = request("POST", url, body);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_INTERNAL_ERROR);
   }
 }

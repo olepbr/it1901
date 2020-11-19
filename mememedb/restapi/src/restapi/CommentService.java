@@ -64,18 +64,23 @@ public class CommentService {
     if (Server.database.getPost(request.params("postID")) != null) {
       try {
         Comment comment = mapper.readValue(request.body(), Comment.class);
-        Server.database.newComment(
-            comment.getText(), comment.getAuthor(), request.params("postID"));
-        response.status(HTTP_OK);
-        return "{\"message:\", \"Comment creation successful\"}";
+        if (Server.database.usernameExists(comment.getAuthor())) {
+          Server.database.newComment(
+              comment.getText(), comment.getAuthor(), request.params("postID"));
+          response.status(HTTP_OK);
+          return "{\"message\": \"Comment creation successful\", \"error\": \"\"}";
+        } else {
+          response.status(HTTP_NOT_FOUND);
+          return "{\"message\": \"\", \"error\": \"User does not exist\"}";
+        }
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
         response.status(HTTP_INTERNAL_ERROR);
-        return "{\"error:\", \"Json Processing Error\"}";
+        return "{\"message\": \"\", \"error\": \"Json Processing Error\"}";
       }
     } else {
       response.status(HTTP_NOT_FOUND);
-      return "";
+      return "{\"message\": \"\", \"error\": \"Post does not exist\"}";
     }
   }
 
@@ -85,14 +90,20 @@ public class CommentService {
    *
    * @param request Spark Request object containing the http request.
    * @param response Spark Response object containing details of the response.
-   * @return A JSON string containing the serialized comments or an error message.
+   * @return A JSON string containing the serialized comment or an error message.
    */
   public String getComment(Request request, Response response) {
     response.type("application/json");
     Post post = Server.database.getPost(request.params("postID"));
     Comment comment =
         Server.database.getComment(request.params("postID"), request.params("commentID"));
-    if (post != null && comment != null) {
+    if (post == null) {
+      response.status(HTTP_NOT_FOUND);
+      return "{\"message\": \"\", \"error\": \"Post does not exist\"}";
+    } else if (comment == null) {
+      response.status(HTTP_NOT_FOUND);
+      return "{\"message\": \"\", \"error\": \"Comment does not exist\"}";
+    } else {
       try {
         response.status(HTTP_OK);
         return mapper.writeValueAsString(comment);
@@ -100,11 +111,8 @@ public class CommentService {
         System.err.println("Json Processing Error");
         e.printStackTrace();
         response.status(HTTP_INTERNAL_ERROR);
-        return "{\"error:\", \"Json Processing Error\"}";
+        return "{\"error:\", \"Json Processing Error\", \"message\": \"\"}";
       }
-    } else {
-      response.status(HTTP_NOT_FOUND);
-      return "";
     }
   }
 
