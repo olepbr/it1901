@@ -21,6 +21,8 @@ and has the following directory structure:
 The following diagram shows the dependencies between the various internal and external modules
 
 ```plantuml
+skinparam linetype ortho
+
 component core {
 	package core.io
 	package core.json
@@ -29,6 +31,10 @@ component core {
 
 component restapi {
     package restapi.main
+}
+
+component runner {
+    package main
 }
 
 component jackson {
@@ -55,7 +61,8 @@ core.datastructures ..> restapi.main
 core.io .up.> core.datastructures
 core.io ..> core.json
 core.datastructures .left.> guava
-
+runner ..> fxui
+runner ..> restapi
 
 
 component fxui {
@@ -76,10 +83,12 @@ component javafx {
 	}
 }
 
-fxui ..> javafx
+fxui.fxui .right.> javafx
 ```
 
-The following class diagram shows the basic outline of the internal class structure:
+The following class diagram shows the basic outline of the internal class structure. 
+Note that the RestDatabase corresponds with the restapi-module, which is explained in further detail
+in the module's own [README](restapi/README.md):
 
 ```plantuml
 package fxui <<Frame>> {
@@ -268,5 +277,6 @@ to ensure quality criteria are met.
 The goal `jacoco:check` runs as part of this goal.
 * `jacoco:check` - Checks that the code coverage metrics are being met.
 * `jacoco:report` - Generates test coverage report to `target/site/jacoco`.
-* `javafx:run -f fxui/pom.xml` - Run the javafx app.
 * `javadoc:aggregate` - Generate javadocs for the project
+* `exec:java -Dexec.arguments="local"` - Runs the app using a local database for persistence
+* `exec:java -Dexec.arguments="rest"` - Runs the app using a restserver for persistence
