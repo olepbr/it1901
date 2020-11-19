@@ -11,6 +11,7 @@
         <module>core</module>
         <module>fxui</module>
         <module>restapi</module>
+        <module>runner</module>
     </modules>
 
     <properties>
@@ -56,11 +57,21 @@
                     </configuration>
                 </plugin>
 
+                <plugin>
+                  <groupId>org.codehaus.mojo</groupId>
+                  <artifactId>exec-maven-plugin</artifactId>
+                  <version>3.0.0</version>
+                    <configuration>
+                      <mainClass>none</mainClass>
+                      <skip>true</skip>
+                      <executable>java</executable>
+                    </configuration>
+                </plugin>
                 <!-- Running tests -->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M5</version>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <version>3.0.0-M5</version>
                     <configuration>
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     </configuration>

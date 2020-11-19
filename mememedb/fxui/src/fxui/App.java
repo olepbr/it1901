@@ -10,8 +10,15 @@ public class App extends Application {
 
   @Override
   public void start(final Stage primaryStage) throws Exception {
-    final Parent parent = FXMLLoader.load(getClass().getClassLoader().getResource("App.fxml"));
-    primaryStage.setScene(new Scene(parent));
+    FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("App.fxml"));
+    Parent root = loader.load();
+    AppController appController = loader.getController();
+    String arg = null;
+    if (this.getParameters().getRaw().size() > 0) {
+      arg = this.getParameters().getRaw().get(0);
+    }
+    appController.setDatabase(arg);
+    primaryStage.setScene(new Scene(root));
     primaryStage.show();
   }
 
