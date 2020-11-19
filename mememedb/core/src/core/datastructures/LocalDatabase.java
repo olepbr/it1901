@@ -252,9 +252,5 @@ public class LocalDatabase implements DatabaseInterface {
     Collections.sort(comments);
     return comments;
   }
-
- 
-
-  
  
 }
