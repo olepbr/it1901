@@ -13,6 +13,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -176,16 +178,20 @@ public class RestDatabase implements DatabaseInterface {
   }
 
   @Override
-  public Collection<Comment> getComments(String postUUID) {
-    Collection<Comment> comments = null;
+  public List<Comment> getComments(String postUUID) {
+    List<Comment> comments = null;
     try {
       comments =
           mapper
           .readValue(requestHandler("/post/:" + postUUID + "/comment", null, "GET")
-          .body(), new TypeReference<Collection<Comment>>() {});
+          .body(), new TypeReference<List<Comment>>() {});
+          Collections.sort(comments);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
     return comments;
   }
+
+
+
 }

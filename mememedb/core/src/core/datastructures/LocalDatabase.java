@@ -3,8 +3,11 @@ package core.datastructures;
 import core.io.IO;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /** Class that represents all the data in the application. */
@@ -239,8 +242,19 @@ public class LocalDatabase implements DatabaseInterface {
     return posts.getOrDefault(postUUID, null);
   }
 
+  /** 
+   * Fetches comments in a posts and sorts them. 
+   * @param postUUID 
+   */
   @Override
-  public Collection<Comment> getComments(String postUUID) {
-    return posts.getOrDefault(postUUID, null).getComments();
+  public List<Comment> getComments(String postUUID) {
+    List<Comment> comments = new ArrayList<Comment>(posts.getOrDefault(postUUID, null).getComments());
+    Collections.sort(comments);
+    return comments;
   }
+
+ 
+
+  
+ 
 }
