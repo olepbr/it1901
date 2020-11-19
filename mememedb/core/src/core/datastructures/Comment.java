@@ -48,8 +48,8 @@ public class Comment implements Comparable<Comment> {
    * Generates a new Comment from the given paramaters, id is assigned
    * automatically using java's UUID class
    *
-   * @param author the username of the author of the comment
-   * @param text   the text in the comment
+   * @param author the nickname of the author of the comment
+   * @param text the text in the comment
    */
   public Comment(String author, String text) {
     this.text = text;
