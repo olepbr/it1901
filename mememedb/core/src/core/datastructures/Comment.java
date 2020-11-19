@@ -71,8 +71,8 @@ public class Comment implements Comparable<Comment> {
   }
   
   /**
-   * Compares the dates of two comments to be able to sort 
-   * all comments in a post. 
+   * Compares the dates of two comments(using the uuids to break ties) to allow comment sorting.
+   * Only returns equal if the comments are the same object.
    */
   @Override
   public int compareTo(Comment other) {
@@ -88,6 +88,10 @@ public class Comment implements Comparable<Comment> {
     return foo;
   }
 
+  /**
+   * Implements equals(), following convention of implementing equality alongside comparator.
+   * Checks whether the compared objects are the same object.
+   */
   @Override
   public boolean equals(Object other) {
     return this == other;
