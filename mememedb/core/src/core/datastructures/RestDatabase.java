@@ -35,20 +35,33 @@ public class RestDatabase implements DatabaseInterface {
     this.mapper = new ObjectMapper().registerModule(new MememeModule());
   }
 
-  private HttpResponse<String> requestHandler(String path, Object o, String type) {
+  /**
+   * Internal method for generating requests to the REST API/server. Uses the protected modifier
+   * to allow for testing.
+   *
+   * @param path The path to add to the base URI of the server, for instance "/user".
+   * @param o The object to pass in the request, e.g. a Comment, Post or User.
+   * @param type The type of request to make.
+   * @return The response from the server.
+   */
+  protected HttpResponse<String> requestHandler(String path, Object o, String type) {
     try {
       HttpRequest request;
       if (type.equalsIgnoreCase("POST")) {
-        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path)).header("Accept", "application/json")
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+            .header("Accept", "application/json")
             .POST(BodyPublishers.ofString(mapper.writeValueAsString(o))).build();
       } else if (type.equalsIgnoreCase("PUT")) {
-        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path)).header("Accept", "application/json")
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+            .header("Accept", "application/json")
             .PUT(BodyPublishers.ofString(mapper.writeValueAsString(o))).build();
       } else if (type.equalsIgnoreCase("DELETE")) {
-        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path)).header("Accept", "application/json")
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+            .header("Accept", "application/json")
             .DELETE().build();
       } else if (type.equalsIgnoreCase("GET")) {
-        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path)).header("Accept", "application/json")
+        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
+            .header("Accept", "application/json")
             .GET().build();
       } else {
         throw new IllegalArgumentException("Invalid request type");
@@ -91,8 +104,8 @@ public class RestDatabase implements DatabaseInterface {
     Collection<User> userCollection = null;
     try {
       userCollection =
-          mapper.readValue(requestHandler("/user", null, "GET").body(), new TypeReference<Collection<User>>() {
-          });
+          mapper.readValue(requestHandler("/user", null, "GET")
+              .body(), new TypeReference<Collection<User>>() {});
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
@@ -102,7 +115,8 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public Map<String, User> getUserMap() {
     Collection<User> userCollection = getUsers();
-    return userCollection.stream().collect(Collectors.toMap(User::getNickname, Function.identity()));
+    return userCollection.stream()
+        .collect(Collectors.toMap(User::getNickname, Function.identity()));
   }
 
   @Override
@@ -110,8 +124,8 @@ public class RestDatabase implements DatabaseInterface {
     Collection<Post> postCollection = null;
     try {
       postCollection =
-          mapper.readValue(requestHandler("/post", null, "GET").body(), new TypeReference<Collection<Post>>() {
-          });
+          mapper.readValue(requestHandler("/post", null, "GET")
+              .body(), new TypeReference<Collection<Post>>() {});
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
@@ -168,7 +182,7 @@ public class RestDatabase implements DatabaseInterface {
   public User getUser(String nickname) {
     User user = null;
     try {
-      user= mapper
+      user = mapper
           .readValue(requestHandler("/user/:" + nickname, null, "GET")
           .body(), User.class);
     } catch (JsonProcessingException e) {
