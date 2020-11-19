@@ -15,10 +15,6 @@ import java.net.http.HttpResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 /**
  * Provides a class implementing the Database interface that utilises the REST API to acquire data.
  *
@@ -78,7 +74,6 @@ public class RestDatabase implements DatabaseInterface {
   /**
    * Checks if the status code of the supplied response is outside of the interval [200-300),
    * i.e. whether the response results in some kind of error.
-   *
    * @param response The response to check.
    * @return True if no error is detected, false otherwise.
    */
@@ -149,13 +144,6 @@ public class RestDatabase implements DatabaseInterface {
   }
 
   @Override
-  public Map<String, User> getUserMap() {
-    Collection<User> userCollection = getUsers();
-    return userCollection.stream()
-        .collect(Collectors.toMap(User::getNickname, Function.identity()));
-  }
-
-  @Override
   public Collection<Post> getPosts() {
     Collection<Post> postCollection = null;
     HttpResponse<String> response = requestHandler("/post", null, "GET");
@@ -171,12 +159,6 @@ public class RestDatabase implements DatabaseInterface {
       }
     }
     return postCollection;
-  }
-
-  @Override
-  public Map<String, Post> getPostMap() {
-    Collection<Post> postCollection = getPosts();
-    return postCollection.stream().collect(Collectors.toMap(Post::getUUID, Function.identity()));
   }
 
   @Override
@@ -196,7 +178,7 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public Comment getComment(String commentUUID, String postUUID) {
     Comment comment = null;
-    HttpResponse<String> response = requestHandler("/post/:" + postUUID + "/comment/:"
+    HttpResponse<String> response = requestHandler("/post/" + postUUID + "/comment/"
         + commentUUID, null, "GET");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
@@ -213,7 +195,7 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public Post getPost(String postUUID) {
     Post post = null;
-    HttpResponse<String> response = requestHandler("/post/:" + postUUID, null, "GET");
+    HttpResponse<String> response = requestHandler("/post/" + postUUID, null, "GET");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
     } else {
@@ -229,7 +211,7 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public User getUser(String nickname) {
     User user = null;
-    HttpResponse<String> response = requestHandler("/user/:" + nickname, null, "GET");
+    HttpResponse<String> response = requestHandler("/user/" + nickname, null, "GET");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
     } else {
@@ -245,7 +227,7 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public List<Comment> getComments(String postUUID) {
     List<Comment> comments = null;
-    HttpResponse<String> response = requestHandler("/post/:" + postUUID + "/comment", null, "GET");
+    HttpResponse<String> response = requestHandler("/post/" + postUUID + "/comment", null, "GET");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
     } else {
