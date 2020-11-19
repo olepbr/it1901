@@ -19,13 +19,14 @@ public class Runner {
    */
   public static void main(String[] args) {
     if (args.length == 0) {
+      //launch app without persistence
       Application.launch(App.class);
-    } else if (args[0].equals("rest")) {
-      System.out.println("hello, running rest");
+    } else if (args[0].equalsIgnoreCase("rest")) {
+      //launch app with REST-API
       Server.main(args);
       Application.launch(App.class, args);
     } else {
-      System.out.println("hello, not running rest");
+      //lanch app with local persistence
       Application.launch(App.class, args);
     }
 
