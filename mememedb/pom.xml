@@ -11,6 +11,7 @@
         <module>core</module>
         <module>fxui</module>
         <module>restapi</module>
+        <module>report</module>
     </modules>
 
     <properties>
