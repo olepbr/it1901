@@ -136,14 +136,14 @@ public class LocalDatabaseTest {
   }
 
   @Test
-  public void TestUsernameExists() {
+  public void TestNicknameExists() {
     final IO mockIO = mock(IO.class);
     doReturn(getFilledMock()).when(mockIO).getDatabase();
     LocalDatabase database = new LocalDatabase(mockIO);
-    assertEquals(false, database.usernameExists("notARealUser"),
-        "Error in username availability, username should not exist yet");
-    assertEquals(true, database.usernameExists("berjon29"),
-        "Error in username availability, username should already exist");
+    assertEquals(false, database.nicknameExists("notARealUser"),
+        "Error in nickname availability, nickname should not exist yet");
+    assertEquals(true, database.nicknameExists("berjon29"),
+        "Error in nickname availability, nickname should already exist");
   }
 
   @Test

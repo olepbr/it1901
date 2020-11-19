@@ -125,8 +125,8 @@ public class RestDatabase implements DatabaseInterface {
   }
 
   @Override
-  public User tryLogin(String username, String password) {
-    User user = getUserMap().getOrDefault(username, null);
+  public User tryLogin(String nickname, String password) {
+    User user = getUserMap().getOrDefault(nickname, null);
     if (user != null && user.getPassword().equals(User.hashPassword(password))) {
       return user;
     }
@@ -134,8 +134,8 @@ public class RestDatabase implements DatabaseInterface {
   }
 
   @Override
-  public boolean usernameExists(String username) {
-    return getUserMap().containsKey(username);
+  public boolean nicknameExists(String nickname) {
+    return getUserMap().containsKey(nickname);
   }
 
   @Override

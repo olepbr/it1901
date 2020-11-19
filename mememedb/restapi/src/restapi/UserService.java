@@ -65,9 +65,9 @@ public class UserService {
       response.status(HTTP_INTERNAL_ERROR);
       return "{\"message\": \"\", \"error\": \"Json Processing Error\"}";
     }
-    if (Server.database.usernameExists(user.getNickname())) {
+    if (Server.database.nicknameExists(user.getNickname())) {
       response.status(HTTP_CONFLICT);
-      return "{\"message\": \"\", \"error\": \"Username allready exists\"}";
+      return "{\"message\": \"\", \"error\": \"Nickname already exists\"}";
     } else {
       Server.database.addUser(user);
       response.status(HTTP_OK);
@@ -94,7 +94,7 @@ public class UserService {
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
         response.status(HTTP_INTERNAL_ERROR);
-        return "{\"message\": \"\", \"error\": \"Username allready exists\"}";
+        return "{\"message\": \"\", \"error\": \"Nickname already exists\"}";
       }
     } else {
       response.status(HTTP_NOT_FOUND);

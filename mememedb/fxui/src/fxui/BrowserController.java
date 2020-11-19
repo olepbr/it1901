@@ -32,7 +32,7 @@ public class BrowserController {
   @FXML private TextField inputTextField;
   @FXML private BorderPane borderPane;
   @FXML private Label imgSelectorLabel;
-  @FXML private Label username;
+  @FXML private Label nickname;
 
   @FXML
   public void initialize() {}
@@ -62,7 +62,7 @@ public class BrowserController {
    */
   public void setActiveUser(User user) {
     this.activeUser = user;
-    username.setText(user.getNickname());
+    nickname.setText(user.getNickname());
   }
 
   /** Removes old posts from browser, fetches and displays updated list of posts. */
