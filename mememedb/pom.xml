@@ -10,10 +10,9 @@
     <modules>
         <module>core</module>
         <module>fxui</module>
-        <!--<module>restapi</module>
-        <module>restserver</module>-->
+        <module>restapi</module>
         <module>runner</module>
-      </modules>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

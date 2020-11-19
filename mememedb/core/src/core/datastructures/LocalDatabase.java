@@ -3,8 +3,11 @@ package core.datastructures;
 import core.io.IO;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /** Class that represents all the data in the application. */
@@ -49,7 +52,7 @@ public class LocalDatabase implements DatabaseInterface {
    * Automatically updates storage.
    *
    * @param text The text belonging to the comment.
-   * @param owner The username of the user that made the comment.
+   * @param owner The nickname of the user that made the comment.
    * @param postUUID The UUID of the post that the comment belongs to.
    */
   public void newComment(String text, String owner, String postUUID) {
@@ -104,8 +107,8 @@ public class LocalDatabase implements DatabaseInterface {
    *                               the database.
    */
   public void newUser(String name, String nickname, String email, String password) {
-    if (usernameExists(nickname)) {
-      throw new IllegalStateException("Username already exists in database!");
+    if (nicknameExists(nickname)) {
+      throw new IllegalStateException("Nickname already exists in database!");
     } else {
       User user = new User(name, nickname, email, password);
       users.put(nickname, user);
@@ -133,9 +136,9 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Fetches the mapping between users and usernames.
+   * Fetches the mapping between users and nicknames.
    *
-   * @return A map mapping users to their usernames
+   * @return A map mapping users to their nicknames
    */
   public Map<String, User> getUserMap() {
     return users;
@@ -162,12 +165,12 @@ public class LocalDatabase implements DatabaseInterface {
   /**
    * Attempts to find a user in the database with the given information.
    *
-   * @param username Username or email of the user
+   * @param nickname Nickname or email of the user
    * @param password The password of the User
    * @return User that logged on if it exists, null if no such user exists
    */
-  public User tryLogin(String username, String password) {
-    User user = users.getOrDefault(username, null);
+  public User tryLogin(String nickname, String password) {
+    User user = users.getOrDefault(nickname, null);
     if (user != null && user.getPassword().equals(User.hashPassword(password))) {
       return user;
     }
@@ -175,13 +178,13 @@ public class LocalDatabase implements DatabaseInterface {
   }
 
   /**
-   * Checks if the input username already exists in the database.
+   * Checks if the input nickname already exists in the database.
    *
-   * @param username The username to check
-   * @return true if the username exists in the database
+   * @param nickname The nickname to check
+   * @return true if the nickname exists in the database
    */
-  public boolean usernameExists(String username) {
-    boolean exists = (users.getOrDefault(username, null) != null);
+  public boolean nicknameExists(String nickname) {
+    boolean exists = (users.getOrDefault(nickname, null) != null);
     return exists;
   }
 
@@ -239,8 +242,15 @@ public class LocalDatabase implements DatabaseInterface {
     return posts.getOrDefault(postUUID, null);
   }
 
+  /** 
+   * Fetches comments in a posts and sorts them. 
+   * @param postUUID 
+   */
   @Override
-  public Collection<Comment> getComments(String postUUID) {
-    return posts.getOrDefault(postUUID, null).getComments();
+  public List<Comment> getComments(String postUUID) {
+    List<Comment> comments = new ArrayList<Comment>(posts.getOrDefault(postUUID, null).getComments());
+    Collections.sort(comments);
+    return comments;
   }
+ 
 }

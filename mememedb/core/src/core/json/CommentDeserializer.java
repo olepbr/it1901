@@ -12,8 +12,8 @@ import core.datastructures.Comment;
 import java.io.IOException;
 
 /**
- * Class for deserializing Comment objects.
- * Format: { "uuid": "...", "author": "...", "text": "..." }
+ * Class for deserializing Comment objects. Format: { "uuid": "...", "author": "...", "text": "..."
+ * }
  *
  * @author Jostein Bakkevig
  */
@@ -47,6 +47,10 @@ class CommentDeserializer extends JsonDeserializer<Comment> {
       JsonNode captionNode = objectNode.get("text");
       if (captionNode instanceof TextNode) {
         comment.setText(((TextNode) captionNode).asText());
+      }
+      JsonNode dateNode = objectNode.get("date");
+      if (dateNode instanceof TextNode) {
+        comment.setDate(((TextNode) dateNode).asText());
       }
       return comment;
     }
