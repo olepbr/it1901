@@ -2,7 +2,6 @@ package fxui;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
 
 import java.io.File;
 
@@ -16,19 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.image.ImageView;
-
-
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.base.WindowMatchers;
-
-import core.datastructures.LocalDatabase;
-import core.io.IO;
-
 import core.datastructures.LocalDatabase;
 
 public class AppTest extends ApplicationTest {
@@ -36,7 +24,6 @@ public class AppTest extends ApplicationTest {
   private LocalDatabase emptyDatabase = new LocalDatabase();
   private Parent parent;
   private AppController controller;
-  private LoginController loginController;
   private BrowserController browserController;
 
   @Override
@@ -115,7 +102,5 @@ public class AppTest extends ApplicationTest {
     final Button commentButton = (Button) parent2.lookup("#commentButton");
     clickOn(commentInput).write("Haha this is such a cool animal right??");
     clickOn(commentButton);
-    
   }
-  
 }
