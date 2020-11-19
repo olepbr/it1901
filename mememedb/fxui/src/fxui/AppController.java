@@ -37,6 +37,18 @@ public class AppController {
     }
   }
 
+  /** Help method for the AppTest.
+   *  Sets the specific databaseInterface for the ui.
+   *
+   * @param database The DatabaseInterface to use
+   */
+  public void setDatabase(DatabaseInterface database) {
+    this.database = database;
+    if (child instanceof LoginController) {
+      ((LoginController) child).setDatabase(database);
+    }
+  }
+
   public Object getChild() {
     return child;
   }
@@ -69,17 +81,6 @@ public class AppController {
     }
   }
 
-  /** Help method for the AppTest.
-   *  Sets the databaseInterface for the ui.
-   *
-   * @param database The DatabaseInterface to use
-   */
-  public void setDatabase(DatabaseInterface database) {
-    this.database = database;
-    if (child instanceof LoginController) {
-      ((LoginController) child).setDatabase(database);
-    }
-  }
 
   /** Clears active User, and returns to login ui. */
   public void handleLogOut() {
