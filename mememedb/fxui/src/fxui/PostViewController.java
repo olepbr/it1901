@@ -63,7 +63,7 @@ public class PostViewController {
   public void addComment(){
     String commentText = commentInput.getText();
     if(!(commentText == null)){
-      database.newComment(commentText, activeUser.getNickname(), post.getUUID(), LocalDateTime.now().toString());
+      database.newComment(commentText, activeUser.getNickname(), post.getUUID());
       fetchComments();
     } else {
       errorLabel.setText("Cannot post an empty comment");
@@ -72,11 +72,11 @@ public class PostViewController {
   }
 
   /**
-   * Fetches comments from daabase and adds them to a database
+   * Fetches comments from database and adds them to a database
    */
 
   public void fetchComments(){
-    ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getCommentList(post.getUUID()).toString().replace("[", "").replace("]", ""));
+    ObservableList<String> observableCommentList = FXCollections.observableArrayList(database.getComments(post.getUUID()).toString().replace("[", "").replace("]", ""));
     commentListView.setItems(observableCommentList);
     commentInput.setText(null);
   }

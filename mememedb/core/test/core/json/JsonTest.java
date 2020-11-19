@@ -2,8 +2,6 @@ package core.json;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -61,7 +59,7 @@ public class JsonTest {
 
   @Test
   public void testCommentSerializer() {
-    Comment comment = new Comment("xXx_gertrude_xXx", "haha, i like this!", LocalDateTime.now().toString());
+    Comment comment = new Comment("xXx_gertrude_xXx", "haha, i like this!");
 
     try {
       String json = mapper.writeValueAsString(comment);
@@ -86,7 +84,7 @@ public class JsonTest {
     Post post2 = new Post("berjon67", "This is also an image", "someotherimage");
     database.addPost(post1);
     database.addPost(post2);
-    post1.addComment(new Comment("imthejahnman", "haha, i like this", LocalDateTime.now().toString()));
+    post1.addComment(new Comment("imthejahnman", "haha, i like this"));
     
     try {
       String json = mapper.writeValueAsString(database);
