@@ -16,6 +16,9 @@ public class DatabaseFactory {
    *     </ul>
    */
   public DatabaseInterface getDatabase(String databaseType) {
+    if (databaseType == null) {
+      return new LocalDatabase();
+    }
     if (databaseType.equalsIgnoreCase("rest")) {
       return new RestDatabase("http://localhost:8000");
     } else if (databaseType.equalsIgnoreCase("local")) {
