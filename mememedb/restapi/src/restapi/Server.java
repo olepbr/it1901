@@ -21,12 +21,12 @@ public class Server {
   }
 
   // Set up database
-  protected static void setupDatabase() {
+  public static void setupDatabase() {
     LocalIO io = new LocalIO();
     setDatabase(new LocalDatabase(io));
   }
 
-  protected static void setupServer() {
+  public static void setupServer() {
     // Configure server
     port(8080);
 
@@ -37,7 +37,7 @@ public class Server {
     awaitInitialization();
   }
 
-  protected static void shutdownServer() {
+  public static void shutdownServer() {
     stop();
   }
 
