@@ -87,7 +87,7 @@ fxui.fxui .right.> javafx
 ```
 
 The following class diagram shows the basic outline of the internal class structure. 
-Note that the RestDatabase corresponds with the restapi-module, which is explained in further detail
+Note that the RestDatabase corresponds with the restapi module, which is explained in further detail
 in the module's own [README](restapi/README.md):
 
 ```plantuml

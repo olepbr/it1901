@@ -115,7 +115,7 @@ Responds with the following json structure:
 
 Creates a new user in the database.
 
-If the username already exists, an error is returned.
+If the nickname already exists, an error is returned.
 
 Expects a body with the following structure:
 
