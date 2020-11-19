@@ -6,8 +6,12 @@ public class Runner {
     if(args.length == 0) {
       Application.launch(App.class);
     }
+    else if(args[0] == "rest") {
+      //TODO: start server
+      Application.launch(App.class, args);
+    }
     else {
-      System.out.println("running" + args[0]);
+      Application.launch(App.class, args);
     }
 
   }
