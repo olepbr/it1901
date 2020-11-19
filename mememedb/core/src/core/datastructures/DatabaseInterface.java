@@ -3,6 +3,7 @@ package core.datastructures;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public interface DatabaseInterface {
@@ -28,9 +29,9 @@ public interface DatabaseInterface {
 
   Map<String, Post> getPostMap();
 
-  Collection<Comment> getComments(String postUUID);
+  List<Comment> getComments(String postUUID);
 
-  User tryLogin(String username, String password);
+  User tryLogin(String nickname, String password);
 
-  boolean usernameExists(String username);
+  boolean nicknameExists(String nickname);
 }

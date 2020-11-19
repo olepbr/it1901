@@ -48,6 +48,10 @@ class CommentDeserializer extends JsonDeserializer<Comment> {
       if (captionNode instanceof TextNode) {
         comment.setText(((TextNode) captionNode).asText());
       }
+      JsonNode dateNode = objectNode.get("date");
+      if (captionNode instanceof TextNode) {
+        comment.setDate(((TextNode) dateNode).asText());
+      }
       return comment;
     }
     return null;

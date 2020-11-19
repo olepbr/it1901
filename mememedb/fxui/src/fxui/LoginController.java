@@ -23,7 +23,7 @@ public class LoginController {
 
   // login
   @FXML private AnchorPane loginAnchorPane;
-  @FXML private TextField loginUsername;
+  @FXML private TextField loginNickname;
   @FXML private PasswordField loginPasswordText;
   @FXML private Button loginButton;
   @FXML private Button registerButton;
@@ -33,11 +33,11 @@ public class LoginController {
   @FXML private AnchorPane registerAnchorPane;
   @FXML private TextField nameTextField;
   @FXML private TextField emailTextField;
-  @FXML private TextField usernameTextField;
+  @FXML private TextField nicknameTextField;
   @FXML private PasswordField passwordTextField;
   @FXML private Button createUserButton;
   @FXML private Label nameWarning;
-  @FXML private Label usernameWarning;
+  @FXML private Label nicknameWarning;
   @FXML private Label emailWarning;
   @FXML private Label passwordWarning;
 
@@ -59,10 +59,10 @@ public class LoginController {
   /** Logs in a user when the correct email and password combo is used. */
   @FXML
   private void login() {
-    String username = loginUsername.getText();
+    String nickname = loginNickname.getText();
     String password = loginPasswordText.getText();
-    if (database.tryLogin(username, password) != null) {
-      parent.handleLogin(database.tryLogin(username, password));
+    if (database.tryLogin(nickname, password) != null) {
+      parent.handleLogin(database.tryLogin(nickname, password));
     } else {
       loginWarning.setText("Password and email do not match!");
     }
@@ -83,19 +83,19 @@ public class LoginController {
   private void createUser() {
     String email = emailTextField.getText();
     String name = nameTextField.getText();
-    String username = usernameTextField.getText();
+    String nickname = nicknameTextField.getText();
     String password = passwordTextField.getText();
     if (name.isEmpty()) {
       nameWarning.setText("Please put your full name");
     } else if (!EmailValidator.getInstance().isValid(email)) {
       emailWarning.setText("Please put a valid email address");
-    } else if (database.usernameExists(username)) {
-      usernameWarning.setText("Username is taken or not valid");
+    } else if (database.nicknameExists(nickname)) {
+      nicknameWarning.setText("Nickname is taken or not valid");
     } else if (password.length() < 8) {
       passwordWarning.setText("Password must contain at least 8 characters");
     } else {
-      database.newUser(name, username, email, password);
-      User user = database.tryLogin(username, password);
+      database.newUser(name, nickname, email, password);
+      User user = database.tryLogin(nickname, password);
       parent.handleLogin(user);
     }
   }

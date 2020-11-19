@@ -68,14 +68,14 @@ public class AppTest extends ApplicationTest {
 
     final TextField nameTextField = (TextField) parent.lookup("#nameTextField");
     final TextField emailTextField = (TextField) parent.lookup("#emailTextField");
-    final TextField usernameTextField = (TextField) parent.lookup("#usernameTextField");
+    final TextField nicknameTextField = (TextField) parent.lookup("#nicknameTextField");
     final PasswordField passwordTextField = (PasswordField) parent.lookup("#passwordTextField");
 
     final Button createUserButton = (Button) parent.lookup("#createUserButton");
 
     clickOn(nameTextField).write("Jostein Bakkevig");
     clickOn(emailTextField).write("jostbak@stud.ntnu.no");
-    clickOn(usernameTextField).write("HestStein");
+    clickOn(nicknameTextField).write("HestStein");
     clickOn(passwordTextField).write("strawberryjam2");
 
     clickOn(createUserButton);
@@ -89,9 +89,9 @@ public class AppTest extends ApplicationTest {
     /*Test login */
 
     final Button loginButton = (Button) parent.lookup("#loginButton");
-    final TextField loginUsername = (TextField) parent.lookup("#loginUsername");
+    final TextField loginNickname = (TextField) parent.lookup("#loginNickname");
     final PasswordField loginPasswordText = (PasswordField) parent.lookup("#loginPasswordText");
-    clickOn(loginUsername).write("HestStein");
+    clickOn(loginNickname).write("HestStein");
     clickOn(loginPasswordText).write("strawberryjam2");
     clickOn(loginButton);
 
@@ -102,8 +102,6 @@ public class AppTest extends ApplicationTest {
     System.out.println(inputFile.getAbsolutePath());
     browserController = ((BrowserController) controller.getChild());
     browserController.setSelectedImage(inputFile);
-    final Button addContent  = (Button) parent.lookup("#addContent");
-    final TextField inputTextField = (TextField) parent.lookup("#inputTextField");
     clickOn("#inputTextField");
     write("This is a very nice animal");
     clickOn("#addContent");

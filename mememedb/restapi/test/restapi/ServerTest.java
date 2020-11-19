@@ -117,7 +117,7 @@ public class ServerTest {
   @Test
   public void createUserTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(false);
+    when(fakeDatabase.nicknameExists("EdgyBoi")).thenReturn(false);
     Server.setDatabase(fakeDatabase);
 
     URL url = new URL(baseURL + "/user");
@@ -128,11 +128,11 @@ public class ServerTest {
     Assertions.assertTrue(responseCode == HTTP_OK);
   }
 
-  // Test if the server responds correctly to a username conflict
+  // Test if the server responds correctly to a nickname conflict
   @Test
   public void createConflictUserTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
+    when(fakeDatabase.nicknameExists("EdgyBoi")).thenReturn(true);
     Server.setDatabase(fakeDatabase);
 
     URL url = new URL(baseURL + "/user");
@@ -249,7 +249,7 @@ public class ServerTest {
   @Test
   public void createPostTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
+    when(fakeDatabase.nicknameExists("EdgyBoi")).thenReturn(true);
     Server.setDatabase(fakeDatabase);
 
     URL url = new URL(baseURL + "/post");
@@ -263,7 +263,7 @@ public class ServerTest {
   @Test
   public void createPostNonExistingUserTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(false);
+    when(fakeDatabase.nicknameExists("EdgyBoi")).thenReturn(false);
     Server.setDatabase(fakeDatabase);
 
     URL url = new URL(baseURL + "/post");
@@ -366,7 +366,7 @@ public class ServerTest {
   @Test
   public void createCommentTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
+    when(fakeDatabase.nicknameExists("EdgyBoi")).thenReturn(true);
     when(fakeDatabase.getPost(testPost.getUUID())).thenReturn(testPost);
     Server.setDatabase(fakeDatabase);
 
@@ -381,7 +381,7 @@ public class ServerTest {
   @Test
   public void createCommentNonExistingPostTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
+    when(fakeDatabase.nicknameExists("EdgyBoi")).thenReturn(true);
     Server.setDatabase(fakeDatabase);
 
     URL url = new URL(baseURL + "/post/somenonsense/comment");
@@ -395,7 +395,7 @@ public class ServerTest {
   @Test
   public void createCommentNonExistingUserTest() throws IOException {
     LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(false);
+    when(fakeDatabase.nicknameExists("EdgyBoi")).thenReturn(false);
     when(fakeDatabase.getPost(testPost.getUUID())).thenReturn(testPost);
     Server.setDatabase(fakeDatabase);
 

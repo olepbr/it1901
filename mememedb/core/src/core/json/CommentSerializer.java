@@ -21,6 +21,7 @@ class CommentSerializer extends JsonSerializer<Comment> {
     jsonGen.writeStringField("uuid", comment.getUUID());
     jsonGen.writeStringField("author", comment.getAuthor());
     jsonGen.writeStringField("text", comment.getText());
+    jsonGen.writeStringField("date", comment.getDate());
     jsonGen.writeEndObject();
   }
 }

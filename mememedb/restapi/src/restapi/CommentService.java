@@ -64,7 +64,7 @@ public class CommentService {
     if (Server.database.getPost(request.params("postID")) != null) {
       try {
         Comment comment = mapper.readValue(request.body(), Comment.class);
-        if (Server.database.usernameExists(comment.getAuthor())) {
+        if (Server.database.nicknameExists(comment.getAuthor())) {
           Server.database.newComment(
               comment.getText(), comment.getAuthor(), request.params("postID"));
           response.status(HTTP_OK);
