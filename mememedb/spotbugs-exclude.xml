@@ -6,5 +6,8 @@
   <Match>
     <Bug code="URF,UUF" />
   </Match>
+  <Match>
+    <Bug pattern="MS_PKGPROTECT" />
+  </Match>
 
   </FindBugsFilter>
