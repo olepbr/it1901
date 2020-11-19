@@ -122,7 +122,15 @@ public class ServerTest {
 
     URL url = new URL(baseURL + "/user");
     String userString =
-        "{\"nickname\":\"EdgyBoi\", \"name\":\"Ola Nordmann\", \"email\":\"ola@nordmann.no\", \"hashedPassword\":\"lisdvilrhngvliuv\"}";
+        "{\"nickname\":\""
+            + testUser.getNickname()
+            + "\", \"name\":\""
+            + testUser.getName()
+            + "\", \"email\":\""
+            + testUser.getNickname()
+            + "\", \"hashedPassword\":\""
+            + testUser.getPassword()
+            + "\"}";
     HttpURLConnection connection = request("POST", url, userString);
     int responseCode = connection.getResponseCode();
     Assertions.assertTrue(responseCode == HTTP_OK);
@@ -137,7 +145,15 @@ public class ServerTest {
 
     URL url = new URL(baseURL + "/user");
     String userString =
-        "{\"nickname\":\"EdgyBoi\", \"name\":\"Ola Nordmann\", \"email\":\"ola@nordmann.no\", \"hashedPassword\":\"lisdvilrhngvliuv\"}";
+        "{\"nickname\":\""
+            + testUser.getNickname()
+            + "\", \"name\":\""
+            + testUser.getName()
+            + "\", \"email\":\""
+            + testUser.getNickname()
+            + "\", \"hashedPassword\":\""
+            + testUser.getPassword()
+            + "\"}";
     HttpURLConnection connection = request("POST", url, userString);
     int responseCode = connection.getResponseCode();
     Assertions.assertTrue(responseCode == HTTP_CONFLICT);
