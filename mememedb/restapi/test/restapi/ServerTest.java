@@ -109,7 +109,7 @@ public class ServerTest {
     URL url = new URL(baseURL + "/");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
   }
 
   /* Test User */
@@ -166,9 +166,9 @@ public class ServerTest {
     URL url = new URL(baseURL + "/user/" + testUser.getNickname());
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
     Assertions.assertEquals(
-        mapper.readValue(responseToString(connection), User.class).toString(), testUser.toString());
+        testUser.toString(), mapper.readValue(responseToString(connection), User.class).toString());
   }
 
   // Test if the server responds correctly to request for non-existing user
@@ -180,7 +180,7 @@ public class ServerTest {
     URL url = new URL(baseURL + "/user/" + testUser.getNickname());
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   // Test if the server can retreive all users
@@ -193,10 +193,10 @@ public class ServerTest {
     URL url = new URL(baseURL + "/user");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
     List<User> users =
         mapper.readValue(responseToString(connection), new TypeReference<ArrayList<User>>() {});
-    Assertions.assertEquals(users.toString(), testUsers.toString());
+    Assertions.assertEquals(testUsers.toString(), users.toString());
   }
 
   /* Test Post */
@@ -214,7 +214,7 @@ public class ServerTest {
     Assertions.assertEquals(responseCode, HTTP_OK);
     List<Post> posts =
         mapper.readValue(responseToString(connection), new TypeReference<ArrayList<Post>>() {});
-    Assertions.assertEquals(posts.toString(), testPosts.toString());
+    Assertions.assertEquals(testPosts.toString(), posts.toString());
   }
 
   // Test if the server can retreive a post
@@ -227,9 +227,9 @@ public class ServerTest {
     URL url = new URL(baseURL + "/post/" + testPost.getUUID());
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
     Assertions.assertEquals(
-        mapper.readValue(responseToString(connection), Post.class).toString(), testPost.toString());
+        testPost.toString(), mapper.readValue(responseToString(connection), Post.class).toString());
   }
 
   // Test if the server responds correctly to request for non-existing post
@@ -241,7 +241,7 @@ public class ServerTest {
     URL url = new URL(baseURL + "/post/somenonsense");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   /* POST */
@@ -256,7 +256,7 @@ public class ServerTest {
     String body = "{\"owner\": \"EdgyBoi\", \"caption\": \"Funny Picture\", \"image\": \"ASDF\"}";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
   }
 
   // Test if the server responds correctly to request from non-existing user
@@ -270,7 +270,7 @@ public class ServerTest {
     String body = "{\"owner\": \"EdgyBoi\", \"caption\": \"Funny Picture\", \"image\": \"ASDF\"}";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   // Test if the server rejects garbage input
@@ -283,7 +283,7 @@ public class ServerTest {
     String body = "{ bad json";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_INTERNAL_ERROR);
+    Assertions.assertEquals(HTTP_INTERNAL_ERROR, responseCode);
   }
 
   /* Test Comment */
@@ -301,9 +301,9 @@ public class ServerTest {
         new URL(baseURL + "/post/" + testPost.getUUID() + "/comment/" + testComment.getUUID());
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
     Comment comment = mapper.readValue(responseToString(connection), Comment.class);
-    Assertions.assertEquals(testComment.toString(), comment.toString());
+    Assertions.assertEquals(comment.toString(), testComment.toString());
   }
 
   // Test if the server responds correctly to request for non-existing post
@@ -315,7 +315,7 @@ public class ServerTest {
     URL url = new URL(baseURL + "/post/somenonsense/comment/" + testComment.getUUID());
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   // Test if the server responds correctly to request for non-existing comment
@@ -328,7 +328,7 @@ public class ServerTest {
     URL url = new URL(baseURL + "/post/" + testPost.getUUID() + "/comment/somenonsense");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   // Test if the server can retreive all comments for a post
@@ -342,10 +342,10 @@ public class ServerTest {
     URL url = new URL(baseURL + "/post/" + testPost.getUUID() + "/comment");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
     List<Comment> comments =
         mapper.readValue(responseToString(connection), new TypeReference<ArrayList<Comment>>() {});
-    Assertions.assertEquals(comments.toString(), testComments.toString());
+    Assertions.assertEquals(testComments.toString(), comments.toString());
   }
 
   // Test if the server responds correctly to request for non-existing post
@@ -358,7 +358,7 @@ public class ServerTest {
     URL url = new URL(baseURL + "/post/somenonsense/comment");
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   /* POST */
@@ -374,7 +374,7 @@ public class ServerTest {
     String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
+    Assertions.assertEquals(HTTP_OK, responseCode);
   }
 
   // Test if the server responds correctly to request on non-existing post
@@ -388,7 +388,7 @@ public class ServerTest {
     String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   // Test if the server responds correctly to request from non-existing user
@@ -403,7 +403,7 @@ public class ServerTest {
     String body = "{\"author\": \"EdgyBoi\", \"text\": \"Picture is indeed funny\"}";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+    Assertions.assertEquals(HTTP_NOT_FOUND, responseCode);
   }
 
   // Test if the server rejects garbage input
@@ -417,6 +417,6 @@ public class ServerTest {
     String body = "{ bad json";
     HttpURLConnection connection = request("POST", url, body);
     int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_INTERNAL_ERROR);
+    Assertions.assertEquals(HTTP_INTERNAL_ERROR, responseCode);
   }
 }
