@@ -75,9 +75,21 @@ public class Comment implements Comparable<Comment> {
    */
   @Override
   public int compareTo(Comment other) {
+    if(this.equals(other)){
+      return 0;
+    }
     LocalDateTime time1 = LocalDateTime.parse(this.getDate());
     LocalDateTime time2 = LocalDateTime.parse(other.getDate());
-    return time1.compareTo(time2);
+    int foo = time1.compareTo(time2);
+    if(foo == 0){
+      return this.getUUID().compareTo(other.getUUID());
+    }
+    return foo;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other;
   }
 
  
