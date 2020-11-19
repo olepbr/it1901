@@ -12,6 +12,7 @@
         <module>fxui</module>
         <module>restapi</module>
         <module>runner</module>
+        <module>report</module>
     </modules>
 
     <properties>
