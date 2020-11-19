@@ -1,16 +1,19 @@
 package restapi;
 
-import static java.net.HttpURLConnection.HTTP_CONFLICT;
-import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
-import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
-import static java.net.HttpURLConnection.HTTP_OK;
-import static org.mockito.Mockito.*;
+import static java.net.HttpURLConnection.HTTP_CONFLICT; // 409
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR; // 500
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND; // 404
+import static java.net.HttpURLConnection.HTTP_OK; // 200
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.Comment;
 import core.datastructures.LocalDatabase;
 import core.datastructures.Post;
 import core.datastructures.User;
+import core.json.MememeModule;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +22,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,9 +39,9 @@ public class ServerTest {
   // Test data
   private static User testUser =
       new User("Ola Nordmann", "EdgyBoi", "ola@nordmann.no", "strongpassword123");
-  private static List<User> testUsers = Arrays.asList(testUser);
+  private static List<User> testUsers = new ArrayList<User>();
   private static Post testPost = new Post("EdgyBoi", "This picture is funny", "ASDF");
-  private static List<Post> testPosts = Arrays.asList(testPost);
+  private static List<Post> testPosts = new ArrayList<Post>();
   private static Comment testComment = new Comment("EdgyBoi", "Yes, this picture is very funny");
   private static List<Comment> testComments = Arrays.asList(testComment);
 
@@ -84,6 +88,9 @@ public class ServerTest {
   @BeforeAll
   public static void setup() {
     Server.setupServer();
+    mapper.registerModule(new MememeModule());
+    testUsers.add(testUser);
+    testPosts.add(testPost);
   }
 
   // Stop the server after the tests.
@@ -105,7 +112,7 @@ public class ServerTest {
     Assertions.assertEquals(responseCode, HTTP_OK);
   }
 
-  /* Test user */
+  /* Test User */
   // Test if the server accepts a new user
   @Test
   public void createUserTest() throws IOException {
@@ -160,9 +167,8 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
-    // FIXME: Password is not stored correctly
-    // Assertions.assertEquals(mapper.readValue(responseToString(connection), User.class),
-    // testUser);
+    Assertions.assertEquals(
+        mapper.readValue(responseToString(connection), User.class).toString(), testUser.toString());
   }
 
   // Test if the server responds correctly to request for non-existing user
@@ -188,37 +194,13 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
+    List<User> users =
+        mapper.readValue(responseToString(connection), new TypeReference<ArrayList<User>>() {});
+    Assertions.assertEquals(users.toString(), testUsers.toString());
   }
 
-  /* Test post */
+  /* Test Post */
   /* GET */
-  // Test if the server accepts a new post
-  @Test
-  public void createPostTest() throws IOException {
-    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
-    Server.setDatabase(fakeDatabase);
-
-    URL url = new URL(baseURL + "/post");
-    String body = "{\"owner\": \"EdgyBoi\", \"caption\": \"Funny Picture\", \"image\": \"ASDF\"}";
-    HttpURLConnection connection = request("POST", url, body);
-    int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_OK);
-  }
-
-  // Test if the server rejects garbage input
-  @Test
-  public void createBadPostTest() throws IOException {
-    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
-    Server.setDatabase(fakeDatabase);
-
-    URL url = new URL(baseURL + "/post");
-    String body = "{ bad json";
-    HttpURLConnection connection = request("POST", url, body);
-    int responseCode = connection.getResponseCode();
-    Assertions.assertEquals(responseCode, HTTP_INTERNAL_ERROR);
-  }
-
   // Test if the server can retreive all posts
   @Test
   public void getAllPostTest() throws IOException {
@@ -230,6 +212,9 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
+    List<Post> posts =
+        mapper.readValue(responseToString(connection), new TypeReference<ArrayList<Post>>() {});
+    Assertions.assertEquals(posts.toString(), testPosts.toString());
   }
 
   // Test if the server can retreive a post
@@ -243,8 +228,8 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
-    // FIXME: text != caption
-    Assertions.assertEquals(mapper.readValue(responseToString(connection), Post.class), testPost);
+    Assertions.assertEquals(
+        mapper.readValue(responseToString(connection), Post.class).toString(), testPost.toString());
   }
 
   // Test if the server responds correctly to request for non-existing post
@@ -260,8 +245,48 @@ public class ServerTest {
   }
 
   /* POST */
+  // Test if the server accepts a new post
+  @Test
+  public void createPostTest() throws IOException {
+    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(true);
+    Server.setDatabase(fakeDatabase);
 
-  /* Test comment */
+    URL url = new URL(baseURL + "/post");
+    String body = "{\"owner\": \"EdgyBoi\", \"caption\": \"Funny Picture\", \"image\": \"ASDF\"}";
+    HttpURLConnection connection = request("POST", url, body);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_OK);
+  }
+
+  // Test if the server responds correctly to request from non-existing user
+  @Test
+  public void createPostNonExistingUserTest() throws IOException {
+    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    when(fakeDatabase.usernameExists("EdgyBoi")).thenReturn(false);
+    Server.setDatabase(fakeDatabase);
+
+    URL url = new URL(baseURL + "/post");
+    String body = "{\"owner\": \"EdgyBoi\", \"caption\": \"Funny Picture\", \"image\": \"ASDF\"}";
+    HttpURLConnection connection = request("POST", url, body);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_NOT_FOUND);
+  }
+
+  // Test if the server rejects garbage input
+  @Test
+  public void createBadPostTest() throws IOException {
+    LocalDatabase fakeDatabase = mock(LocalDatabase.class);
+    Server.setDatabase(fakeDatabase);
+
+    URL url = new URL(baseURL + "/post");
+    String body = "{ bad json";
+    HttpURLConnection connection = request("POST", url, body);
+    int responseCode = connection.getResponseCode();
+    Assertions.assertEquals(responseCode, HTTP_INTERNAL_ERROR);
+  }
+
+  /* Test Comment */
   /* GET */
   // Test if the server can retreive a comment
   @Test
@@ -277,6 +302,8 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
+    Comment comment = mapper.readValue(responseToString(connection), Comment.class);
+    Assertions.assertEquals(testComment.toString(), comment.toString());
   }
 
   // Test if the server responds correctly to request for non-existing post
@@ -316,6 +343,9 @@ public class ServerTest {
     HttpURLConnection connection = request("GET", url);
     int responseCode = connection.getResponseCode();
     Assertions.assertEquals(responseCode, HTTP_OK);
+    List<Comment> comments =
+        mapper.readValue(responseToString(connection), new TypeReference<ArrayList<Comment>>() {});
+    Assertions.assertEquals(comments.toString(), testComments.toString());
   }
 
   // Test if the server responds correctly to request for non-existing post
