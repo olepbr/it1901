@@ -27,11 +27,11 @@ public class CommentService {
 
   // Requests to "/"
   /**
-   * [TODO:description]
+   * Retrieves all comments for a post.
    *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
+   * @param request Spark Request object containing the http request.
+   * @param response Spark Response object containing details of the response.
+   * @return A JSON string containing the serialized comments or a message/error.
    */
   public String getAllComments(Request request, Response response) {
     response.type("application/json");
@@ -44,7 +44,7 @@ public class CommentService {
         System.err.println("Json Processing Error");
         e.printStackTrace();
         response.status(HTTP_INTERNAL_ERROR);
-        return "{\"error:\", \"Json Processing Error\"}";
+        return "{\"message\": \"\", \"error\": \"Json Processing Error\"}";
       }
     } else {
       response.status(HTTP_NOT_FOUND);
@@ -53,11 +53,11 @@ public class CommentService {
   }
 
   /**
-   * [TODO:description]
+   * Creates a comment for a post.
    *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
+   * @param request Spark Request object containing the http request.
+   * @param response Spark Response object containing details of the response.
+   * @return A JSON string containing a message or error.
    */
   public String createComment(Request request, Response response) {
     response.type("application/json");

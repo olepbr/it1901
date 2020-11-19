@@ -43,7 +43,7 @@ public class UserService {
       System.err.println("Json Processing Error");
       e.printStackTrace();
       response.status(HTTP_INTERNAL_ERROR);
-      return "{\"error:\", \"Json Processing Error\"}";
+      return "{\"message\": \"\", \"error\": \"Json Processing Error\"}";
     }
   }
 
@@ -94,7 +94,7 @@ public class UserService {
       } catch (JsonProcessingException e) {
         System.err.println("Json Processing Error");
         response.status(HTTP_INTERNAL_ERROR);
-        return "{\"error:\", \"Json Processing Error\"}";
+        return "{\"message\": \"\", \"error\": \"Username allready exists\"}";
       }
     } else {
       response.status(HTTP_NOT_FOUND);
