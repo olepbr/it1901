@@ -14,10 +14,10 @@
          <children>
             <Button fx:id="loginButton" layoutX="276.0" layoutY="283.0" mnemonicParsing="false" onAction="#login" text="Login" />
             <Button fx:id="registerButton" layoutX="432.0" layoutY="341.0" mnemonicParsing="false" onAction="#registerClick" text="Click here to register" />
-            <TextField fx:id="loginUsername" layoutX="220.0" layoutY="139.0" />
+            <TextField fx:id="loginNickname" layoutX="220.0" layoutY="139.0" />
             <Label fx:id="loginWarning" layoutX="220.0" layoutY="172.0" textFill="RED" />
             <PasswordField fx:id="loginPasswordText" layoutX="220.0" layoutY="226.0" />
-            <Label layoutX="220.0" layoutY="114.0" text="Username" />
+            <Label layoutX="220.0" layoutY="114.0" text="Nickname" />
             <Label layoutX="220.0" layoutY="200.0" text="Password" />
          </children>
       </AnchorPane>
@@ -25,15 +25,15 @@
          <children>
             <TextField fx:id="nameTextField" layoutX="95.0" layoutY="134.0" />
             <TextField fx:id="emailTextField" layoutX="328.0" layoutY="134.0" />
-            <TextField fx:id="usernameTextField" layoutX="95.0" layoutY="221.0" />
+            <TextField fx:id="nicknameTextField" layoutX="95.0" layoutY="221.0" />
             <PasswordField fx:id="passwordTextField" layoutX="328.0" layoutY="221.0" />
             <Label layoutX="95.0" layoutY="106.0" text="Full name" />
             <Label layoutX="334.0" layoutY="106.0" text="Email" />
-            <Label layoutX="95.0" layoutY="192.0" text="Username" />
+            <Label layoutX="95.0" layoutY="192.0" text="Nickname" />
             <Label layoutX="328.0" layoutY="192.0" text="Password" />
             <Button fx:id="createUserButton" layoutX="256.0" layoutY="298.0" mnemonicParsing="false" onAction="#createUser" text="Create user" />
             <Label fx:id="nameWarning" layoutX="98.0" layoutY="162.0" textFill="RED" />
-            <Label fx:id="usernameWarning" layoutX="96.0" layoutY="253.0" textFill="RED" />
+            <Label fx:id="nicknameWarning" layoutX="96.0" layoutY="253.0" textFill="RED" />
             <Label fx:id="emailWarning" layoutX="325.0" layoutY="162.0" textFill="RED" />
             <Label fx:id="passwordWarning" layoutX="327.0" layoutY="253.0" textFill="RED" />
          </children>

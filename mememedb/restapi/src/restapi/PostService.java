@@ -64,7 +64,7 @@ public class PostService {
       response.status(HTTP_INTERNAL_ERROR);
       return "{\"error\":, \"Json Processing Error\"}";
     }
-    if (Server.database.usernameExists(post.getOwner())) {
+    if (Server.database.nicknameExists(post.getOwner())) {
       Server.database.newPost(post.getOwner(), post.getText(), post.getImage());
       response.status(HTTP_OK);
       return "{\"message\": \"Post created successfully\", \"error\": \"\"}";

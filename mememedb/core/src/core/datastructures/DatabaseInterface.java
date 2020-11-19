@@ -30,7 +30,7 @@ public interface DatabaseInterface {
 
   Collection<Comment> getComments(String postUUID);
 
-  User tryLogin(String username, String password);
+  User tryLogin(String nickname, String password);
 
-  boolean usernameExists(String username);
+  boolean nicknameExists(String nickname);
 }
