@@ -14,4 +14,5 @@ The specific controller instances, as well as the main App-launcher, are located
 - **AppController** - Mastercontroller, initializes and switches between the subcontrollers(Browser and Login)
 - **LoginController** - Handles Logging in existing users and Registering new users
 - **BrowserController** - Handles displaying and adding new posts
-- **PostController** - Subcontroller of BrowserController, handles displaying each specific post
+- **PostController** - Subcontroller of BrowserController, handles displaying each specific post in the browser
+- **PostViewControlelr** Subcontroller of PostController, handles a window showing the contents of a specific post, as well as comment functionality

@@ -3,8 +3,6 @@ package fxui;
 import core.datastructures.DatabaseFactory;
 import core.datastructures.DatabaseInterface;
 import core.datastructures.User;
-import core.io.IO;
-import core.io.LocalIO;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,8 +57,12 @@ public class AppController {
     }
   }
 
-  /** Help method for the AppTest */
-  public void setDatabase(DatabaseInterface database){
+  /** Help method for the AppTest.
+   *  Sets the databaseInterface for the ui.
+   *
+   * @param database The DatabaseInterface to use
+   */
+  public void setDatabase(DatabaseInterface database) {
     this.database = database;
   }
 

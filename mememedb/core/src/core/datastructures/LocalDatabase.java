@@ -194,8 +194,12 @@ public class LocalDatabase implements DatabaseInterface {
    * Directly adds the given Post object to the Database.
    */
   public void addPost(Post post) {
-    posts.put(post.getUUID(), post);
-    users.get(post.getOwner()).addPost(post.getUUID());
+    if (!posts.containsKey(post.getUUID())){
+      posts.put(post.getUUID(), post);
+    }
+    if (!users.get(post.getOwner()).getPosts().contains(post.getUUID())) {
+      users.get(post.getOwner()).addPost(post.getUUID());
+    }
     saveToStorage();
   }
 

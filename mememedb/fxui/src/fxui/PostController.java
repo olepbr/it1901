@@ -3,7 +3,6 @@ package fxui;
 import core.datastructures.DatabaseInterface;
 import core.datastructures.Post;
 import core.datastructures.User;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
@@ -15,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 import javax.imageio.ImageIO;
 
 public class PostController {
@@ -24,7 +22,6 @@ public class PostController {
   @FXML private Label postText;
   @FXML private Label postPoster;
 
-  private PostViewController postViewController;
   private Post post;
   private User activeUser;
   private DatabaseInterface database;
@@ -48,33 +45,33 @@ public class PostController {
     this.post = post;
   }
 
-  public void setActiveUser(User activeUser){
+  public void setActiveUser(User activeUser) {
     this.activeUser = activeUser;
   }
 
-  public void setDatabase(DatabaseInterface database){
+  public void setDatabase(DatabaseInterface database) {
     this.database = database;
   }
 
-    /**
+  /**
    * Displays a new window when image is clicked. Opens PostView.fxml window.
    */
   @FXML
-  public void handleEnterPostView(MouseEvent event){
+  public void handleEnterPostView(MouseEvent event) {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader();
       fxmlLoader.setLocation(getClass().getClassLoader().getResource("PostView.fxml"));
       Scene scene = new Scene(fxmlLoader.load());
       Stage stage = new Stage();
+      stage.setTitle("Jostein UwU");
+      stage.setScene(scene);
       PostViewController postViewController = ((PostViewController) fxmlLoader.getController());
       postViewController.setDatabase(database);
       postViewController.setPost(post);
       postViewController.setActiveUser(activeUser);
-      stage.setTitle("Jostein UwU");
-      stage.setScene(scene);
       stage.show();
       event.consume();
-    } catch (IOException e){
+    } catch (IOException e) {
       System.out.println("Could not load new window");
       e.printStackTrace();
     }

@@ -63,7 +63,7 @@ public class BrowserController {
   public void setActiveUser(User user) {
     this.activeUser = user;
     username.setText(user.getNickname());
-    }
+  }
 
   /** Removes old posts from browser, fetches and displays updated list of posts. */
   public void updatePosts() {
@@ -126,12 +126,12 @@ public class BrowserController {
     }
   }
 
-  public User getActiveUser(){
+  public User getActiveUser() {
     return activeUser;
   }
 
   /**
-   * Amends AppTest
+   * Amends AppTest.
    */
 
   public void setSelectedImage(File file) {
