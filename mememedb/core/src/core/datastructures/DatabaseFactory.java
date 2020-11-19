@@ -20,7 +20,7 @@ public class DatabaseFactory {
       return new LocalDatabase();
     }
     if (databaseType.equalsIgnoreCase("rest")) {
-      return new RestDatabase("http://localhost:8000");
+      return new RestDatabase("http://localhost:8080");
     } else if (databaseType.equalsIgnoreCase("local")) {
       return new LocalDatabase(new LocalIO());
     } else {
