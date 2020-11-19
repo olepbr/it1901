@@ -11,7 +11,7 @@ public class DatabaseFactory {
    * @return 
    *     <ul>
    *     <li>A RestDatabase if the given String is "rest"</li>
-   *     <li>A LocalDatabase that reads and writes to file if given String is "io"</li>
+   *     <li>A LocalDatabase that reads and writes to file if given String is "local"</li>
    *     <li>An empty LocalDatabase without persistence if given any other String</li>
    *     </ul>
    */

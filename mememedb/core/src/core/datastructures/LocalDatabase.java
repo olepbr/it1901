@@ -47,14 +47,6 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
-  /**
-   * Creates a new Comment in the database, using the supplied information.
-   * Automatically updates storage.
-   *
-   * @param text The text belonging to the comment.
-   * @param owner The nickname of the user that made the comment.
-   * @param postUUID The UUID of the post that the comment belongs to.
-   */
   public void newComment(String text, String owner, String postUUID) {
     Post post = posts.getOrDefault(postUUID, null);
     if (post != null) {
@@ -63,13 +55,7 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
-  /**
-   * Creates a new Post in the database from the given arguments. Automatically updates storage.
-   *
-   * @param owner The user that made the post
-   * @param caption The caption belonging to the post
-   * @param image A file referencing the image belonging to the post
-   */
+
   public void newPost(String owner, String caption, File image) {
     try {
       Post post = new Post(owner, caption, image);
@@ -80,32 +66,12 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
-  /**
-   * Creates a new Post in the database from the given arguments. Automatically updates storage.
-   *
-   * @param owner The user that made the post
-   * @param caption The caption belonging to the post
-   * @param imageData The base64 data containing the imgae of the post
-   */
   public void newPost(String owner, String caption, String imageData) {
     Post post = new Post(owner, caption, imageData);
     posts.put(post.getUUID(), post);
     saveToStorage();
   }
 
-
-
-  /**
-   * Creates a new User in the database, unless the user already exists.
-   * Automatically updates storage.
-   *
-   * @param name     The name of the user.
-   * @param nickname The nickname of the user.
-   * @param email    The email of the user.
-   * @param password The password of the user.
-   * @throws IllegalStateException In the case of the nickname already existing in
-   *                               the database.
-   */
   public void newUser(String name, String nickname, String email, String password) {
     if (nicknameExists(nickname)) {
       throw new IllegalStateException("Nickname already exists in database!");
@@ -116,59 +82,21 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
-  /**
-   * Fetches a single user.
-   *
-   * @param nickname The nickname of the user.
-   * @return The user object corresponding to the user with the given nickname.
-   */
   public User getUser(String nickname) {
     return users.get(nickname);
   }
 
-  /**
-   * Fetches a collection of all users in the database.
-   *
-   * @return returns a collection of all users
-   */
   public Collection<User> getUsers() {
     return users.values();
   }
 
-  /**
-   * Fetches the mapping between users and nicknames.
-   *
-   * @return A map mapping users to their nicknames
-   */
-  public Map<String, User> getUserMap() {
-    return users;
-  }
 
-  /**
-   * Fetches a list of all posts in the database.
-   *
-   * @return returns a list of all posts
-   */
   public Collection<Post> getPosts() {
     return posts.values();
   }
 
-  /**
-   * Fetches the mapping between posts and Ids.
-   *
-   * @return A map mapping posts to their Ids
-   */
-  public Map<String, Post> getPostMap() {
-    return posts;
-  }
 
-  /**
-   * Attempts to find a user in the database with the given information.
-   *
-   * @param nickname Nickname or email of the user
-   * @param password The password of the User
-   * @return User that logged on if it exists, null if no such user exists
-   */
+
   public User tryLogin(String nickname, String password) {
     User user = users.getOrDefault(nickname, null);
     if (user != null && user.getPassword().equals(User.hashPassword(password))) {
@@ -177,19 +105,29 @@ public class LocalDatabase implements DatabaseInterface {
     return null;
   }
 
-  /**
-   * Checks if the input nickname already exists in the database.
-   *
-   * @param nickname The nickname to check
-   * @return true if the nickname exists in the database
-   */
+
   public boolean nicknameExists(String nickname) {
     boolean exists = (users.getOrDefault(nickname, null) != null);
     return exists;
   }
 
+  public Post getPost(String postUUID) {
+    return posts.getOrDefault(postUUID, null);
+  }
+
+  public List<Comment> getComments(String postUUID) {
+    List<Comment> comments = new ArrayList<Comment>(
+        posts.getOrDefault(postUUID, null).getComments());
+    Collections.sort(comments);
+    return comments;
+  }
+
+
+
+
+
   /*
-   * Pre-constructed object addition methods used in testing and
+   * Pre-constructed object addition and internal getter methods used in testing and
    * json-deserializing, not part of the DatabaseInterface.
    */
 
@@ -212,6 +150,26 @@ public class LocalDatabase implements DatabaseInterface {
   public void addUser(User user) {
     users.put(user.getNickname(), user);
     saveToStorage();
+  }
+
+  /**
+   * Returns the internal postMap, used when creating 
+   * database from IO
+   *
+   * @return A map mapping posts to their ids
+   */
+  public Map<String, Post> getPostMap() {
+    return posts;
+  }
+
+  /**
+   * Fetches the internal mapping between 
+   * users and nicknames, used when constructing from io
+   *
+   * @return A map mapping users to their nicknames
+   */
+  public Map<String, User> getUserMap() {
+    return users;
   }
 
   @Override
@@ -237,22 +195,6 @@ public class LocalDatabase implements DatabaseInterface {
     return null;
   }
 
-  @Override
-  public Post getPost(String postUUID) {
-    return posts.getOrDefault(postUUID, null);
-  }
 
-  /** 
-   * Fetches comments in a posts and sorts them. 
-   *
-   * @param postUUID the UUID of the post to fetch comments from
-   */
-  @Override
-  public List<Comment> getComments(String postUUID) {
-    List<Comment> comments = new ArrayList<Comment>(
-        posts.getOrDefault(postUUID, null).getComments());
-    Collections.sort(comments);
-    return comments;
-  }
  
 }
