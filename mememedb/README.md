@@ -257,9 +257,11 @@ LocalDatabase "posts" --> "*" Post
 
 ## User Stories
 
-* I want to be able to post a picture to the app, and see it appear on the main page
+* As a content creator, I want to be able to post a picture with a caption to the app, and see it appear in the app
+* As a content creator, I want to have a place to store my memes
 * I want to be able to create and log in with my account
-* I want to comment on other peoples posts
+* As a person who enjoys memes, I want to be able to view and comment on other people's posts
+* I want to be able to log out of my account when I need to
 
 ## Storage method
 
