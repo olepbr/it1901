@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 /**
  * Controller class for PostView.fxml. Controller opens a new window which views
@@ -32,7 +33,7 @@ public class PostViewController {
   private User activeUser;
   private DatabaseInterface database;
   @FXML
-  private Label caption;
+  private Text caption;
   @FXML
   private ImageView imageView;
   @FXML
@@ -42,9 +43,9 @@ public class PostViewController {
   @FXML
   private ListView<String> commentListView;
   @FXML
-  private Label errorLabel;
+  private Text errorLabel;
   @FXML
-  private Label posterLabel;
+  private Text posterLabel;
 
   public void setActiveUser(User activeUser) {
     this.activeUser = activeUser;

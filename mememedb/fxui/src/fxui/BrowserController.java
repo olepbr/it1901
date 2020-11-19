@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 public class BrowserController {
@@ -31,7 +32,7 @@ public class BrowserController {
   @FXML private Button browseButton;
   @FXML private TextField inputTextField;
   @FXML private BorderPane borderPane;
-  @FXML private Label imgSelectorLabel;
+  @FXML private Text imgSelectorLabel;
   @FXML private Label nickname;
 
   @FXML
