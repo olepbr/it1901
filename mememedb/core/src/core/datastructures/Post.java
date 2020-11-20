@@ -90,16 +90,30 @@ public class Post {
   }
 
   /**
+   * Converts the supplied File object to a base64-encoded string.
+   * @param image The image to convert.
+   * @return The string representation of the image.
+   * @throws IOException If an error occurs during reading.
+   */
+  public static String imageFileToString(File image) throws IOException {
+    try (FileInputStream imageStream = new FileInputStream(image)) {
+      byte[] data = imageStream.readAllBytes();
+      String data64 = Base64.getEncoder().encodeToString(data);
+      return data64;
+    } catch (IOException e) {
+      throw e;
+    }
+  }
+
+  /**
    * Sets the image of the post to the data in the given file.
    *
    * @param image The image file to use.
    * @throws IOException If an error occurs during reading.
    */
   public void setImage(File image) throws IOException {
-    try (FileInputStream imageStream = new FileInputStream(image)) {
-      byte[] data = imageStream.readAllBytes();
-      String data64 = Base64.getEncoder().encodeToString(data);
-      this.image = data64;
+    try {
+      this.image = imageFileToString(image);
     } catch (IOException e) {
       throw e;
     }
