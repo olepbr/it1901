@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import restapi.Server;
 
-public class TestIT {
+public class restapiIT {
 
   // Set up RestDatabase
   private static int port = 8082;
