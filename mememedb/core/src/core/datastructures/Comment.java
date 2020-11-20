@@ -29,6 +29,12 @@ public class Comment implements Comparable<Comment> {
     this.author = author;
   }
 
+  /**
+   * Sets the time the comment was posted on. Used for sorting comments by date
+   *
+   * @param date The time, given as the string version
+   *             of a java LocalDateTime, e.g. "2007-12-03T10:15:30"
+   */
   public void setDate(String date) {
     this.date = date;
   }
@@ -41,6 +47,13 @@ public class Comment implements Comparable<Comment> {
     this.uuid = uuid;
   }
 
+
+  /**
+   * Returns the time the comment was posted on.
+   *
+   * @return The time, given as the string version of a java LocalDateTime,
+   *          e.g. "2007-12-03T10:15:30"
+   */
   public String getDate() {
     return this.date;
   }

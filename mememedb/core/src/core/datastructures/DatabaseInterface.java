@@ -6,13 +6,12 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The interface to the database used by the ui
+ * The interface to the database used by the ui.
  */
 public interface DatabaseInterface {
 
   /**
    * Creates a new Comment in the database, using the supplied information.
-   * Automatically updates storage.
    *
    * @param text The text belonging to the comment.
    * @param owner The nickname of the user that made the comment.
@@ -21,7 +20,7 @@ public interface DatabaseInterface {
   void newComment(String text, String owner, String postUUID);
 
   /**
-   * Creates a new Post in the database from the given arguments. Automatically updates storage.
+   * Creates a new Post in the database from the given arguments.
    *
    * @param owner The user that made the post
    * @param caption The caption belonging to the post
@@ -30,7 +29,7 @@ public interface DatabaseInterface {
   void newPost(String owner, String caption, File image) throws IOException;
 
   /**
-   * Creates a new Post in the database from the given arguments. Automatically updates storage.
+   * Creates a new Post in the database from the given arguments. 
    *
    * @param owner The user that made the post
    * @param caption The caption belonging to the post
@@ -40,7 +39,6 @@ public interface DatabaseInterface {
 
   /**
    * Creates a new User in the database, unless the user already exists.
-   * Automatically updates storage.
    *
    * @param name     The name of the user.
    * @param nickname The nickname of the user.
@@ -91,7 +89,7 @@ public interface DatabaseInterface {
   Collection<Post> getPosts();
 
   /** 
-   * Fetches the comments of a given post, sorted by date 
+   * Fetches the comments of a given post, sorted by date.
    *
    * @param postUUID the UUID of the post to fetch comments from
    */

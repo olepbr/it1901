@@ -47,6 +47,7 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
+  @Override
   public void newComment(String text, String owner, String postUUID) {
     Post post = posts.getOrDefault(postUUID, null);
     if (post != null) {
@@ -55,7 +56,7 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
-
+  @Override
   public void newPost(String owner, String caption, File image) {
     try {
       Post post = new Post(owner, caption, image);
@@ -66,12 +67,14 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
+  @Override
   public void newPost(String owner, String caption, String imageData) {
     Post post = new Post(owner, caption, imageData);
     posts.put(post.getUUID(), post);
     saveToStorage();
   }
 
+  @Override
   public void newUser(String name, String nickname, String email, String password) {
     if (nicknameExists(nickname)) {
       throw new IllegalStateException("Nickname already exists in database!");
@@ -82,21 +85,23 @@ public class LocalDatabase implements DatabaseInterface {
     }
   }
 
+  @Override
   public User getUser(String nickname) {
     return users.get(nickname);
   }
 
+  @Override
   public Collection<User> getUsers() {
     return users.values();
   }
 
-
+  @Override
   public Collection<Post> getPosts() {
     return posts.values();
   }
 
 
-
+  @Override
   public User tryLogin(String nickname, String password) {
     User user = users.getOrDefault(nickname, null);
     if (user != null && user.getPassword().equals(User.hashPassword(password))) {
@@ -105,16 +110,18 @@ public class LocalDatabase implements DatabaseInterface {
     return null;
   }
 
-
+  @Override
   public boolean nicknameExists(String nickname) {
     boolean exists = (users.getOrDefault(nickname, null) != null);
     return exists;
   }
 
+  @Override
   public Post getPost(String postUUID) {
     return posts.getOrDefault(postUUID, null);
   }
 
+  @Override
   public List<Comment> getComments(String postUUID) {
     List<Comment> comments = new ArrayList<Comment>(
         posts.getOrDefault(postUUID, null).getComments());
@@ -122,6 +129,15 @@ public class LocalDatabase implements DatabaseInterface {
     return comments;
   }
 
+  @Override
+  public Comment getComment(String commentUUID, String postUUID) {
+    for (Comment comment : posts.get(postUUID).getComments()) {
+      if (comment.getUUID().equals(commentUUID)) {
+        return comment;
+      }
+    }
+    return null;
+  }
 
 
 
@@ -154,7 +170,7 @@ public class LocalDatabase implements DatabaseInterface {
 
   /**
    * Returns the internal postMap, used when creating 
-   * database from IO
+   * database from IO.
    *
    * @return A map mapping posts to their ids
    */
@@ -164,7 +180,7 @@ public class LocalDatabase implements DatabaseInterface {
 
   /**
    * Fetches the internal mapping between 
-   * users and nicknames, used when constructing from io
+   * users and nicknames, used when constructing from IO.
    *
    * @return A map mapping users to their nicknames
    */
@@ -184,17 +200,4 @@ public class LocalDatabase implements DatabaseInterface {
     }
     return s.toString().trim();
   }
-
-  @Override
-  public Comment getComment(String commentUUID, String postUUID) {
-    for (Comment comment : posts.get(postUUID).getComments()) {
-      if (comment.getUUID().equals(commentUUID)) {
-        return comment;
-      }
-    }
-    return null;
-  }
-
-
- 
 }

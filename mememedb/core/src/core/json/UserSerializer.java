@@ -7,8 +7,8 @@ import core.datastructures.User;
 import java.io.IOException;
 
 /**
- * Class for serializing User objects format: { "id": "...", "name": "...", "nickname": "...",
- * "email": "...", "password": "...", "posts": [ ... ] }
+ * Class for serializing User objects format: { "name": "...", "nickname":
+ * "...", "email": "...", "password": "...", "posts": [ ... ] }
  *
  * @author Ole Peder Brandtzæg
  */

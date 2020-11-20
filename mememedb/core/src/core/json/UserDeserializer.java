@@ -13,8 +13,8 @@ import core.datastructures.User;
 import java.io.IOException;
 
 /**
- * Class for deserializing JSON into User objects. Format: { "id": "...", "name": "...", "nickname":
- * "...", "email": "...", "posts": [ ... ] }
+ * Class for deserializing JSON into User objects. Format: { "name": "...", "nickname":
+ * "...", "email": "...", "password": "...", "posts": [ ... ] }
  *
  * @author Ole Peder Brandtzæg
  */
