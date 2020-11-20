@@ -60,8 +60,8 @@ public class AppTest extends ApplicationTest {
 
     final Button createUserButton = (Button) parent.lookup("#createUserButton");
 
-    clickOn(nameTextField).write("Jostein Bakkevig");
-    clickOn(emailTextField).write("jostbak@stud.ntnu.no");
+    clickOn(nameTextField).write("Heststein Beststein");
+    clickOn(emailTextField).write("heststein@ntnu.no");
     clickOn(nicknameTextField).write("HestStein");
     clickOn(passwordTextField).write("strawberryjam2");
 
@@ -95,12 +95,13 @@ public class AppTest extends ApplicationTest {
     sleep(3000);
 
     /* Test comment */
-    final ImageView postImage  = (ImageView) parent.lookup("#postImage");
-    clickOn(postImage);
+    final Button viewPostButton  = (Button) parent.lookup("#viewPostButton");
+    clickOn(viewPostButton);
     Parent parent2 = Window.getWindows().get(1).getScene().getRoot();
     final TextField commentInput = (TextField) parent2.lookup("#commentInput");
     final Button commentButton = (Button) parent2.lookup("#commentButton");
     clickOn(commentInput).write("Haha this is such a cool animal right??");
     clickOn(commentButton);
+
   }
 }
