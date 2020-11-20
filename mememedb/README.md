@@ -2,6 +2,8 @@
 
 # MEMEMEDB
 
+![MEMEME LOGO](mememedb.png)
+
 MEMEMEDB is a meme sharing application.
 With this application users may view, share, and comment on memes.
 A meme consists of a picture and a caption.
@@ -92,13 +94,13 @@ runner ..> restapi
 
 guava -[hidden] jackson
 guava -[hidden] spark
-guava -[hidden] commons-validator
-jackson -[hidden] commons-validator
-javafx -[hidden] commons-validator
+guava -[hidden] commons\-validator
+jackson -[hidden] commons\-validator
+javafx -[hidden] commons\-validator
 
 fxui ..> core
 fxui .up.> javafx
-fxui ..> commons-validator
+fxui ..> commons\-validator
 ```
 
 The following class diagram shows the basic outline of the internal class structure.
