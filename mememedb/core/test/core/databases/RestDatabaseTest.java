@@ -1,4 +1,4 @@
-package core.datastructures;
+package core.databases;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -9,7 +9,11 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +22,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import core.datastructures.Comment;
+import core.datastructures.Post;
+import core.datastructures.User;
 
 public class RestDatabaseTest {
 
@@ -158,6 +165,40 @@ public class RestDatabaseTest {
                                     + testComment.getText() + "\"} ] } ]")));
     Collection<Post> receivedPosts = restDatabase.getPosts();
     assertEquals(testPosts.toString(), receivedPosts.toString());
+  }
+
+  @Test
+  public void testTryLoginSuccess() {
+    stubFor(get(urlEqualTo("/user/" + testUser.getNickname())).withHeader("Accept", equalTo("application/json"))
+        .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json")
+        .withBody("{\"nickname\": \"" + testUser.getNickname() + "\", \"name\""
+            + ": \"" + testUser.getName() + "\", \"email\": \"" + testUser.getEmail()
+                + "\", \"posts\": [\"12345\"],"
+                    + "\"password\": \"" + testUser.getPassword() + "\"}")));
+    User receivedUser = restDatabase.tryLogin(testUser.getNickname(), "verygood");
+    assertNotNull(receivedUser);
+    assertEquals(testUser.getPassword(), receivedUser.getPassword());
+  }
+
+  @Test
+  public void testTryLoginFailure() {
+    assertNull(restDatabase.tryLogin("jegharikke", "enbruker"));
+  }
+
+  @Test
+  public void testNicknameExists() {
+    stubFor(get(urlEqualTo("/user/" + testUser.getNickname())).withHeader("Accept", equalTo("application/json"))
+        .willReturn(aResponse().withStatus(200).withHeader("Content-Type", "application/json")
+        .withBody("{\"nickname\": \"" + testUser.getNickname() + "\", \"name\""
+            + ": \"" + testUser.getName() + "\", \"email\": \"" + testUser.getEmail()
+                + "\", \"posts\": [\"12345\"],"
+                    + "\"password\": \"" + testUser.getPassword() + "\"}")));
+    assertTrue(restDatabase.nicknameExists(testUser.getNickname()));
+  }
+
+  @Test
+  public void testNicknameDoesNotExist() {
+    assertFalse(restDatabase.nicknameExists(testUser.getNickname()));
   }
 
   @AfterEach
