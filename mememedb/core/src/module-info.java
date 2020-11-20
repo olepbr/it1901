@@ -7,6 +7,7 @@ module core {
   exports core.io;
   exports core.json;
   exports core.datastructures;
+  exports core.databases;
 
   opens core.datastructures to
       com.fasterxml.jackson.databind;

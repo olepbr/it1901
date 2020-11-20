@@ -1,9 +1,13 @@
-package core.datastructures;
+package core.databases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
+
+import core.datastructures.Comment;
+import core.datastructures.Post;
+import core.datastructures.User;
 import core.io.IO;
 import java.util.ArrayList;
 import java.util.Arrays;

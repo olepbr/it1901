@@ -1,8 +1,11 @@
-package core.datastructures;
+package core.databases;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.datastructures.Comment;
+import core.datastructures.Post;
+import core.datastructures.User;
 import core.json.MememeModule;
 import java.io.File;
 import java.io.IOException;

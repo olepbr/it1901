@@ -4,7 +4,7 @@ import static spark.Spark.awaitInitialization;
 import static spark.Spark.port;
 import static spark.Spark.stop;
 
-import core.datastructures.LocalDatabase;
+import core.databases.LocalDatabase;
 import core.io.LocalIO;
 
 /** Main class for rest api server. */
@@ -27,6 +27,12 @@ public class Server {
     LocalIO io = new LocalIO();
     setDatabase(new LocalDatabase(io));
   }
+
+  /**
+   * Set up and start the server.
+   *
+   * @param port port the server listens to
+   */
 
   public static void setupServer(int port) {
     // Configure server

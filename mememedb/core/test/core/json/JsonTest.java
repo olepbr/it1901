@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import core.datastructures.Comment;
-import core.datastructures.LocalDatabase;
+import core.databases.LocalDatabase;
 import core.datastructures.Post;
 import core.datastructures.User;
 import org.junit.jupiter.api.Assertions;

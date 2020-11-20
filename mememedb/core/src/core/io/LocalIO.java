@@ -3,7 +3,7 @@ package core.io;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.datastructures.LocalDatabase;
+import core.databases.LocalDatabase;
 import core.json.MememeModule;
 import java.io.File;
 import java.io.FileReader;
