@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  * Class for serializing Comment objects.
- * Format: { "uuid": "...", "author": "...", "text": "..." }
+ * Format: { "uuid": "...", "author": "...", "text": "...", "date": "..."}
  *
  * @author Jostein Bakkevig
  */

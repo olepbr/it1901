@@ -80,7 +80,11 @@ public class Post {
     this.caption = text;
   }
 
-  /* Get/Set Image */
+  /**
+   * Returns the image for the post, stored as a base64-encoded String.
+   *
+   * @return The base64-encoded String of the image
+   */
   public String getImage() {
     return image;
   }

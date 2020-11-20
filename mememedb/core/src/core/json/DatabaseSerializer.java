@@ -9,14 +9,15 @@ import core.datastructures.User;
 import java.io.IOException;
 
 /**
- * Class for serializing a database of users format: { "users": [ ... ] }
+ * Class for serializing a database of users format: { "users": [ ... ], "posts": [...] }
  *
  * @author Ole Peder Brandtzæg
  */
 class DatabaseSerializer extends JsonSerializer<LocalDatabase> {
 
   /**
-   * Class for serializing a database into a JSON object. Format: {"users": [ ... ] }
+   * Class for serializing a database into a JSON object. 
+   * Format: { "users": [ ... ], "posts": [...] }
    *
    * @param database The database object to serialize.
    * @param jsonGen The JsonGenerator object writing the JSON (provided by Jackson).

@@ -12,8 +12,8 @@ import core.datastructures.Comment;
 import java.io.IOException;
 
 /**
- * Class for deserializing Comment objects. Format: { "uuid": "...", "author": "...", "text": "..."
- * }
+ * Class for deserializing Comment objects. Format: 
+ * { "uuid": "...", "author": "...", "text": "...", "date": "..."}
  *
  * @author Jostein Bakkevig
  */

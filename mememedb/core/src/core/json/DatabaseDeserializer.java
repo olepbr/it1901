@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  * Class for deserializing JSON into LocalDatabase objects.
- * Format: { "users": [ ... ] }
+ * Format: { "users": [ ... ], "posts": [...] }
  *
  * @author Ole Peder Brandtzæg
  */

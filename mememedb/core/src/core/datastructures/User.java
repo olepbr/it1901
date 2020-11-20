@@ -23,9 +23,9 @@ public class User {
   /**
    * Initializes a User object.
    *
-   * @param name This user's name.
-   * @param nickname This user's nickname.
-   * @param email This user's email.
+   * @param name This user's real name.
+   * @param nickname This user's nickname, this should be unique.
+   * @param email This user's email. Email must be a valid email on the form "xxx@xx.xx"
    */
   public User(String name, String nickname, String email, String password) {
     this.name = name;
@@ -61,10 +61,20 @@ public class User {
     this.email = email;
   }
 
+  /**
+   * Returns the uuids of the posts belonging to the User.
+   *
+   * @return A list of uuids, each belonging to one of the users posts
+   */
   public List<String> getPosts() {
     return posts;
   }
 
+  /**
+   * Adds the given postuuid to the user.
+   *
+   * @param postUUID the uuid of the post to add
+   */
   public void addPost(String postUUID) {
     posts.add(postUUID);
   }
@@ -82,14 +92,30 @@ public class User {
     return hashedPassword;
   }
 
+  /**
+   * Sets the hashed password of the user directly.
+   *
+   * @param password The password to set, this is stored directly
+   *                 as the password without being hashed by the program
+   */
   public void setHashedPassword(String password) {
     this.hashedPassword = password;
   }
 
+  /**
+   * Sets the password of the user, password is hashed using SHA256 before it is stored.
+   *
+   * @param password The password to use
+   */
   public void setPassword(String password) {
     this.hashedPassword = hashPassword(password);
   }
 
+  /**
+   * Returns the hashed password of the user.
+   *
+   * @return The hashed password string
+   */
   public String getPassword() {
     return hashedPassword;
   }
