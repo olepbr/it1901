@@ -74,6 +74,33 @@ public class LoginController {
     loginAnchorPane.setVisible(false);
     registerAnchorPane.setVisible(true);
   }
+/**
+   * Checks if username is valid. Source: https://www.regextester.com/104030
+   * @param username
+   * @return true if username matches regex pattern.
+   */
+  private boolean usernameIsValid(String username){
+    String pattern = "^[a-zA-Z0-9_-]{3,16}$";
+    if (username.matches(pattern)){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  /**
+   * Checks if name is valid. Source: https://www.regextester.com/93648
+   * @param name
+   * @return true if name matches regex pattern.
+   */
+
+  private boolean nameIsValid(String name){
+    String pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"; //
+		if (name.matches(pattern)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   /**
    * Checks if all the strings in TextFields are valid. Creates a new User object and saves it in
@@ -83,19 +110,19 @@ public class LoginController {
   private void createUser() {
     String email = emailTextField.getText();
     String name = nameTextField.getText();
-    String nickname = nicknameTextField.getText();
+    String username = nicknameTextField.getText();
     String password = passwordTextField.getText();
-    if (name.isEmpty()) {
+    if (!nameIsValid(name)) {
       nameWarning.setText("Please put your full name");
     } else if (!EmailValidator.getInstance().isValid(email)) {
       emailWarning.setText("Please put a valid email address");
-    } else if (database.nicknameExists(nickname)) {
-      nicknameWarning.setText("Nickname is taken or not valid");
+    } else if (database.nicknameExists(username) || (!usernameIsValid(username))) {
+      nicknameWarning.setText("Username is taken or not valid");
     } else if (password.length() < 8) {
       passwordWarning.setText("Password must contain at least 8 characters");
     } else {
-      database.newUser(name, nickname, email, password);
-      User user = database.tryLogin(nickname, password);
+      database.newUser(name, username, email, password);
+      User user = database.tryLogin(username, password);
       parent.handleLogin(user);
     }
   }
