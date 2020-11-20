@@ -74,14 +74,16 @@ public class LoginController {
     loginAnchorPane.setVisible(false);
     registerAnchorPane.setVisible(true);
   }
-/**
+
+  /**
    * Checks if username is valid. Source: https://www.regextester.com/104030
-   * @param username
+   *
+   * @param username the username to check
    * @return true if username matches regex pattern.
    */
-  private boolean usernameIsValid(String username){
+  private boolean usernameIsValid(String username) {
     String pattern = "^[a-zA-Z0-9_-]{3,16}$";
-    if (username.matches(pattern)){
+    if (username.matches(pattern)) {
       return true;
     } else {
       return false;
@@ -89,13 +91,14 @@ public class LoginController {
   }
   /**
    * Checks if name is valid. Source: https://www.regextester.com/93648
-   * @param name
+   *
+   * @param name the name to check
    * @return true if name matches regex pattern.
    */
 
-  private boolean nameIsValid(String name){
+  private boolean nameIsValid(String name) {
     String pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"; //
-		if (name.matches(pattern)) {
+    if (name.matches(pattern)) {
       return true;
     } else {
       return false;
