@@ -40,39 +40,30 @@ public class RestDatabase implements DatabaseInterface {
    * to allow for testing.
    *
    * @param path The path to add to the base URI of the server, for instance "/user".
-   * @param o The object to pass in the request, e.g. a Comment, Post or User.
+   * @param body The body of the request (only used for POST requests).
    * @param type The type of request to make.
    * @return The response from the server.
    */
-  protected HttpResponse<String> requestHandler(String path, Object o, String type) {
+  protected HttpResponse<String> requestHandler(String path, String body, String type) {
     try {
       HttpRequest request;
       if (type.equalsIgnoreCase("POST")) {
         request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
             .header("Accept", "application/json")
-            .POST(BodyPublishers.ofString(mapper.writeValueAsString(o))).build();
-      } else if (type.equalsIgnoreCase("PUT")) {
-        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
-            .header("Accept", "application/json")
-            .PUT(BodyPublishers.ofString(mapper.writeValueAsString(o))).build();
-      } else if (type.equalsIgnoreCase("DELETE")) {
-        request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
-            .header("Accept", "application/json")
-            .DELETE().build();
+            .POST(BodyPublishers.ofString(body)).build();
+        return HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
       } else if (type.equalsIgnoreCase("GET")) {
         request = HttpRequest.newBuilder(new URI(endpointBaseUriString + path))
             .header("Accept", "application/json")
             .GET().build();
-      } else {
-        throw new IllegalArgumentException("Invalid request type");
+        return HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
       }
-      return HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
     } catch (URISyntaxException e) {
-      e.printStackTrace();
-      return null;
+      throw new IllegalArgumentException("Invalid URI!");
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
+    return null;
   }
 
   /**
@@ -93,7 +84,7 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public void newComment(String text, String owner, String postUUID) {
     HttpResponse<String> response = requestHandler("/post/" + postUUID + "/comment",
-        new Comment(owner, text), "POST");
+        "{\"author\":\"" + owner + "\",\"text\":\"" + text + "\"}", "POST");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
     }
@@ -103,7 +94,9 @@ public class RestDatabase implements DatabaseInterface {
   public void newPost(String owner, String caption, File image) {
     try {
       HttpResponse<String> response = requestHandler("/post",
-          new Post(owner, caption, image), "POST");
+          "{\"owner\":\"" + owner + "\",\"caption\""
+              + ":\"" + caption + "\",\"image\":\"" + Post.imageFileToString(image)
+                  + "\"}", "POST");
       if (! responseCodeChecker(response)) {
         System.err.println(response.body());
       }
@@ -115,7 +108,9 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public void newPost(String owner, String caption, String imageData) {
     HttpResponse<String> response = requestHandler("/post",
-        new Post(owner, caption, imageData), "POST");
+        "{\"owner\":\"" + owner + "\",\"caption\""
+            + ":\"" + caption + "\",\"image\":\"" + imageData
+                    + "\"}", "POST");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
     }
@@ -124,7 +119,9 @@ public class RestDatabase implements DatabaseInterface {
   @Override
   public void newUser(String name, String nickname, String email, String password) {
     HttpResponse<String> response = requestHandler("/user",
-        new User(name, nickname, email, password), "POST");
+        "{\"name\":\"" + name + "\",\"nickname\""
+            + ":\"" + nickname + "\",\"email\":\"" + email
+                    + "\",\"password\":\"" + password + "\"}", "POST");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
     }
