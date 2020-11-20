@@ -1,10 +1,10 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.idi.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2020/gr2015/gr2015)
 
-# MEMEMEDB
+# MememeDB
 
 ![MEMEME LOGO](mememedb.png)
 
-MEMEMEDB is a meme sharing application.
+MememeDB is a meme sharing application.
 With this application users may view, share, and comment on memes.
 A meme consists of a picture and a caption.
 Example memes can be found in the project directory in the folder **memes**.
