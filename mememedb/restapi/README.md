@@ -16,8 +16,10 @@ component restapi {
 restapi .left.> core
 
 class Server {
-  +setup(): void
-  +shutdown(): void
+  +setupServer(int port): void
+  +shutdownServer(): void
+  +setupDatabase(): void
+  +setDatabase(LocalDatabase database): void
   #database: LocalDatabase
 }
 
@@ -37,8 +39,6 @@ class UserService {
   +getAllUsers(Request request, Response response): String
   +createUser(Request request, Response response): String
   +getUser(Request request, Response response): String
-  +updateUser(Request request, Response response): String
-  +deleteUser(Request request, Response response): String
 }
 
 UserService ..> jackson
@@ -47,8 +47,6 @@ class PostService {
   +getAllPosts(Request request, Response response): String
   +createPost(Request request, Response response): String
   +getPost(Request request, Response response): String
-  +updatePost(Request request, Response response): String
-  +deletePost(Request request, Response response): String
 }
 
 PostService ..> jackson
@@ -57,8 +55,6 @@ class CommentService {
   +getAllComments(Request request, Response response): String
   +createComment(Request request, Response response): String
   +getComment(Request request, Response response): String
-  +updateComment(Request request, Response response): String
-  +deleteComment(Request request, Response response): String
 }
 
 CommentService ..> jackson
