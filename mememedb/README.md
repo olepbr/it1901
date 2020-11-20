@@ -92,16 +92,16 @@ runner ..> restapi
 
 guava -[hidden] jackson
 guava -[hidden] spark
-guava -[hidden] org.apache.commons.validator
-jackson -[hidden] org.apache.commons.validator
-javafx -[hidden] org.apache.commons.validator
+guava -[hidden] commons-validator
+jackson -[hidden] commons-validator
+javafx -[hidden] commons-validator
 
 fxui ..> core
 fxui .up.> javafx
-fxui ..> org.apache.commons.validator
+fxui ..> commons-validator
 ```
 
-The following class diagram shows the basic outline of the internal class structure. 
+The following class diagram shows the basic outline of the internal class structure.
 Note that the `RestDatabase` corresponds with the `restapi` module, which is explained in further detail
 in the module's own [README](restapi/README.md):
 
