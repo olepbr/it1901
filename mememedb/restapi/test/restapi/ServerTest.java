@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.datastructures.Comment;
-import core.datastructures.LocalDatabase;
+import core.databases.LocalDatabase;
 import core.datastructures.Post;
 import core.datastructures.User;
 import core.json.MememeModule;
