@@ -13,6 +13,7 @@ import core.datastructures.User;
  *
  * @author Ole Peder Brandtzæg
  */
+@SuppressWarnings("serial")
 public class MememeModule extends SimpleModule {
 
   private static final String NAME = "MememeModule";
