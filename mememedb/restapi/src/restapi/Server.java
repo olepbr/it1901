@@ -10,25 +10,27 @@ import core.io.LocalIO;
 /** Main class for rest api server. */
 public class Server {
 
+  private static int defaultPort = 8080;
+
   protected static LocalDatabase database;
 
   // Defeat instantiation
   protected Server() {}
 
   // This method exists to inject a fake database in testing
-  protected static void setDatabase(LocalDatabase newDatabase) {
+  public static void setDatabase(LocalDatabase newDatabase) {
     database = newDatabase;
   }
 
   // Set up database
-  protected static void setupDatabase() {
+  public static void setupDatabase() {
     LocalIO io = new LocalIO();
     setDatabase(new LocalDatabase(io));
   }
 
-  protected static void setupServer() {
+  public static void setupServer(int port) {
     // Configure server
-    port(8080);
+    port(port);
 
     // Routes
     Routes.configureRoutes();
@@ -43,6 +45,6 @@ public class Server {
 
   public static void main(String[] args) {
     setupDatabase();
-    setupServer();
+    setupServer(defaultPort);
   }
 }

@@ -10,9 +10,6 @@ import java.util.List;
  */
 public interface DatabaseInterface {
 
-
-
-
   /**
    * Creates a new Comment in the database, using the supplied information.
    *
@@ -106,7 +103,7 @@ public interface DatabaseInterface {
    * @return User that logged on if it exists, null if no such user exists
    */
   User tryLogin(String nickname, String password);
-    
+
   /**
    * Checks if the input nickname already exists in the database.
    *
