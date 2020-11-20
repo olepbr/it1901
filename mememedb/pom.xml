@@ -13,6 +13,7 @@
         <module>restapi</module>
         <module>runner</module>
         <module>report</module>
+        <module>integration</module>
     </modules>
 
     <properties>
