@@ -263,23 +263,34 @@ LocalDatabase "posts" --> "*" Post
 * As a person who enjoys memes, I want to be able to view and comment on other people's posts
 * I want to be able to log out of my account when I need to
 
+## Sequence diagram
+Below is a diagram showing the sequence of calls done when the user clicks on the 
+"post" button in the browser while using a Restdatabase and REST-Server. 
 
 ```plantuml
-actor fxui
+actor user
+participant BrowserController
+participant PostController
 participant RestDatabase
 participant RestServer
 database LocalDatabase
 
-fxui -> RestDatabase: newPost
+activate BrowserController
+user -> BrowserController: Post
+BrowserController -> RestDatabase: newPost
 activate RestDatabase
 RestDatabase -> RestServer: POST /post
 activate RestServer
 RestServer -> LocalDatabase: newPost
+activate LocalDatabase
+return
+deactivate LocalDatabase
 RestDatabase <-- RestServer: message
+return
 deactivate RestServer
-fxui <-- RestDatabase: message
 deactivate RestDatabase
-fxui -> RestDatabase: getPosts
+BrowserController -> BrowserController ++: updatePosts
+BrowserController -> RestDatabase: getPosts
 activate RestDatabase
 RestDatabase -> RestServer: GET /post
 activate RestServer
@@ -289,8 +300,14 @@ RestServer <-- LocalDatabase: posts
 deactivate LocalDatabase
 RestDatabase <-- RestServer: posts
 deactivate RestServer
-fxui <-- RestDatabase: posts
+BrowserController <-- RestDatabase: posts
 deactivate RestDatabase
+BrowserController -> PostController ** : new PostController
+activate PostController
+BrowserController -> PostController: setPost
+return
+return
+deactivate BrowserController
 ```
 
 ## Storage method
