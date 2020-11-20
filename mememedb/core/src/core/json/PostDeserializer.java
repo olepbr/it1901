@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  * Class for deserializing Post objects.
- * Format: { "owner": "...", "caption": "...", "image": "..." }
+ * Format: {"uuid": "..." "owner": "...", "caption": "...", "image": "..." }
  *
  * @author Ole Peder Brandtzæg
  */
