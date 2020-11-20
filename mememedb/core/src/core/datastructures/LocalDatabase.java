@@ -60,8 +60,7 @@ public class LocalDatabase implements DatabaseInterface {
   public void newPost(String owner, String caption, File image) {
     try {
       Post post = new Post(owner, caption, image);
-      posts.put(post.getUUID(), post);
-      saveToStorage();
+      addPost(post);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -70,8 +69,7 @@ public class LocalDatabase implements DatabaseInterface {
   @Override
   public void newPost(String owner, String caption, String imageData) {
     Post post = new Post(owner, caption, imageData);
-    posts.put(post.getUUID(), post);
-    saveToStorage();
+    addPost(post);
   }
 
   @Override
@@ -80,8 +78,7 @@ public class LocalDatabase implements DatabaseInterface {
       throw new IllegalStateException("Nickname already exists in database!");
     } else {
       User user = new User(name, nickname, email, password);
-      users.put(nickname, user);
-      saveToStorage();
+      addUser(user);
     }
   }
 
