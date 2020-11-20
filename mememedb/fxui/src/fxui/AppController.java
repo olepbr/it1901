@@ -1,7 +1,7 @@
 package fxui;
 
-import core.datastructures.DatabaseFactory;
-import core.datastructures.DatabaseInterface;
+import core.databases.DatabaseFactory;
+import core.databases.DatabaseInterface;
 import core.datastructures.User;
 import java.io.IOException;
 import javafx.fxml.FXML;

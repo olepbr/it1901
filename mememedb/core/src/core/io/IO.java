@@ -1,6 +1,6 @@
 package core.io;
 
-import core.datastructures.LocalDatabase;
+import core.databases.LocalDatabase;
 
 /** Interface for handling Input/Output. */
 public interface IO {
