@@ -3,7 +3,7 @@ package core.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import core.databases.LocalDatabase;
+import core.datastructures.LocalDatabase;
 import core.datastructures.Post;
 import core.datastructures.User;
 import java.io.IOException;
