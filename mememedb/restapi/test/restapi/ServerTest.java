@@ -34,7 +34,8 @@ import org.junit.jupiter.api.Test;
 public class ServerTest {
 
   private static ObjectMapper mapper = new ObjectMapper();
-  private static String baseURL = "http://localhost:8080";
+  private static int port = 8081;
+  private static String baseURL = "http://localhost:" + port;
 
   // Test data
   private static User testUser =
@@ -87,7 +88,7 @@ public class ServerTest {
   // Start the server before all tests.
   @BeforeAll
   public static void setup() {
-    Server.setupServer();
+    Server.setupServer(port);
     mapper.registerModule(new MememeModule());
     testUsers.add(testUser);
     testPosts.add(testPost);
