@@ -264,7 +264,7 @@ LocalDatabase "posts" --> "*" Post
 
 ## Sequence diagram
 Below is a diagram showing the sequence of calls done when the user clicks on the 
-"post" button in the browser while using a Restdatabase and REST-Server. 
+"post" button in the browser while using a Restdatabase and REST server.
 
 ```plantuml
 actor user

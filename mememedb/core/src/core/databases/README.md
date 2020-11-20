@@ -1,5 +1,5 @@
 # Databases
-The database package represents the root datastructure in the project, and the implemented objects are used by the ui-layers to store and interact with data.
+The database package represents the root data structure in the project, and the implemented objects are used by the UI layers to store and interact with data.
 The database classes in mememedb all implement the **DatabaseInterface** interface, which is used by the fxui package to communicate with the app.
 The app implements two main types of database, the **RestDatabase**, and the **LocalDatabase**:
 
