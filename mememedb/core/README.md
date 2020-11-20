@@ -5,8 +5,8 @@ This project contains the domain and persistence layers for [mememedb](../README
 ## Domain Layer
 
 The domain layer contains the classes and logic for managing the types of data handled by the application,
-more specifically users and their posts as well as the database class, which acts as the application's root element.
-These classes are all located in the **[mememedb.core.datastructures](src/core/datastructures/README.md)** package.
+more specifically users, posts and comments, as well as the database classes, the application's root element who are also responsible for communicating with the persistence layer.
+The structure classes are located in the **[mememedb.core.datastructures](src/core/datastructures/README.md)** package, and the database related classes are located in the **[mememedb.core.databases](src/core/databases/README.md)** package.
 
 ## Persistence Layer
 
