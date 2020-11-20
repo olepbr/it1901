@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import restapi.Server;
 
 public class App extends Application {
 
@@ -19,7 +20,14 @@ public class App extends Application {
     }
     appController.setDatabase(arg);
     primaryStage.setScene(new Scene(root));
+    primaryStage.setTitle("mememedb");
     primaryStage.show();
+  }
+
+  @Override
+  public void stop() {
+    /*Shuts down the REST-server, if it is running*/
+    Server.shutdownServer();
   }
 
   public static void main(final String[] args) {

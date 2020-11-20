@@ -9,6 +9,7 @@ module fxui {
   requires java.desktop;
 
   requires transitive core;
+  requires transitive restapi;
 
   exports fxui;
 

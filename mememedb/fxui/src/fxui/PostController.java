@@ -10,9 +10,10 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
@@ -21,6 +22,7 @@ public class PostController {
   @FXML private ImageView postImage;
   @FXML private Label postText;
   @FXML private Label postPoster;
+  @FXML private Button viewPostButton;
 
   private Post post;
   private User activeUser;
@@ -55,22 +57,25 @@ public class PostController {
 
   /**
    * Displays a new window when image is clicked. Opens PostView.fxml window.
+   * PostView scene uses Init Modality to prevent user from using background 
+   * window when PostView is active.
    */
   @FXML
-  public void handleEnterPostView(MouseEvent event) {
+  public void handleEnterPostView() {
     try {
       FXMLLoader fxmlLoader = new FXMLLoader();
       fxmlLoader.setLocation(getClass().getClassLoader().getResource("PostView.fxml"));
       Scene scene = new Scene(fxmlLoader.load());
       Stage stage = new Stage();
-      stage.setTitle("Jostein UwU");
+      stage.setTitle("View post");
       stage.setScene(scene);
       PostViewController postViewController = ((PostViewController) fxmlLoader.getController());
       postViewController.setDatabase(database);
       postViewController.setPost(post);
       postViewController.setActiveUser(activeUser);
+      stage.initModality(Modality.APPLICATION_MODAL);
       stage.show();
-      event.consume();
+      
     } catch (IOException e) {
       System.out.println("Could not load new window");
       e.printStackTrace();

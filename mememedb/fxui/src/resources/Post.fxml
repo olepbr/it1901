@@ -2,18 +2,18 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root prefHeight="200.0" prefWidth="500.0" type="HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxui.PostController">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxui.PostController">
    <children>
-      <ImageView fx:id="postImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" onMouseClicked="#handleEnterPostView" preserveRatio="true"></ImageView>
+      <ImageView fx:id="postImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <VBox fx:id="postInfo" HBox.hgrow="ALWAYS">
         <children>
-          <Label fx:id="postText" text="This is a post, it has an image and some text"/>
-          <Label fx:id="postPoster" text="This post was made by somebody"  VBox.vgrow="ALWAYS"/>
+          <Label fx:id="postText" text="This is a post, it has an image and some text" />
+          <Label fx:id="postPoster" text="This post was made by somebody" VBox.vgrow="ALWAYS" />
+           <Button fx:id="viewPostButton" mnemonicParsing="false" onAction="#handleEnterPostView" text="View post" />
         </children>
       </VBox>
    </children>

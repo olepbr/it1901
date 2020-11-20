@@ -6,7 +6,6 @@ import core.datastructures.User;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -66,7 +65,9 @@ public class BrowserController {
     nickname.setText(user.getNickname());
   }
 
-  /** Removes old posts from browser, fetches and displays updated list of posts. */
+  /** 
+   * Removes old posts from browser, fetches and displays updated list of posts. 
+   */
   public void updatePosts() {
     // remove old posts and reset post selector
     content.getChildren().clear();
@@ -102,7 +103,9 @@ public class BrowserController {
     }
   }
 
-  /** Attempts to create a new Post object, and passes it to the memeIO object. */
+  /** 
+   * Attempts to create a new Post object, and passes it to the memeIO object. 
+   */
   @FXML
   public void handleAddContent() {
     String caption = inputTextField.getText();
@@ -139,7 +142,9 @@ public class BrowserController {
     this.selectedImage = file;
   }
 
-  /** Shows a fileselect menu for images. */
+  /** 
+   * Shows a fileselect menu for images. 
+   */
   public void imageFileChooser() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Pick a meme");
@@ -162,7 +167,10 @@ public class BrowserController {
     }
   }
 
-  /** Closes the browser and returns to the Login-screen, clearing active user. */
+  /** 
+   * Closes the browser and returns to the Login-screen, 
+   * clearing active user. 
+   */
   @FXML
   public void handleLogOut() {
     parent.handleLogOut();
