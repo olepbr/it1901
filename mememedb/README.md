@@ -263,6 +263,36 @@ LocalDatabase "posts" --> "*" Post
 * As a person who enjoys memes, I want to be able to view and comment on other people's posts
 * I want to be able to log out of my account when I need to
 
+
+```plantuml
+actor fxui
+participant RestDatabase
+participant RestServer
+database LocalDatabase
+
+fxui -> RestDatabase: newPost
+activate RestDatabase
+RestDatabase -> RestServer: POST /post
+activate RestServer
+RestServer -> LocalDatabase: newPost
+RestDatabase <-- RestServer: message
+deactivate RestServer
+fxui <-- RestDatabase: message
+deactivate RestDatabase
+fxui -> RestDatabase: getPosts
+activate RestDatabase
+RestDatabase -> RestServer: GET /post
+activate RestServer
+RestServer -> LocalDatabase: getPosts
+activate LocalDatabase
+RestServer <-- LocalDatabase: posts
+deactivate LocalDatabase
+RestDatabase <-- RestServer: posts
+deactivate RestServer
+fxui <-- RestDatabase: posts
+deactivate RestDatabase
+```
+
 ## Storage method
 
 This app uses an implicit storage method, where the user is not directly informed of how or where data is stored.
