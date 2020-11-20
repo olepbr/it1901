@@ -115,32 +115,4 @@ public class CommentService {
       }
     }
   }
-
-  /**
-   * [TODO:description]
-   *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
-   */
-  // public String updateComment(Request request, Response response) {
-  //   response.type("application/json");
-  //   response.status(HTTP_NOT_IMPLEMENTED);
-  //   // TODO: Implement
-  //   return "{\"error\": \"This method is not implemented\"}";
-  // }
-
-  /**
-   * [TODO:description]
-   *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
-   */
-  // public String deleteComment(Request request, Response response) {
-  //   response.type("application/json");
-  //   response.status(HTTP_NOT_IMPLEMENTED);
-  //   // TODO: Implement
-  //   return "{\"error\": \"This method is not implemented\"}";
-  // }
 }

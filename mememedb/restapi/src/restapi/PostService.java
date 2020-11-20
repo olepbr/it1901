@@ -101,32 +101,4 @@ public class PostService {
       return "";
     }
   }
-
-  /**
-   * [TODO:description]
-   *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
-   */
-  // public String updatePost(Request request, Response response) {
-  //   response.type("application/json");
-  //   response.status(HTTP_NOT_IMPLEMENTED);
-  //   // TODO: Implement
-  //   return "";
-  // }
-
-  /**
-   * [TODO:description]
-   *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
-   */
-  // public String deletePost(Request request, Response response) {
-  //   response.type("application/json");
-  //   response.status(HTTP_NOT_IMPLEMENTED);
-  //   // TODO: Implement
-  //   return "";
-  // }
 }

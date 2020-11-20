@@ -101,32 +101,4 @@ public class UserService {
       return "";
     }
   }
-
-  /**
-   * [TODO:description]
-   *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
-   */
-  // public String updateUser(Request request, Response response) {
-  //   response.type("application/json");
-  //   response.status(HTTP_NOT_IMPLEMENTED);
-  //   // TODO: Implement
-  //   return "";
-  // }
-
-  /**
-   * [TODO:description]
-   *
-   * @param request [TODO:description]
-   * @param response [TODO:description]
-   * @return [TODO:description]
-   */
-  // public String deleteUser(Request request, Response response) {
-  //   response.type("application/json");
-  //   response.status(HTTP_NOT_IMPLEMENTED);
-  //   // TODO: Implement
-  //   return "";
-  // }
 }
