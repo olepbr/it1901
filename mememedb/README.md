@@ -21,69 +21,68 @@ and has the following directory structure:
 The following diagram shows the dependencies between the various internal and external modules
 
 ```plantuml
-skinparam linetype ortho
+left to right direction
 
-component core {
-	package core.io
-	package core.json
-	package core.datastructures
+package core {
+    package io
+    package json
+    package datastructures
+    package databases
 }
 
-component restapi {
-    package restapi.main
+
+package restapi {
 }
 
-component runner {
-    package main
+package spark{
 }
 
-component jackson {
+package runner {
 }
 
-component guava{
+package jackson {
 }
 
-component org.apache.commons.validator{
+package guava{
 }
 
-component spark{
+package org.apache.commons.validator{
 }
 
-restapi ..> jackson
+
+package fxui {
+}
+
+package javafx {
+    component fxml {
+    }
+    component controls{
+    }
+    component swing{
+    }
+    component graphics{
+    }
+}
+
 restapi ..> spark
-restapi ..> core.datastructures
-restapi .left.> core.io
-restapi ..> core.json
+restapi ..> jackson
+restapi ..> core
 
-core.json ..> jackson
-core.datastructures .down.> core.io
-core.datastructures ..> restapi.main
-core.io .up.> core.datastructures
-core.io ..> core.json
-core.datastructures .left.> guava
+core .up.> jackson
+core .up.> guava
+
 runner ..> fxui
 runner ..> restapi
 
+guava -[hidden] jackson
+guava -[hidden] spark
+guava -[hidden] org.apache.commons.validator
+jackson -[hidden] org.apache.commons.validator
+javafx -[hidden] org.apache.commons.validator
 
-component fxui {
-	package fxui.fxui
-}
-
-fxui ..> core.datastructures
-fxui .left.> org.apache.commons.validator
-
-component javafx {
-	component fxml {
-	}
-	component controls{
-	}
-	component swing{
-	}
-	component graphics{
-	}
-}
-
-fxui.fxui .right.> javafx
+fxui ..> core
+fxui .up.> javafx
+fxui ..> org.apache.commons.validator
 ```
 
 The following class diagram shows the basic outline of the internal class structure. 
