@@ -1,6 +1,6 @@
 package core.io;
 
-import core.databases.LocalDatabase;
+import core.datastructures.LocalDatabase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

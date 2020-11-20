@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import core.databases.LocalDatabase;
+import core.datastructures.LocalDatabase;
 
 public class AppTest extends ApplicationTest {
 

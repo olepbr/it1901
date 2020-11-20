@@ -1,9 +1,9 @@
 package integration;
 
 import core.datastructures.Comment;
-import core.databases.LocalDatabase;
+import core.datastructures.LocalDatabase;
 import core.datastructures.Post;
-import core.databases.RestDatabase;
+import core.datastructures.RestDatabase;
 import core.datastructures.User;
 import java.util.Arrays;
 import java.util.Collection;
