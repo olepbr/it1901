@@ -8,7 +8,8 @@ import core.datastructures.Post;
 import java.io.IOException;
 
 /**
- * Class for serializing Post objects. Format: { uuid: "..." "owner": "...", "caption": "...", "image": "..." }
+ * Class for serializing Post objects. 
+ * Format: { uuid: "..." "owner": "...", "caption": "...", "image": "..." }
  *
  * @author Ole Peder Brandtzæg
  */
