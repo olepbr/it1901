@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.scene.image.ImageView;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import core.datastructures.LocalDatabase;
@@ -83,8 +82,7 @@ public class AppTest extends ApplicationTest {
     clickOn(loginButton);
 
     /*Test add post */
-
-  //  browserController.setDatabase(emptyDatabase);
+    
     File inputFile = new File(getClass().getClassLoader().getResource("pangolin.jpg").getPath());
     System.out.println(inputFile.getAbsolutePath());
     browserController = ((BrowserController) controller.getChild());
