@@ -105,8 +105,8 @@ Responds with the following json structure:
     "name": "string",
     "email": "string",
     "posts":
-      ["UUID", "UUID", ..., "UUID"],
-    "hashedPassword": "string"
+      ["uuid", "uuid", ..., "uuid"],
+    "password": "string"
   }
 ]
 ```
@@ -124,7 +124,7 @@ Expects a body with the following structure:
   "nickname": "string",
   "name": "string",
   "email": "string",
-  "hashedPassword": "string"
+  "password": "string"
 }
 ```
 
@@ -143,33 +143,10 @@ Responds with the following structure:
   "name": "string",
   "email": "string",
   "posts":
-    ["UUID", "UUID", ..., "UUID"],
-  "hashedPassword": "string"
+    ["uuid", "uuid", ..., "uuid"],
+  "password": "string"
 }
 ```
-
-### `PUT /user/:nickname`
-
-Updates a user.
-
-Responds with a message and/or an error.
-
-Expects a body with the following structure:
-
-```json
-{
-  "nickname": "string",
-  "name": "string",
-  "email": "string",
-  "hashedPassword": "string"
-}
-```
-
-### `DELETE /user/:nickname`
-
-Deletes a user.
-
-Responds with a message and/or an error.
 
 ### `GET /post`
 
@@ -180,13 +157,13 @@ Responds with the following structure:
 ```json
 [
   {
-    "UUID": "string",
+    "uuid": "string",
     "owner": "string",
     "caption": "string",
     "image": "string",
     "comments": [
       {
-        "UUID": "string",
+        "uuid": "string",
         "author": "user nickname",
         "text": "string"
       }
@@ -222,40 +199,19 @@ On success, responds with the following structure:
 
 ```json
 {
-  "UUID": "string",
+  "uuid": "string",
   "owner": "string",
   "caption": "string",
   "image": "string",
   "comments": [
     {
-      "UUID": "string",
+      "uuid": "string",
       "author": "user nickname",
       "text": "string"
     }
   ]
 }
 ```
-
-### `PUT /post/:postUUID`
-
-Updates post.
-
-Responds with message and/or error.
-
-body:
-
-```json
-{
-  "UUID": "string",
-  "title": "string",
-  "caption": "string",
-  "image": "string"
-}
-```
-
-### `DELETE /post/:postUUID`
-
-Returns message and/or error.
 
 ### `GET /post/:postUUID/comment`
 
@@ -266,8 +222,8 @@ Returns:
 ```json
 [
   {
-    "UUID": "string",
-    "author": "user nickname",
+    "uuid": "string",
+    "author": "nickname",
     "text": "string"
   }
 ]
@@ -283,25 +239,18 @@ Body:
 
 ```json
 {
-  "author": "user nickname",
+  "author": "nickname",
   "text": "string"
 }
 ```
 
 ### `GET /post/:postUUID/comment/:commentUUID`
 
-### `PUT /post/:postUUID/comment/:commentUUID`
-
-body:
+Returns:
 
 ```json
 {
-  "UUID": "string",
-  "author": "user nickname",
+  "author": "nickname",
   "text": "string"
 }
 ```
-
-### `DELETE /post/:postUUID/comment/:commentUUID`
-
-Deletes comment.
