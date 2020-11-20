@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
@@ -63,14 +64,15 @@ public class PostController {
       fxmlLoader.setLocation(getClass().getClassLoader().getResource("PostView.fxml"));
       Scene scene = new Scene(fxmlLoader.load());
       Stage stage = new Stage();
-      stage.setTitle("Jostein UwU");
+      stage.setTitle("View post");
       stage.setScene(scene);
       PostViewController postViewController = ((PostViewController) fxmlLoader.getController());
       postViewController.setDatabase(database);
       postViewController.setPost(post);
       postViewController.setActiveUser(activeUser);
+      stage.initModality(Modality.APPLICATION_MODAL);
       stage.show();
-      event.consume();
+      
     } catch (IOException e) {
       System.out.println("Could not load new window");
       e.printStackTrace();
