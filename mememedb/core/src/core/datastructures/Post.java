@@ -91,6 +91,7 @@ public class Post {
 
   /**
    * Converts the supplied File object to a base64-encoded string.
+   *
    * @param image The image to convert.
    * @return The string representation of the image.
    * @throws IOException If an error occurs during reading.
