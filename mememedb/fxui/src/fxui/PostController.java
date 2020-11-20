@@ -7,14 +7,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -59,6 +57,8 @@ public class PostController {
 
   /**
    * Displays a new window when image is clicked. Opens PostView.fxml window.
+   * PostView scene uses Init Modality to prevent user from using background 
+   * window when PostView is active.
    */
   @FXML
   public void handleEnterPostView() {
