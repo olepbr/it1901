@@ -1,5 +1,8 @@
-package core.datastructures;
+package core.databases;
 
+import core.datastructures.Comment;
+import core.datastructures.Post;
+import core.datastructures.User;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;

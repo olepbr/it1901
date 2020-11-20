@@ -1,6 +1,6 @@
 package fxui;
 
-import core.datastructures.DatabaseInterface;
+import core.databases.DatabaseInterface;
 import core.datastructures.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

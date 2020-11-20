@@ -1,4 +1,4 @@
-package core.datastructures;
+package core.databases;
 
 import core.io.LocalIO;
 
