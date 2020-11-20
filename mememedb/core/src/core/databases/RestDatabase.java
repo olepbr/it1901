@@ -121,7 +121,7 @@ public class RestDatabase implements DatabaseInterface {
     HttpResponse<String> response = requestHandler("/user",
         "{\"name\":\"" + name + "\",\"nickname\""
             + ":\"" + nickname + "\",\"email\":\"" + email
-                    + "\",\"password\":\"" + password + "\"}", "POST");
+                    + "\",\"password\":\"" + User.hashPassword(password) + "\"}", "POST");
     if (! responseCodeChecker(response)) {
       System.err.println(response.body());
     }
