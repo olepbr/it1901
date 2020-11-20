@@ -37,7 +37,7 @@ public class Server {
     awaitInitialization();
   }
 
-  protected static void shutdownServer() {
+  public static void shutdownServer() {
     stop();
   }
 
