@@ -141,14 +141,13 @@
                                 <element>PACKAGE</element>
                                   <includes>
                                     <include>core.**</include>
-                                    <include>fxui.**</include>
                                     <include>restapi.**</include>
                                   </includes>
                                   <limits>
                                     <limit>
                                     <counter>LINE</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.1</minimum>
+                                    <minimum>0.4</minimum>
                                   </limit>
                                 </limits>
                               </rule>
