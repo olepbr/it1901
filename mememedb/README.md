@@ -64,7 +64,7 @@ package jackson {
 package guava{
 }
 
-package commons-validator{
+package commonsvalidator{
 }
 
 
@@ -94,13 +94,13 @@ runner ..> restapi
 
 guava -[hidden] jackson
 guava -[hidden] spark
-guava -[hidden] commons\-validator
-jackson -[hidden] commons\-validator
-javafx -[hidden] commons\-validator
+guava -[hidden] commonsvalidator
+jackson -[hidden] commonsvalidator
+javafx -[hidden] commonsvalidator
 
 fxui ..> core
 fxui .up.> javafx
-fxui ..> commons\-validator
+fxui ..> commonsvalidator
 ```
 
 The following class diagram shows the basic outline of the internal class structure.
