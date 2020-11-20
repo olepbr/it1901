@@ -211,7 +211,7 @@ On success, responds with the following structure:
 
 ### `GET /post/:postUUID/comment`
 
-If postUUID does not exist 404 and error message.
+If postUUID does not exist, this returns response code 404 and an error message.
 
 Returns:
 
@@ -225,7 +225,7 @@ Returns:
 ]
 ```
 
-### `POST /post/:postUUID/coment`
+### `POST /post/:postUUID/comment`
 
 Responds with message and/or error.
 
